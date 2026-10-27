@@ -1,11 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CalendarCheck, Navigation, Plus, Search } from "lucide-react";
+import { CalendarCheck, ChevronLeft, Search } from "lucide-react";
 import { PlaceSheet } from "./place-sheet";
-import { CategoryIcon, Photo, Tags } from "./ui";
+import { Photo, Tags } from "./ui";
 import { allPlaces, CATEGORY_LABELS, isKosher, plannedIds } from "@/lib/catalog";
-import { directionsUrl } from "@/lib/geo";
 import { IDEAS } from "@/lib/ideas";
 import { useTrip } from "@/lib/store";
 import type { Place } from "@/lib/types";
@@ -22,19 +21,9 @@ type Filter = {
 const FILTERS: Filter[] = [
   { id: "all", label: "הכול", match: () => true },
   { id: "kosher", label: "אוכל כשר", match: isKosher, color: "#1f6a3f" },
-  { id: "christmas", label: "כריסמס", match: (p) => !!p.tags?.includes("christmas"), color: "#9d2323" },
-  { id: "sight", label: "אתרים ונוף", match: (p) => p.category === "sight" },
-  { id: "jewish", label: "מורשת יהודית", match: (p) => p.category === "jewish", color: "#23447d" },
-  { id: "cafe", label: "קפה ומתוקים", match: (p) => p.category === "cafe", color: "#6f4a2c" },
-  { id: "food", label: "מסעדות", match: (p) => p.category === "food", color: "#a8432a" },
-  { id: "bath", label: "מרחצאות", match: (p) => p.category === "bath", color: "#1d5f73" },
-  { id: "experience", label: "חוויות", match: (p) => p.category === "experience", color: "#b06a1d" },
-  {
-    id: "shopping",
-    label: "קניות ושווקים",
-    match: (p) => p.category === "shopping" || p.category === "market",
-    color: "#4c3584",
-  },
+  { id: "sight", label: "אתרים", match: (p) => p.category === "sight" || p.category === "jewish" },
+  { id: "food", label: "אוכל וקפה", match: (p) => p.category === "food" || p.category === "cafe" },
+  { id: "christmas", label: "כריסמס", match: (p) => !!p.tags?.includes("christmas") },
 ];
 
 function KosherNote() {
@@ -116,39 +105,26 @@ export function ExploreView() {
 
       {filter === "kosher" && <KosherNote />}
 
-      <div className="idea-list">
+      <div className="card idea-list">
         {list.map((place) => (
-          <article key={place.id} className="card idea">
-            <button type="button" className="idea-hero" onClick={() => setOpen(place)} aria-label={place.name}>
-              <Photo place={place} width={960} iconSize={56} />
-              {planned.has(place.id) && (
-                <span className="idea-planned">
-                  <CalendarCheck size={14} aria-hidden /> בתוכנית
-                </span>
-              )}
-              <span className="idea-hero-text">
-                <span className="idea-cat">
-                  <CategoryIcon category={place.category} size={14} />
-                  {CATEGORY_LABELS[place.category]}
-                  {place.duration && ` · ${place.duration}`}
-                </span>
-                <span className="idea-title">{place.name}</span>
+          <button key={place.id} type="button" className="idea-row" onClick={() => setOpen(place)}>
+            <Photo place={place} className="idea-thumb" iconSize={26} />
+            <span className="grow">
+              <span className="idea-meta">
+                {CATEGORY_LABELS[place.category]}
+                {place.duration && ` · ${place.duration}`}
               </span>
-            </button>
-            <div className="idea-body">
-              <Tags tags={place.tags} />
-              <p className="stop-desc is-clamped">{place.description}</p>
-              {place.why && <p className="idea-why">💡 {place.why}</p>}
-              <div className="btn-row">
-                <button type="button" className="btn btn-primary" onClick={() => setOpen(place)}>
-                  <Plus size={18} /> פרטים והוספה
-                </button>
-                <a className="btn btn-soft" href={directionsUrl(place)} target="_blank" rel="noreferrer" style={{ flex: "none" }}>
-                  <Navigation size={18} /> ניווט
-                </a>
-              </div>
-            </div>
-          </article>
+              <span className="idea-title">{place.name}</span>
+              {planned.has(place.id) ? (
+                <span className="idea-planned">
+                  <CalendarCheck size={14} aria-hidden /> כבר בתוכנית
+                </span>
+              ) : (
+                <Tags tags={place.tags?.filter((t) => t === "kosher" || t === "free")} />
+              )}
+            </span>
+            <ChevronLeft size={20} aria-hidden className="idea-chevron" />
+          </button>
         ))}
         {list.length === 0 && <p className="empty">לא נמצאו מקומות.</p>}
       </div>

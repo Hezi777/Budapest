@@ -7,7 +7,6 @@ export const TRIP_VERSION = 2;
 export const TRIP_INFO = {
   title: "בודפשט",
   dates: "26–29 בנובמבר 2026",
-  tagline: "טיול חורף, שווקי כריסמס ונוף על הדנובה",
 };
 
 export const DAY_COLORS = ["#3b6fb6", "#2f8f6a", "#c27c1a", "#8b5cc4"];

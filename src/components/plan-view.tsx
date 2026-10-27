@@ -14,13 +14,11 @@ import {
   Moon,
   Navigation,
   Pencil,
-  Phone,
   Plus,
   Route,
   Share2,
   Snowflake,
   UtensilsCrossed,
-  Wifi,
 } from "lucide-react";
 import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
 import { BudapestScene, CopyAddress, Photo, Tags } from "./ui";
@@ -56,13 +54,13 @@ function daysBetween(fromIso: string, toIso: string): number {
 }
 
 function countdown(today: string | null, days: Day[]): string {
-  if (!today) return TRIP_INFO.dates;
+  if (!today) return "4 ימים בבודפשט";
   const until = daysBetween(today, days[0].date);
   if (until > 1) return `עוד ${until} ימים לטיסה`;
   if (until === 1) return "טסים מחר!";
   const index = days.findIndex((d) => d.date === today);
   if (index >= 0) return `היום: יום ${index + 1} בטיול`;
-  return today > days[days.length - 1].date ? "היה טיול מקסים" : TRIP_INFO.dates;
+  return today > days[days.length - 1].date ? "היה טיול מקסים" : "4 ימים בבודפשט";
 }
 
 /* ---------- Legs ---------- */
@@ -72,7 +70,7 @@ function RouteLink({ from, to, mode }: { from: Place; to?: Place; mode: "walking
   if (!to) return null;
   return (
     <a className="route-link" href={directionsUrl(to, mode, from)} target="_blank" rel="noreferrer">
-      <Route size={15} aria-hidden /> מסלול
+      <Route size={14} aria-hidden /> מסלול
     </a>
   );
 }
@@ -200,6 +198,7 @@ function StopCard({
   place,
   places,
   arrivesOnFoot,
+  editing,
   onOpenPlace,
 }: {
   day: Day;
@@ -207,11 +206,10 @@ function StopCard({
   place: Place;
   places: Map<string, Place>;
   arrivesOnFoot: boolean;
+  editing: boolean;
   onOpenPlace: (place: Place) => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
   const title = stop.title ?? place.name;
-  const long = place.description.length > 90;
 
   return (
     <>
@@ -229,12 +227,6 @@ function StopCard({
       </button>
       <div className="stop-body">
         {stop.note && <p className="stop-note">{stop.note}</p>}
-        <p className={`stop-desc${long && !expanded ? " is-clamped" : ""}`}>{place.description}</p>
-        {long && (
-          <button type="button" className="more-link" onClick={() => setExpanded((v) => !v)}>
-            {expanded ? "פחות" : "לקרוא עוד"}
-          </button>
-        )}
         <Tags tags={place.tags?.filter((t) => t !== "free")} />
         {stop.alts?.map((alt) => {
           const altPlace = alt.placeId ? places.get(alt.placeId) : undefined;
@@ -250,24 +242,27 @@ function StopCard({
             </button>
           );
         })}
-        <div className="stop-actions">
-          <a
-            className="btn btn-primary"
-            href={arrivesOnFoot ? directionsUrl(place) : mapsUrl(place)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Navigation size={18} /> ניווט
-          </a>
-          <button
-            type="button"
-            className="btn btn-soft done-btn"
-            aria-pressed={!!stop.done}
-            onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
-          >
-            <Check size={18} /> {stop.done ? "היינו!" : "היינו"}
-          </button>
-        </div>
+        {!editing && (
+          <div className="stop-actions">
+            <a
+              className="btn btn-primary"
+              href={arrivesOnFoot ? directionsUrl(place) : mapsUrl(place)}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Navigation size={18} /> ניווט
+            </a>
+            <button
+              type="button"
+              className="icon-btn done-btn"
+              aria-pressed={!!stop.done}
+              aria-label={stop.done ? "היינו כאן" : "סימון: היינו כאן"}
+              onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
+            >
+              <Check size={22} />
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
@@ -390,16 +385,15 @@ export function PlanView() {
       <section className="hero" aria-label="הטיול">
         <BudapestScene className="hero-art" />
         <Photo place={HERO} width={960} iconSize={0} />
-        <div className="hero-top">
-          <span className="glass-pill">{countdown(today, trip.days)}</span>
-          <span className="glass-pill">
-            <Snowflake size={15} aria-hidden /> 0–7°
-          </span>
-        </div>
         <div className="hero-text">
-          <div className="hero-dates">{TRIP_INFO.dates} · 4 ימים</div>
+          <div className="hero-dates">{countdown(today, trip.days)}</div>
           <h1 className="hero-title">{TRIP_INFO.title}</h1>
-          <p className="hero-tagline">{TRIP_INFO.tagline}</p>
+          <div className="hero-meta">
+            <span>{TRIP_INFO.dates}</span>
+            <span className="glass-pill">
+              <Snowflake size={14} aria-hidden /> 0–7°
+            </span>
+          </div>
         </div>
       </section>
 
@@ -427,12 +421,6 @@ export function PlanView() {
           </span>
           מפת היום
         </Link>
-        <Link className="quick" href="/esim">
-          <span className="q-icon">
-            <Wifi size={22} aria-hidden />
-          </span>
-          אינטרנט
-        </Link>
         <Link className="quick" href="/money">
           <span className="q-icon">
             <Coins size={22} aria-hidden />
@@ -440,25 +428,6 @@ export function PlanView() {
           המרת כסף
         </Link>
       </nav>
-
-      <section className="card hotel" aria-label="המלון">
-        <Photo place={hotel} iconSize={26} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="muted small">המלון שלכם</div>
-          <div className="hotel-name latin" style={{ textAlign: "start" }}>
-            {hotel.local}
-          </div>
-          <div className="muted small latin" style={{ textAlign: "start" }}>
-            Kossuth Lajos utca 7-9
-          </div>
-          <div className="muted small">ליד תחנת המטרו Astoria</div>
-        </div>
-        {hotel.phone && (
-          <a className="icon-btn" href={`tel:${hotel.phone.replace(/\s/g, "")}`} aria-label="התקשרות למלון">
-            <Phone size={20} />
-          </a>
-        )}
-      </section>
 
       <h2 className="section-title">התוכנית</h2>
       <div className="day-strip" role="group" aria-label="בחירת יום">
@@ -487,16 +456,16 @@ export function PlanView() {
         </div>
         <h2 className="day-title">{day.title}</h2>
         <p className="day-summary">{day.summary}</p>
-        <div className="btn-row">
+        <div className="day-links">
           <button
             type="button"
-            className="btn btn-sm"
+            className="text-link"
             aria-pressed={editing}
             onClick={() => setEditing((v) => !v)}
           >
             <Pencil size={16} /> {editing ? "סיום עריכה" : "שינוי היום"}
           </button>
-          <button type="button" className="btn btn-sm" onClick={shareDay}>
+          <button type="button" className="text-link" onClick={shareDay}>
             <Share2 size={16} /> שליחה בוואטסאפ
           </button>
         </div>
@@ -504,7 +473,7 @@ export function PlanView() {
 
       {editing && (
         <div className="edit-banner" role="status">
-          מצב עריכה: החיצים מזיזים עצירה, „עריכה” משנה שעה, שם או יום, ואפשר גם למחוק.
+          החיצים מזיזים, „עריכה” משנה שעה, שם או יום.
         </div>
       )}
 
@@ -552,6 +521,7 @@ export function PlanView() {
                     place={place}
                     places={places}
                     arrivesOnFoot={leg?.leg.mode === "walk"}
+                    editing={editing}
                     onOpenPlace={setOpenPlace}
                   />
                   {editing && (
@@ -573,7 +543,7 @@ export function PlanView() {
 
       <button
         type="button"
-        className="btn btn-primary btn-block"
+        className="btn btn-outline btn-block"
         style={{ marginBlockStart: 18 }}
         onClick={() => setAdding(true)}
       >

@@ -1,10 +1,12 @@
 import Link from "next/link";
 import {
+  BedDouble,
   CalendarCheck,
   CarTaxiFront,
   ChevronLeft,
   Coins,
   MessageCircle,
+  Navigation,
   Phone,
   Settings,
   Siren,
@@ -17,6 +19,19 @@ import {
 } from "lucide-react";
 import { SettingsPanel } from "@/components/settings-panel";
 import { EMERGENCY_GROUPS, telHref } from "@/lib/emergency";
+import { PLAN_PLACES, HOTEL_ID } from "@/lib/places";
+import { directionsUrl } from "@/lib/geo";
+
+const HOTEL = PLAN_PLACES.find((p) => p.id === HOTEL_ID)!;
+
+const JUMPS = [
+  { id: "sos", label: "חירום" },
+  { id: "hotel", label: "המלון" },
+  { id: "transport", label: "מוניות ותחבורה" },
+  { id: "christmas", label: "כריסמס" },
+  { id: "kosher", label: "כשר ושבת" },
+  { id: "settings", label: "הגדרות" },
+];
 
 const BOOKINGS = [
   { when: "חמישי 18:00", what: "שייט בדנובה · Legenda", how: "legenda.hu", href: "https://www.legenda.hu" },
@@ -57,8 +72,16 @@ export default function InfoPage() {
     <>
       <div className="page-head">
         <h1 className="page-title">מידע שימושי</h1>
-        <p className="page-lead">טלפונים לחירום, אינטרנט בחו״ל, מוניות, כשרות וכל השאר.</p>
+        <p className="page-lead">טלפונים לחירום, המלון, מוניות, כשרות וכל השאר.</p>
       </div>
+
+      <nav className="chip-row" aria-label="קפיצה לנושא" style={{ marginBlockEnd: 14 }}>
+        {JUMPS.map((j) => (
+          <a key={j.id} className="chip" href={`#${j.id}`}>
+            {j.label}
+          </a>
+        ))}
+      </nav>
 
       <Link href="/esim" className="card link-tile">
         <span className="lead">
@@ -85,9 +108,10 @@ export default function InfoPage() {
         <Phone size={26} aria-hidden />
       </a>
       <div className="stack" style={{ marginBlockStart: 12 }}>
-        {EMERGENCY_GROUPS.map((group) => (
-          <section key={group.title} className="card" aria-label={group.title}>
-            <h3 className="group-title">{group.title}</h3>
+        {EMERGENCY_GROUPS.map((group, i) => (
+          // Only the Israeli MFA group starts open; 112 above covers Hungary.
+          <details key={group.title} className="card group" open={i === 1}>
+            <summary className="group-title">{group.title}</summary>
             <div className="list">
               {group.contacts.map((c) => (
                 <a
@@ -109,7 +133,7 @@ export default function InfoPage() {
                 </a>
               ))}
             </div>
-          </section>
+          </details>
         ))}
       </div>
       <p className="small muted" style={{ marginBlockStart: 10 }}>
@@ -117,19 +141,57 @@ export default function InfoPage() {
         הטיסה. מד״א (101) ומשטרת ישראל (100) לא עובדים מחו״ל.
       </p>
 
-      <Title icon={<CarTaxiFront size={20} aria-hidden />}>
-        מוניות: אפליקציית Bolt
+      <Title id="hotel" icon={<BedDouble size={20} aria-hidden />}>
+        המלון שלכם
+      </Title>
+      <div className="card card-pad stack">
+        <div>
+          <div className="title latin" style={{ textAlign: "start", fontWeight: 800, fontSize: "1.1rem" }}>
+            {HOTEL.local}
+          </div>
+          <div className="muted latin" style={{ textAlign: "start" }}>
+            Kossuth Lajos utca 7-9
+          </div>
+          <div className="muted">ליד תחנת המטרו Astoria (קו M2)</div>
+        </div>
+        <div className="btn-row">
+          <a className="btn btn-primary" href={directionsUrl(HOTEL)} target="_blank" rel="noreferrer">
+            <Navigation size={18} /> ניווט למלון
+          </a>
+          <a className="btn btn-outline" href={`tel:${HOTEL.phone!.replace(/\s/g, "")}`}>
+            <Phone size={18} /> התקשרות
+          </a>
+        </div>
+      </div>
+
+      <Title id="transport" icon={<CarTaxiFront size={20} aria-hidden />}>
+        מוניות ותחבורה
       </Title>
       <div className="card card-pad stack">
         <ol className="steps">
           <li>מורידים את Bolt עוד בארץ, ונרשמים עם מספר הטלפון וכרטיס אשראי.</li>
-          <li>בכל פס צהוב בתוכנית יש כתובת באנגלית. לוחצים עליה, היא מועתקת, ומדביקים ב־Bolt.</li>
+          <li>בכל קטע מונית בתוכנית יש כתובת באנגלית. לוחצים עליה, היא מועתקת, ומדביקים ב־Bolt.</li>
           <li>המחיר מופיע מראש ומחויב אוטומטית. לא צריך מזומן.</li>
           <li>לא עוצרים מוניות ברחוב. בשדה התעופה: עמדת Főtaxi הרשמית או Bolt.</li>
         </ol>
         <a className="btn btn-primary" href="https://bolt.eu/he-il/" target="_blank" rel="noreferrer">
           להורדת Bolt
         </a>
+      </div>
+      <div className="card" style={{ marginBlockStart: 12 }}>
+        <ul className="bullets">
+          <li>
+            <strong>בנחיתה:</strong> בביקורת הדרכונים יש מאז 2026 רישום ביומטרי חדש (EES) לישראלים, והתור יכול
+            להתארך. לא לתכנן משהו צמוד לנחיתה.
+          </li>
+          <li>
+            <strong>מטרו ואוטובוס 100E לשדה:</strong> אפשר לשלם בכניסה בהצמדת כרטיס אשראי (כרטיס בודד). המלון ליד
+            תחנת Astoria בקו M2.
+          </li>
+          <li>
+            <strong>לא עוצרים מונית ברחוב.</strong> רק Bolt או Főtaxi. מונית רחוב לשדה יכולה לעלות פי 3.
+          </li>
+        </ul>
       </div>
 
       <div className="info-grid" style={{ marginBlockStart: 12 }}>
@@ -146,7 +208,7 @@ export default function InfoPage() {
         <div className="card info-tile">
           <Coins size={22} aria-hidden />
           <div className="big">פורינט</div>
-          <p className="small muted">1,000 פורינט ≈ 10 ₪. אשראי עובד כמעט בכל מקום.</p>
+          <p className="small muted">1,000 פורינט ≈ 9 ₪. אשראי עובד כמעט בכל מקום.</p>
         </div>
         <div className="card info-tile">
           <Wine size={22} aria-hidden />
@@ -155,7 +217,7 @@ export default function InfoPage() {
         </div>
       </div>
 
-      <Title icon={<TreePine size={20} aria-hidden />}>
+      <Title id="christmas" icon={<TreePine size={20} aria-hidden />}>
         כריסמס בבודפשט
       </Title>
       <div className="card">
@@ -177,7 +239,7 @@ export default function InfoPage() {
         </ul>
       </div>
 
-      <Title icon={<UtensilsCrossed size={20} aria-hidden />}>
+      <Title id="kosher" icon={<UtensilsCrossed size={20} aria-hidden />}>
         אוכל כשר ושבת
       </Title>
       <div className="card card-pad stack">
@@ -216,14 +278,14 @@ export default function InfoPage() {
         ))}
       </div>
 
-      <Title icon={<Settings size={20} aria-hidden />}>
+      <Title id="settings" icon={<Settings size={20} aria-hidden />}>
         הגדרות
       </Title>
       <SettingsPanel />
 
       <div className="footer-note">
         <span>שעות, מחירים וטלפונים נבדקו באוקטובר 2026. שווה לבדוק שוב שבוע לפני.</span>
-        <span>תמונות: ויקיפדיה ו־Wikimedia Commons. מפה: OpenStreetMap ו־CARTO.</span>
+        <span>תמונות: ויקיפדיה ו־Wikimedia Commons. מפה: OpenStreetMap.</span>
       </div>
     </>
   );

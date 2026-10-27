@@ -84,11 +84,14 @@ export function Photo({
   className,
   width = 500,
   iconSize = 32,
+  hideIfMissing = false,
 }: {
   place: Place;
   className?: string;
   width?: 500 | 960 | 1280;
   iconSize?: number;
+  /** Render nothing, rather than an icon tile, when there's no photo. */
+  hideIfMissing?: boolean;
 }) {
   const src = photoUrl(place, width);
   const [failed, setFailed] = useState<string | null>(null);
@@ -101,6 +104,8 @@ export function Photo({
     },
     [src],
   );
+
+  if (hideIfMissing && (!src || broken)) return null;
 
   return (
     <div className={`photo cat-${place.category} ${className ?? ""}`}>

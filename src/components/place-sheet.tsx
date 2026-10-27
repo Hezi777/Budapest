@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import {
   CalendarPlus,
   Clock,
-  ExternalLink,
   Globe,
   MapPin,
   Navigation,
@@ -14,7 +13,7 @@ import {
 } from "lucide-react";
 import { Photo, Sheet, Tags, useToast } from "./ui";
 import { allPlaces, plannedIds } from "@/lib/catalog";
-import { directionsUrl, mapsUrl } from "@/lib/geo";
+import { directionsUrl } from "@/lib/geo";
 import {
   addStop,
   moveStopToDay,
@@ -113,7 +112,7 @@ export function PlaceSheet({
 
   return (
     <Sheet title={place.name} onClose={onClose}>
-      <Photo place={place} className="sheet-photo" width={960} iconSize={48} />
+      <Photo place={place} className="sheet-photo" width={960} iconSize={0} hideIfMissing />
       {place.local !== place.name && (
         <div className="latin muted" style={{ textAlign: "end", marginBlockStart: -6 }}>
           {place.local}
@@ -165,19 +164,15 @@ export function PlaceSheet({
         )}
       </div>
 
-      <div className="btn-row">
-        <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
-          <Navigation size={20} /> ניווט ברגל
-        </a>
-        <a className="btn btn-outline" href={mapsUrl(place)} target="_blank" rel="noreferrer">
-          <ExternalLink size={20} /> בגוגל מפות
-        </a>
-      </div>
-
       {!adding ? (
-        <button type="button" className="btn btn-outline" onClick={() => setAdding(true)}>
-          <CalendarPlus size={20} /> הוספה לתוכנית
-        </button>
+        <div className="btn-row">
+          <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+            <Navigation size={20} /> ניווט
+          </a>
+          <button type="button" className="btn btn-outline" onClick={() => setAdding(true)}>
+            <CalendarPlus size={20} /> הוספה לתוכנית
+          </button>
+        </div>
       ) : (
         <div className="card card-pad" style={{ display: "grid", gap: 14 }}>
           <DayTimePicker
