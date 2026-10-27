@@ -1,5 +1,5 @@
-import { CircleCheck, Smartphone, TicketPercent, Wrench } from "lucide-react";
-import { CouponCode, InstallSteps } from "@/components/esim-guide";
+import { Smartphone, Wrench } from "lucide-react";
+import { EsimWalkthrough } from "@/components/esim-guide";
 
 function Title({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
@@ -60,53 +60,17 @@ export default function EsimPage() {
       </div>
 
       <Title icon={<Smartphone size={20} aria-hidden />}>
-        לבדוק קודם שהטלפון מתאים
-      </Title>
-      <div className="card">
-        <div className="check-row">
-          <CircleCheck size={20} aria-hidden />
-          <span>
-            מחייגים <bdi dir="ltr"><strong>*#06#</strong></bdi>. אם מופיעה שורה בשם <strong>EID</strong>, הטלפון תומך ב־eSIM.
-          </span>
-        </div>
-        <div className="check-row">
-          <CircleCheck size={20} aria-hidden />
-          <span>בדרך כלל: אייפון XS ומעלה, סמסונג Galaxy S20 ומעלה.</span>
-        </div>
-        <div className="check-row">
-          <CircleCheck size={20} aria-hidden />
-          <span>הטלפון צריך להיות „פתוח” ולא נעול לחברה סלולרית. טלפון שנקנה בחנות רגילה בארץ בדרך כלל פתוח.</span>
-        </div>
-      </div>
-
-      <Title icon={<TicketPercent size={20} aria-hidden />}>
-        קודי הנחה
-      </Title>
-      <div className="stack">
-        <CouponCode
-          code="NEWTOAIRALO15"
-          title="15% הנחה לנרשמים חדשים"
-          note="דווח כעובד באתרי קופונים בסוף אוקטובר 2026"
-        />
-        <div className="card card-pad stack">
-          <strong>3$ הנחה עם קוד הזמנה מחבר</strong>
-          <p className="small muted">
-            מי שכבר יש לו חשבון Airalo (למשל הילדים) מוצא באפליקציה את „Refer & earn” ושולח לכם קוד אישי. אתם
-            מקבלים 3$ הנחה, והוא מקבל 3$ לקנייה הבאה. זה המבצע הרשמי של Airalo.
-          </p>
-        </div>
-        <p className="small muted">אי אפשר לשלב שני קודים. מנסים את הראשון, ואם לא עובד את השני.</p>
-      </div>
-
-      <Title icon={<Smartphone size={20} aria-hidden />}>
         התקנה צעד אחר צעד
       </Title>
-      <InstallSteps />
+      <EsimWalkthrough />
 
-      <Title icon={<Wrench size={20} aria-hidden />}>
-        אם משהו לא עובד
-      </Title>
-      <div className="card">
+      <details className="card esim-trouble">
+        <summary>
+          <span className="badge-icon">
+            <Wrench size={20} aria-hidden />
+          </span>
+          אם משהו לא עובד
+        </summary>
         <ul className="bullets">
           {PROBLEMS.map((p) => (
             <li key={p.q}>
@@ -116,7 +80,7 @@ export default function EsimPage() {
             </li>
           ))}
         </ul>
-      </div>
+      </details>
 
       <div className="footer-note">
         <span>מחירים וקודים נבדקו ב־27.10.2026 ועשויים להשתנות. Airalo לא קשורה לאתר הזה.</span>

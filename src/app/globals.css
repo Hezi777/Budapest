@@ -2098,3 +2098,302 @@ textarea.input {
     animation: fade-in 0.3s ease-out backwards;
   }
 }
+
+/* ================= eSIM walkthrough ================= */
+
+.esim-walk {
+  display: grid;
+  gap: 12px;
+  scroll-margin-block-start: calc(var(--header-height) + 8px);
+}
+
+.esim-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.esim-count {
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.esim-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-sunk);
+  overflow: hidden;
+}
+
+.esim-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ink);
+  transition: width 240ms var(--ease-out);
+}
+
+.esim-card {
+  gap: 14px;
+}
+
+.esim-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.esim-text {
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.esim-text p {
+  margin: 0;
+}
+
+/* One screenshot per step, framed like the phone it shows. */
+.esim-shot {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.esim-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: var(--surface-sunk);
+}
+
+.esim-shot[data-shape="tall"] img {
+  max-width: 290px;
+}
+
+.esim-shot[data-shape="wide"] img {
+  max-width: 420px;
+}
+
+.esim-shot figcaption {
+  text-align: center;
+}
+
+.esim-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.esim-nav .btn {
+  min-height: 56px;
+  font-size: 1.05rem;
+}
+
+.esim-nav .btn-soft {
+  flex: 1;
+}
+
+.esim-nav .btn-primary {
+  flex: 2;
+}
+
+.esim-hint {
+  text-align: center;
+  margin: 0;
+}
+
+.esim-checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.esim-checks li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.esim-checks svg {
+  flex: none;
+  margin-block-start: 3px;
+  color: var(--walk);
+}
+
+.esim-alert {
+  background: var(--surface-sunk);
+  box-shadow: none;
+}
+
+.esim-bullets {
+  margin: 0;
+}
+
+.esim-bullets li {
+  padding-inline: 0;
+}
+
+.esim-card .segmented button {
+  min-height: 52px;
+}
+
+.esim-card .segmented button svg {
+  vertical-align: -4px;
+  margin-inline-end: 4px;
+}
+
+/* Phone picker: two big cards. */
+.esim-choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 84px;
+  padding: 16px;
+  width: 100%;
+  font: inherit;
+  font-size: 1.15rem;
+  color: var(--text);
+  text-align: start;
+  cursor: pointer;
+}
+
+.esim-choice .grow {
+  flex: 1;
+}
+
+.esim-choice-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: var(--white);
+  flex: none;
+}
+
+/* Extra help and troubleshooting stay folded until asked for. */
+.esim-more {
+  border-block-start: 1px solid var(--line);
+  padding-block-start: 12px;
+}
+
+.esim-more > summary,
+.esim-trouble > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.esim-more > summary::-webkit-details-marker,
+.esim-trouble > summary::-webkit-details-marker {
+  display: none;
+}
+
+.esim-more > summary::after,
+.esim-trouble > summary::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  margin-inline-start: auto;
+  border-inline-end: 2.5px solid var(--text-muted);
+  border-block-end: 2.5px solid var(--text-muted);
+  transform: rotate(45deg);
+  transition: transform 200ms var(--ease-out);
+}
+
+.esim-more[open] > summary::after,
+.esim-trouble[open] > summary::after {
+  transform: rotate(225deg);
+}
+
+.esim-more[open] > summary {
+  margin-block-end: 8px;
+}
+
+.esim-trouble {
+  margin-block-start: 28px;
+}
+
+.esim-trouble > summary {
+  padding: 8px 16px;
+}
+
+.esim-trouble > summary .badge-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--white);
+  flex: none;
+}
+
+.esim-trouble[open] > summary {
+  border-block-end: 1px solid var(--line);
+}
+
+/* Motion: a step settles in with a small rise; taps answer the finger. */
+.esim-step {
+  animation: rise 240ms var(--ease-out);
+}
+
+.esim-choice,
+.esim-more > summary,
+.esim-trouble > summary {
+  transition: transform 160ms var(--ease-out);
+}
+
+.esim-choice:active {
+  transform: scale(0.985);
+}
+
+.esim-more > summary:active,
+.esim-trouble > summary:active {
+  transform: scale(0.99);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esim-step {
+    animation: fade-in 0.2s ease-out;
+  }
+
+  .esim-bar > span,
+  .esim-more > summary::after,
+  .esim-trouble > summary::after {
+    transition: none;
+  }
+
+  .esim-choice:active,
+  .esim-more > summary:active,
+  .esim-trouble > summary:active {
+    transform: none;
+  }
+}
+
+.esim-text .path.latin {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* A menu path that opens a step sits on its own line. */
+.esim-text p > .path:first-child {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-block-end: 8px;
+}
+
+.esim-text p > .path.latin {
+  margin-block: 4px;
+}
