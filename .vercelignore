@@ -1,0 +1,7 @@
+# Local scratch files, never part of the app
+/test-results/
+/playwright-report/
+/scripts/
+
+# We use pnpm
+/package-lock.json
