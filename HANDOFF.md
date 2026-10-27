@@ -12,6 +12,38 @@ content is transcribed into `src/lib/trip.ts` and `src/lib/places.ts`. Design
 follows Hen Helper (`Hezi777/Hen-Helper`), with the itinerary layout inspired by
 Wanderlog.
 
+## Context: what Hen asked for
+
+The requests, in order, so the next session knows the intent behind the code:
+
+1. Turn the PDF guide into an interactive **mobile** website on **Vercel**, in
+   the `Hezi777/Budapest` repo, and make it **customizable** (the parents can
+   change the plan themselves).
+2. Use **Hen Helper** for design inspiration and **Wanderlog** for how the app
+   is built and looks, adapted for **50–60 year olds who aren't technical**:
+   big text and buttons, plain Hebrew, one obvious action per card.
+3. Add a **map** view, and a **forint ⇄ shekel converter** that works both ways.
+4. **Real photos** of everything.
+5. **More kosher restaurant options.** The parents keep kosher to some degree;
+   Shabbat falls inside the trip.
+6. Use a **TikTok playlist** of Budapest recommendations to add to the lists
+   (link in Open items, still not done).
+7. Use **Sonnet sub-agents** for execution where useful. They were used for
+   research (kosher, places, Airalo, emergency numbers).
+8. After the first version Hen said the design "sucks" and asked for a better
+   one. That led to the current design: illustrated hero, quick actions, date
+   strip, timeline, photo cards, floating nav. Keep the bar high on visual
+   polish; screenshot every change at 390×844 before calling it done.
+9. Add an **Airalo eSIM how-to** with **coupon codes that currently work**, and
+   **emergency phone numbers** they'd need, including Israeli ones.
+10. Hen asked whether Claude could launch it: not from a sandbox without Vercel
+    access, so Hen will import the repo in Vercel.
+
+Working style: Hen writes short messages and expects things done end to end:
+commit and push to `main` (there is no PR flow on this repo), then report
+briefly. Be honest about anything unverified (codes, hours, phone numbers)
+rather than presenting it as fact.
+
 ## Status
 
 - `main` is pushed and builds. `pnpm lint` and `pnpm build` are clean.
