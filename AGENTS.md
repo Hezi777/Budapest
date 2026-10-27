@@ -1,33 +1,47 @@
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-
 # Budapest trip
 
-A mobile trip planner for a 4-day Budapest trip (26–29 Nov 2026), built for
-parents in their 50s–60s. The UI is Hebrew and RTL.
+A mobile web app for Hen's parents, Edna and Benny (50s–60s, not technical), on
+a Budapest trip, Thu 26 – Sun 29 Nov 2026: the day-by-day plan, a map, ideas
+(with kosher places; they keep kosher and Shabbat falls in the trip), a
+forint ⇄ shekel converter, emergency numbers and an eSIM guide. Hebrew, RTL.
+Live at https://budapest-opal.vercel.app.
+
+# This is NOT the Next.js you know
+
+Next.js 16 / React 19 have breaking changes. Read the relevant guide in
+`node_modules/next/dist/docs/` before writing Next.js code.
 
 ## Where things live
 
-- `src/lib/places.ts` — places in the plan, plus the kosher list.
-- `src/lib/ideas.ts` — extra places for the Ideas tab.
-- `src/lib/trip.ts` — the four days: stops, times, how to get between them.
-- `src/lib/emergency.ts` — phone numbers on the Info page.
-- `src/lib/store.ts` — the plan and settings, saved in localStorage.
-- `src/app/api/photo` — resolves a real photo per place (Google Places if a
-  key is set, else Wikipedia, else a matching Wikimedia Commons file).
-- `src/app/api/rate` — live HUF → ILS rate.
+- `src/lib/trip.ts` — the four days (seed plan). `places.ts` — places in the
+  plan and the kosher list. `ideas.ts` — extra places. `emergency.ts` — phones.
+- `src/lib/store.ts` — the plan and settings, in localStorage, per phone.
+- `src/app/api/photo` — real photo per place. `src/app/api/rate` — HUF → ILS.
+- `src/app/globals.css` — all styles; tokens in `:root`.
 
-Bump `TRIP_VERSION` in `src/lib/trip.ts` when the seed plan changes, so phones
-with a saved plan pick up the new one.
+## How to work
 
-## Conventions
+- pnpm, not npm. `pnpm dev`; `pnpm lint` and `pnpm build` before calling
+  anything done. Don't run `build` while `dev` is up (it corrupts `.next`).
+- Check UI changes with a screenshot at 390×844 before calling them done.
+- Commit and push to `main` (no PR flow). Every push deploys to Vercel.
+- Bump `TRIP_VERSION` in `src/lib/trip.ts` when seed stops change, or phones
+  keep the old plan.
+- Facts (hours, prices, phone numbers, coupon codes) must be sourced; say
+  what's unverified instead of presenting it as fact.
 
-- User-facing strings are Hebrew. Code, comments and commits are English.
-- Plain CSS in `src/app/globals.css` using the tokens in `:root` (the Hen
-  Helper design language). Reuse existing classes before inventing new ones.
-- Layout must stay direction-agnostic: `inset-inline-*`, `margin-inline-*`,
+## Rules
+
+- User-facing strings are Hebrew; code, comments and commits are English.
+- Layout is direction-agnostic: `inset-inline-*`, `margin-inline-*`,
   `padding-inline-*`, never left/right.
-- The audience is not technical: big tap targets (48px+), plain words, one
-  obvious action per card.
-- Run `pnpm lint` and `pnpm build` before declaring work done.
+- Design is Hen Helper: white canvas, hairline-bordered cards, black ink for
+  primary actions and selected states; colour only for meaning. Big tap
+  targets (48px+), plain words, one obvious action per card.
+
+## Read before starting
+
+- `agent_docs/architecture.md` — state, legs, photos, fonts, icons, gotchas.
+- `agent_docs/design.md` — tokens, motion, RTL and mixed-script text.
+- `agent_docs/data.md` — how confident each piece of trip data is.
+- `HANDOFF.md` — current status and open items.
