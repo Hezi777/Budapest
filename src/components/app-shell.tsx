@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 import { CalendarDays, Coins, Compass, Info, Map, Siren } from "lucide-react";
 import { ToastProvider } from "./ui";
+import { Welcome } from "./welcome";
 import { updateSettings, useSettings, type TextSize } from "@/lib/store";
 
 const NAV = [
@@ -62,6 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           );
         })}
       </nav>
+      <Welcome />
     </ToastProvider>
   );
 }

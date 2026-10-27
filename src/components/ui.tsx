@@ -87,7 +87,7 @@ export function Photo({
 }: {
   place: Place;
   className?: string;
-  width?: 500 | 960;
+  width?: 500 | 960 | 1280;
   iconSize?: number;
 }) {
   const src = photoUrl(place, width);
@@ -112,7 +112,7 @@ export function Photo({
           alt={place.local}
           fill
           unoptimized
-          sizes={width === 960 ? "100vw" : "120px"}
+          sizes={width >= 960 ? "100vw" : "120px"}
           onError={() => setFailed(src)}
         />
       )}

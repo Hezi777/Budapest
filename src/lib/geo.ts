@@ -60,7 +60,7 @@ export function mapsUrl(place: Place): string {
   return `https://www.google.com/maps/search/?${params}`;
 }
 
-export function photoUrl(place: Place, width: 500 | 960 = 500): string | undefined {
+export function photoUrl(place: Place, width: 500 | 960 | 1280 = 500): string | undefined {
   const photo = place.photo;
   if (!photo) return undefined;
   const params = new URLSearchParams({ w: String(width) });

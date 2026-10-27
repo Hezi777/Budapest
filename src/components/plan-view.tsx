@@ -26,22 +26,10 @@ import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
 import { BudapestScene, CopyAddress, Photo, Tags } from "./ui";
 import { CATEGORY_LABELS, placeIndex } from "@/lib/catalog";
 import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
-import { HOTEL_ID } from "@/lib/places";
+import { HERO, HOTEL_ID } from "@/lib/places";
 import { moveStop, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
 import { TRIP_INFO } from "@/lib/trip";
 import type { Day, Leg, Place, Stop } from "@/lib/types";
-
-const HERO: Place = {
-  id: "hero",
-  name: "בודפשט",
-  local: "Budapest",
-  address: "Budapest",
-  lat: 0,
-  lng: 0,
-  category: "sight",
-  description: "",
-  photo: { wiki: "Hungarian Parliament Building" },
-};
 
 const MONTHS = ["ינו׳", "פבר׳", "מרץ", "אפר׳", "מאי", "יוני", "יולי", "אוג׳", "ספט׳", "אוק׳", "נוב׳", "דצמ׳"];
 

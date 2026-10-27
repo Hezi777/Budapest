@@ -6,6 +6,19 @@ import type { Place } from "./types";
  */
 export const HOTEL_ID = "hotel";
 
+/** The Parliament photo behind the home hero and the welcome screen. */
+export const HERO: Place = {
+  id: "hero",
+  name: "בודפשט",
+  local: "Budapest",
+  address: "Budapest",
+  lat: 0,
+  lng: 0,
+  category: "sight",
+  description: "",
+  photo: { wiki: "Hungarian Parliament Building" },
+};
+
 export const PLAN_PLACES: Place[] = [
   {
     id: "airport",

@@ -168,6 +168,8 @@ export type Settings = {
   dayPick?: { id: string; on: string };
   /** Last rate we fetched, so the converter works offline. */
   rate?: { value: number; date: string };
+  /** The first-visit welcome was dismissed. */
+  welcomed?: boolean;
 };
 
 const settingsStore = createStore<Settings>(
