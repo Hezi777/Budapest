@@ -15,7 +15,7 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
 - Live at https://budapest-opal.vercel.app (Vercel project `budapest`, linked
   to `Hezi777/Budapest`; pushes to `main` auto-deploy).
 - Verified on a real network: photos, OpenStreetMap tiles, `/api/rate`.
-- Done this session: map tile fix (CARTO needs a key now), Hen Helper
+- Done this session: interactive eSIM walkthrough with real screenshots, map tile fix (CARTO needs a key now), Hen Helper
   redesign, motion polish, sheet drag-to-dismiss, "next up" card during the
   trip, Wanderlog-style "מסלול" links between stops, first-visit welcome for
   Edna and Benny, calmer screens from a UX audit (compact ideas list,
@@ -24,15 +24,19 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
 
 ## Open items
 
-1. **Restaurant photos**: several restaurants and the hotel show icon tiles.
-   Adding `GOOGLE_PLACES_API_KEY` (Places API (New)) in Vercel env vars fills
-   them; no code change. Needs a Google Cloud project with billing, which is
-   Hen's call.
-2. **TikTok collection** "Budapest" (31 videos, `@hen_zrihen`, short link
-   `https://vt.tiktok.com/ZS9yh884nSfda-l2jX9/`): the web view hides the
-   videos behind an app wall. Needs Hen's logged-in browser (Claude in Chrome)
-   or screenshots/place names, then entries in `src/lib/ideas.ts` with a `why`
-   mentioning the TikTok.
+1. **Restaurant photos (no API, Hen's choice)**: fetch real photos manually
+   (venue website, Google Maps listing, Commons) into `public/places/<id>.webp`
+   and add a `file` option to `PhotoSource`/`photoUrl`. An agent started this
+   and was stopped at the usage limit; its partial downloads are uncommitted in
+   the worktree `.claude/worktrees/agent-ab7be357f5fbba0b2` (`public/places/`).
+2. **TikTok collection**: Hen's account is private, so the collection only
+   loads while signed in (Hen is signed in to TikTok in the desktop app's
+   built-in browser). All 29 posts (captions, on-screen text, 212 slideshow
+   image URLs, video/subtitle URLs) are saved in `.tiktok-collection.json` at
+   the repo root (git-excluded; slide URLs expire ~29 Oct 2026). Next: read the
+   slides (place names are written on them), dedupe against `ideas.ts` and
+   `places.ts`, verify each place, and add to `src/lib/ideas.ts` with a `why`
+   saying it came from Hen's TikTok.
 3. **Plan content to confirm with the parents** (client-facing):
    - Day 1 has the hotel at 11:15 after a 10:00 landing; EES passport queues
      may make that tight.
