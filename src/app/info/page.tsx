@@ -41,10 +41,10 @@ const BOOKINGS = [
   },
 ];
 
-function Title({ icon, color, bg, children, id }: { icon: React.ReactNode; color: string; bg: string; children: React.ReactNode; id?: string }) {
+function Title({ icon, sos, children, id }: { icon: React.ReactNode; sos?: boolean; children: React.ReactNode; id?: string }) {
   return (
     <h2 className="section-title" id={id} style={{ scrollMarginTop: 70 }}>
-      <span className="badge-icon" style={{ "--icon": color, "--icon-bg": bg } as React.CSSProperties}>
+      <span className={`badge-icon${sos ? " is-sos" : ""}`}>
         {icon}
       </span>
       {children}
@@ -61,7 +61,7 @@ export default function InfoPage() {
       </div>
 
       <Link href="/esim" className="card link-tile">
-        <span className="lead" style={{ "--icon": "#1f6a3f", "--icon-bg": "#e2f2e7" } as React.CSSProperties}>
+        <span className="lead">
           <Wifi size={26} aria-hidden />
         </span>
         <span className="grow">
@@ -72,7 +72,7 @@ export default function InfoPage() {
         <ChevronLeft size={22} aria-hidden />
       </Link>
 
-      <Title id="sos" icon={<Siren size={20} aria-hidden />} color="#fff" bg="#c8372d">
+      <Title id="sos" icon={<Siren size={20} aria-hidden />} sos>
         טלפונים לחירום
       </Title>
       <a className="sos-call" href="tel:112">
@@ -87,7 +87,7 @@ export default function InfoPage() {
       <div className="stack" style={{ marginBlockStart: 12 }}>
         {EMERGENCY_GROUPS.map((group) => (
           <section key={group.title} className="card" aria-label={group.title}>
-            <h3 style={{ padding: "14px 16px 4px", fontSize: "1rem", color: group.color }}>{group.title}</h3>
+            <h3 className="group-title">{group.title}</h3>
             <div className="list">
               {group.contacts.map((c) => (
                 <a
@@ -103,7 +103,7 @@ export default function InfoPage() {
                     <span className="sub latin" style={{ display: "inline-block" }}>{c.phone}</span>
                     {c.note && <span className="sub"> · {c.note}</span>}
                   </span>
-                  <span className="lead" style={{ "--icon": group.color, "--icon-bg": group.bg } as React.CSSProperties}>
+                  <span className="lead">
                     {c.whatsapp ? <MessageCircle size={20} aria-label="וואטסאפ" /> : <Phone size={20} aria-label="חיוג" />}
                   </span>
                 </a>
@@ -117,45 +117,45 @@ export default function InfoPage() {
         הטיסה. מד״א (101) ומשטרת ישראל (100) לא עובדים מחו״ל.
       </p>
 
-      <Title icon={<CarTaxiFront size={20} aria-hidden />} color="#3d2b00" bg="#f7c948">
+      <Title icon={<CarTaxiFront size={20} aria-hidden />}>
         מוניות: אפליקציית Bolt
       </Title>
       <div className="card card-pad stack">
-        <ol className="steps" style={{ "--step": "#b07a00" } as React.CSSProperties}>
+        <ol className="steps">
           <li>מורידים את Bolt עוד בארץ, ונרשמים עם מספר הטלפון וכרטיס אשראי.</li>
           <li>בכל פס צהוב בתוכנית יש כתובת באנגלית. לוחצים עליה, היא מועתקת, ומדביקים ב־Bolt.</li>
           <li>המחיר מופיע מראש ומחויב אוטומטית. לא צריך מזומן.</li>
           <li>לא עוצרים מוניות ברחוב. בשדה התעופה: עמדת Főtaxi הרשמית או Bolt.</li>
         </ol>
-        <a className="btn btn-navy" href="https://bolt.eu/he-il/" target="_blank" rel="noreferrer">
+        <a className="btn btn-primary" href="https://bolt.eu/he-il/" target="_blank" rel="noreferrer">
           להורדת Bolt
         </a>
       </div>
 
       <div className="info-grid" style={{ marginBlockStart: 12 }}>
-        <div className="card info-tile" style={{ "--icon": "#2b4c80" } as React.CSSProperties}>
+        <div className="card info-tile">
           <Snowflake size={22} aria-hidden />
           <div className="big latin" style={{ textAlign: "start" }}>0–7°</div>
           <p className="small muted">קר. מעיל, כפפות, כובע ונעליים נוחות.</p>
         </div>
-        <div className="card info-tile" style={{ "--icon": "#b06a1d" } as React.CSSProperties}>
+        <div className="card info-tile">
           <Sunset size={22} aria-hidden />
           <div className="big">15:55</div>
           <p className="small muted">שקיעה. בחמש כבר חושך, והשווקים נדלקים.</p>
         </div>
-        <div className="card info-tile" style={{ "--icon": "#1f6a3f" } as React.CSSProperties}>
+        <div className="card info-tile">
           <Coins size={22} aria-hidden />
           <div className="big">פורינט</div>
           <p className="small muted">1,000 פורינט ≈ 10 ₪. אשראי עובד כמעט בכל מקום.</p>
         </div>
-        <div className="card info-tile" style={{ "--icon": "#9d2323" } as React.CSSProperties}>
+        <div className="card info-tile">
           <Wine size={22} aria-hidden />
           <div className="big">בלי אלכוהול</div>
           <p className="small muted">בשווקים: gyerekpuncs או שוקו חם. לאבא: בירה Dreher.</p>
         </div>
       </div>
 
-      <Title icon={<TreePine size={20} aria-hidden />} color="#9d2323" bg="#fde6e6">
+      <Title icon={<TreePine size={20} aria-hidden />}>
         כריסמס בבודפשט
       </Title>
       <div className="card">
@@ -177,7 +177,7 @@ export default function InfoPage() {
         </ul>
       </div>
 
-      <Title icon={<UtensilsCrossed size={20} aria-hidden />} color="#1f6a3f" bg="#e2f2e7">
+      <Title icon={<UtensilsCrossed size={20} aria-hidden />}>
         אוכל כשר ושבת
       </Title>
       <div className="card card-pad stack">
@@ -197,13 +197,13 @@ export default function InfoPage() {
         </Link>
       </div>
 
-      <Title icon={<CalendarCheck size={20} aria-hidden />} color="#a3302a" bg="#fdeae8">
+      <Title icon={<CalendarCheck size={20} aria-hidden />}>
         כדאי להזמין מראש
       </Title>
       <div className="card list">
         {BOOKINGS.map((b) => (
           <a key={b.what} className="list-row" href={b.href} target="_blank" rel="noreferrer">
-            <span className="lead" style={{ "--icon": "#a3302a", "--icon-bg": "#fdeae8", fontSize: "0.78rem", lineHeight: 1.15, textAlign: "center" } as React.CSSProperties}>
+            <span className="lead" style={{ fontSize: "0.78rem", lineHeight: 1.15, textAlign: "center" } as React.CSSProperties}>
               {b.when}
             </span>
             <span className="grow">
@@ -216,7 +216,7 @@ export default function InfoPage() {
         ))}
       </div>
 
-      <Title icon={<Settings size={20} aria-hidden />} color="#1f2a44" bg="#ecebe8">
+      <Title icon={<Settings size={20} aria-hidden />}>
         הגדרות
       </Title>
       <SettingsPanel />

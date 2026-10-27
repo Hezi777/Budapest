@@ -6,6 +6,7 @@ import {
   BedDouble,
   CarTaxiFront,
   Check,
+  Coins,
   ChevronDown,
   ChevronUp,
   Footprints,
@@ -15,8 +16,8 @@ import {
   Pencil,
   Phone,
   Plus,
+  Route,
   Share2,
-  Siren,
   Snowflake,
   UtensilsCrossed,
   Wifi,
@@ -55,6 +56,13 @@ function useToday(): string | null {
   return useSyncExternalStore(noop, todayIso, () => null);
 }
 
+const nowHhmm = () => new Date().toTimeString().slice(0, 5);
+
+/** The local time ("14:05") at render, null during server render. */
+function useNow(): string | null {
+  return useSyncExternalStore(noop, nowHhmm, () => null);
+}
+
 function daysBetween(fromIso: string, toIso: string): number {
   return Math.round((Date.parse(toIso) - Date.parse(fromIso)) / 86_400_000);
 }
@@ -71,10 +79,30 @@ function countdown(today: string | null, days: Day[]): string {
 
 /* ---------- Legs ---------- */
 
-function LegRow({ leg, estimated }: { leg: Leg; estimated?: boolean }) {
+/** Wanderlog-style "directions from the last stop to this one". */
+function RouteLink({ from, to, mode }: { from: Place; to?: Place; mode: "walking" | "driving" }) {
+  if (!to) return null;
+  return (
+    <a className="route-link" href={directionsUrl(to, mode, from)} target="_blank" rel="noreferrer">
+      <Route size={15} aria-hidden /> מסלול
+    </a>
+  );
+}
+
+function LegRow({
+  leg,
+  estimated,
+  from,
+  to,
+}: {
+  leg: Leg;
+  estimated?: boolean;
+  from: Place;
+  to?: Place;
+}) {
   if (leg.mode === "walk") {
     return (
-      <div className="leg">
+      <div className="leg leg-row">
         <span className="leg-walk">
           <span className="leg-icon">
             <Footprints size={16} aria-hidden />
@@ -82,6 +110,7 @@ function LegRow({ leg, estimated }: { leg: Leg; estimated?: boolean }) {
           {leg.text}
           {estimated && <span className="estimate">(הערכה)</span>}
         </span>
+        <RouteLink from={from} to={to} mode="walking" />
       </div>
     );
   }
@@ -92,10 +121,11 @@ function LegRow({ leg, estimated }: { leg: Leg; estimated?: boolean }) {
           <span className="leg-icon">
             <CarTaxiFront size={16} aria-hidden />
           </span>
-          <span>
+          <span className="grow">
             {leg.text}
             {estimated && <span className="estimate"> (הערכה)</span>}
           </span>
+          <RouteLink from={from} to={to} mode="driving" />
         </div>
         {leg.boltTo && <CopyAddress address={leg.boltTo} />}
       </div>
@@ -108,12 +138,12 @@ function resolveLeg(
   leg: Leg | undefined,
   from: Place | undefined,
   to: Place | undefined,
-): { leg: Leg; estimated: boolean } | undefined {
+): { leg: Leg; estimated: boolean; from: Place; to?: Place } | undefined {
   if (!from) return undefined;
-  if (leg && leg.from === from.id) return { leg, estimated: false };
+  if (leg && leg.from === from.id) return { leg, estimated: false, from, to };
   if (!to) return undefined;
   const guess = estimateLeg(from, to);
-  return guess && { leg: guess, estimated: true };
+  return guess && { leg: guess, estimated: true, from, to };
 }
 
 /** Pairs every stop with how you get there. Each day starts from the hotel. */
@@ -169,7 +199,7 @@ function EditBar({
         <ChevronDown size={22} />
       </button>
       <span className="spacer" />
-      <button type="button" className="btn btn-navy btn-sm" onClick={onEdit}>
+      <button type="button" className="btn btn-primary btn-sm" onClick={onEdit}>
         <Pencil size={16} /> עריכה
       </button>
     </div>
@@ -233,15 +263,14 @@ function StopCard({
           );
         })}
         <div className="stop-actions">
-          {arrivesOnFoot ? (
-            <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
-              <Navigation size={18} /> ניווט ברגל
-            </a>
-          ) : (
-            <a className="btn btn-primary" href={mapsUrl(place)} target="_blank" rel="noreferrer">
-              <MapIcon size={18} /> פתיחה במפה
-            </a>
-          )}
+          <a
+            className="btn btn-primary"
+            href={arrivesOnFoot ? directionsUrl(place) : mapsUrl(place)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Navigation size={18} /> ניווט
+          </a>
           <button
             type="button"
             className="btn btn-soft done-btn"
@@ -253,6 +282,65 @@ function StopCard({
         </div>
       </div>
     </>
+  );
+}
+
+/* ---------- Next up (during the trip) ---------- */
+
+function NextUp({
+  day,
+  dayNumber,
+  places,
+  now,
+  hotel,
+  onOpenPlace,
+}: {
+  day: Day;
+  dayNumber: number;
+  places: Map<string, Place>;
+  now: string;
+  hotel: Place;
+  onOpenPlace: (place: Place) => void;
+}) {
+  const open = day.stops.filter((s) => !s.done && !s.compact && s.placeId && places.has(s.placeId));
+  // The first stop not yet ticked that hasn't started; else the last one still open.
+  const stop = open.find((s) => s.time >= now) ?? open[open.length - 1];
+  if (!stop) {
+    return (
+      <section className="card next-up" aria-label="הבא בתוכנית">
+        <div className="next-kicker">יום {dayNumber}</div>
+        <div className="next-title">סיימתם את כל התחנות להיום</div>
+        <a className="btn btn-primary btn-block" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
+          <BedDouble size={18} /> ניווט למלון
+        </a>
+      </section>
+    );
+  }
+  const place = places.get(stop.placeId!)!;
+  return (
+    <section className="card next-up" aria-label="הבא בתוכנית">
+      <button type="button" className="next-head" onClick={() => onOpenPlace(place)}>
+        <Photo place={place} className="next-thumb" iconSize={26} />
+        <span className="grow">
+          <span className="next-kicker">
+            {stop.time <= now ? "עכשיו" : "הבא בתוכנית"} · {stop.time}
+          </span>
+          <span className="next-title">{stop.title ?? place.name}</span>
+        </span>
+      </button>
+      <div className="stop-actions">
+        <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+          <Navigation size={18} /> ניווט
+        </a>
+        <button
+          type="button"
+          className="btn btn-soft"
+          onClick={() => updateStop(day.id, stop.id, { done: true })}
+        >
+          <Check size={18} /> היינו
+        </button>
+      </div>
+    </section>
   );
 }
 
@@ -275,6 +363,7 @@ export function PlanView() {
   const trip = useTrip();
   const settings = useSettings();
   const today = useToday();
+  const now = useNow();
   const places = useMemo(() => placeIndex(trip), [trip]);
   const [editing, setEditing] = useState(false);
   const [openPlace, setOpenPlace] = useState<Place | null>(null);
@@ -288,6 +377,7 @@ export function PlanView() {
   const day = trip.days[dayIndex];
   const hotel = places.get(HOTEL_ID)!;
   const { rows, endLeg } = layoutDay(day, places, hotel);
+  const todayIndex = trip.days.findIndex((d) => d.date === today);
 
   function pickDay(id: string) {
     updateSettings({ dayPick: { id, on: todayIso() } });
@@ -325,30 +415,41 @@ export function PlanView() {
         </div>
       </section>
 
+      {todayIndex >= 0 && now && (
+        <NextUp
+          day={trip.days[todayIndex]}
+          dayNumber={todayIndex + 1}
+          places={places}
+          now={now}
+          hotel={hotel}
+          onOpenPlace={setOpenPlace}
+        />
+      )}
+
       <nav className="quick-grid" aria-label="קיצורים">
         <a className="quick" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
-          <span className="q-icon" style={{ "--q": "#a3302a", "--q-bg": "#fdeae8" } as React.CSSProperties}>
+          <span className="q-icon">
             <BedDouble size={22} aria-hidden />
           </span>
           חזרה למלון
         </a>
         <Link className="quick" href={`/map?day=${day.id}`}>
-          <span className="q-icon" style={{ "--q": "#2b4c80", "--q-bg": "#e5edf9" } as React.CSSProperties}>
+          <span className="q-icon">
             <MapIcon size={22} aria-hidden />
           </span>
           מפת היום
         </Link>
         <Link className="quick" href="/esim">
-          <span className="q-icon" style={{ "--q": "#1f6a3f", "--q-bg": "#e2f2e7" } as React.CSSProperties}>
+          <span className="q-icon">
             <Wifi size={22} aria-hidden />
           </span>
           אינטרנט
         </Link>
-        <Link className="quick" href="/info#sos">
-          <span className="q-icon" style={{ "--q": "#fff", "--q-bg": "#c8372d" } as React.CSSProperties}>
-            <Siren size={22} aria-hidden />
+        <Link className="quick" href="/money">
+          <span className="q-icon">
+            <Coins size={22} aria-hidden />
           </span>
-          חירום
+          המרת כסף
         </Link>
       </nav>
 
@@ -423,7 +524,7 @@ export function PlanView() {
       <div className="timeline" key={day.id}>
         {rows.map(({ stop, place, leg, i, isRest, number }) => (
           <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
-            {leg && <LegRow leg={leg.leg} estimated={leg.estimated} />}
+            {leg && <LegRow {...leg} />}
             <div style={{ position: "relative" }}>
               <span
                 className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}`}
@@ -479,7 +580,7 @@ export function PlanView() {
             </div>
           </div>
         ))}
-        {endLeg && <LegRow leg={endLeg.leg} estimated={endLeg.estimated} />}
+        {endLeg && <LegRow {...endLeg} />}
       </div>
 
       <button

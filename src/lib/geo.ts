@@ -40,12 +40,18 @@ function query(place: Place): string {
     : `${place.local}, ${place.address}`;
 }
 
-export function directionsUrl(place: Place, mode: "walking" | "driving" = "walking"): string {
+/** Google Maps directions to a place; from where you stand unless `from` is given. */
+export function directionsUrl(
+  place: Place,
+  mode: "walking" | "driving" = "walking",
+  from?: Place,
+): string {
   const params = new URLSearchParams({
     api: "1",
     destination: query(place),
     travelmode: mode,
   });
+  if (from) params.set("origin", query(from));
   return `https://www.google.com/maps/dir/?${params}`;
 }
 

@@ -28,7 +28,7 @@ export function CouponCode({ code, title, note }: { code: string; title: string;
         </div>
         <div className="small muted">{note}</div>
       </div>
-      <button type="button" className="btn btn-navy btn-sm" onClick={copy} style={{ flex: "none" }}>
+      <button type="button" className="btn btn-primary btn-sm" onClick={copy} style={{ flex: "none" }}>
         {copied ? <Check size={18} /> : <Copy size={18} />} {copied ? "הועתק" : "העתקה"}
       </button>
     </div>
@@ -98,7 +98,7 @@ export function InstallSteps() {
       </div>
       <div className="card card-pad stack" style={{ marginBlockStart: 12 }}>
         <strong style={{ fontSize: "1.05rem" }}>אחרי הנחיתה בבודפשט</strong>
-        <ol className="steps" style={{ "--step": "#1f6a3f" } as React.CSSProperties}>
+        <ol className="steps">
           {steps.landing.map((s, i) => (
             <li key={i}>
               <span>{s}</span>

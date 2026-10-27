@@ -12,16 +12,12 @@ export type Contact = {
 
 export type ContactGroup = {
   title: string;
-  color: string;
-  bg: string;
   contacts: Contact[];
 };
 
 export const EMERGENCY_GROUPS: ContactGroup[] = [
   {
     title: "חירום בהונגריה",
-    color: "#c8372d",
-    bg: "#fdecea",
     contacts: [
       { name: "אמבולנס", phone: "104" },
       { name: "משטרה", phone: "107" },
@@ -35,8 +31,6 @@ export const EMERGENCY_GROUPS: ContactGroup[] = [
   },
   {
     title: "ישראלים בחו״ל",
-    color: "#2b4c80",
-    bg: "#e5edf9",
     contacts: [
       {
         name: "חמ״ל משרד החוץ (24/7)",
@@ -54,8 +48,6 @@ export const EMERGENCY_GROUPS: ContactGroup[] = [
   },
   {
     title: "רופא ובית חולים",
-    color: "#1f6a3f",
-    bg: "#e2f2e7",
     contacts: [
       {
         name: "FirstMed · מרפאה פרטית באנגלית",
@@ -76,8 +68,6 @@ export const EMERGENCY_GROUPS: ContactGroup[] = [
   },
   {
     title: "ביטוח נסיעות (מוקד בחו״ל)",
-    color: "#7a5200",
-    bg: "#fcf0d4",
     contacts: [
       { name: "הפניקס", phone: "+972 3 714 1000" },
       { name: "הפניקס בוואטסאפ", phone: "+972 50 224 1953", whatsapp: true },
@@ -88,8 +78,6 @@ export const EMERGENCY_GROUPS: ContactGroup[] = [
   },
   {
     title: "כרטיס אשראי אבד או נגנב",
-    color: "#4c3584",
-    bg: "#efeafa",
     contacts: [
       { name: "ישראכרט", phone: "+972 3 636 4400" },
       { name: "כאל", phone: "+972 3 572 6333" },
@@ -98,8 +86,6 @@ export const EMERGENCY_GROUPS: ContactGroup[] = [
   },
   {
     title: "שימושי",
-    color: "#1f2a44",
-    bg: "#ecebe8",
     contacts: [
       { name: "המלון · Exe Budapest Center", phone: "+36 1 445 4800" },
       { name: "בית חב״ד בודפשט", phone: "+36 1 266 0308", note: "Károly körút 20" },

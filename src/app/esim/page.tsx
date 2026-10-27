@@ -1,10 +1,10 @@
 import { CircleCheck, Smartphone, TicketPercent, Wrench } from "lucide-react";
 import { CouponCode, InstallSteps } from "@/components/esim-guide";
 
-function Title({ icon, color, bg, children }: { icon: React.ReactNode; color: string; bg: string; children: React.ReactNode }) {
+function Title({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
     <h2 className="section-title">
-      <span className="badge-icon" style={{ "--icon": color, "--icon-bg": bg } as React.CSSProperties}>
+      <span className="badge-icon">
         {icon}
       </span>
       {children}
@@ -59,7 +59,7 @@ export default function EsimPage() {
         </span>
       </div>
 
-      <Title icon={<Smartphone size={20} aria-hidden />} color="#2b4c80" bg="#e5edf9">
+      <Title icon={<Smartphone size={20} aria-hidden />}>
         לבדוק קודם שהטלפון מתאים
       </Title>
       <div className="card">
@@ -79,7 +79,7 @@ export default function EsimPage() {
         </div>
       </div>
 
-      <Title icon={<TicketPercent size={20} aria-hidden />} color="#7a5200" bg="#fcf0d4">
+      <Title icon={<TicketPercent size={20} aria-hidden />}>
         קודי הנחה
       </Title>
       <div className="stack">
@@ -98,12 +98,12 @@ export default function EsimPage() {
         <p className="small muted">אי אפשר לשלב שני קודים. מנסים את הראשון, ואם לא עובד את השני.</p>
       </div>
 
-      <Title icon={<Smartphone size={20} aria-hidden />} color="#1f6a3f" bg="#e2f2e7">
+      <Title icon={<Smartphone size={20} aria-hidden />}>
         התקנה צעד אחר צעד
       </Title>
       <InstallSteps />
 
-      <Title icon={<Wrench size={20} aria-hidden />} color="#a3302a" bg="#fdeae8">
+      <Title icon={<Wrench size={20} aria-hidden />}>
         אם משהו לא עובד
       </Title>
       <div className="card">

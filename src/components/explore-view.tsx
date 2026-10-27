@@ -140,7 +140,7 @@ export function ExploreView() {
               <p className="stop-desc is-clamped">{place.description}</p>
               {place.why && <p className="idea-why">💡 {place.why}</p>}
               <div className="btn-row">
-                <button type="button" className="btn btn-navy" onClick={() => setOpen(place)}>
+                <button type="button" className="btn btn-primary" onClick={() => setOpen(place)}>
                   <Plus size={18} /> פרטים והוספה
                 </button>
                 <a className="btn btn-soft" href={directionsUrl(place)} target="_blank" rel="noreferrer" style={{ flex: "none" }}>

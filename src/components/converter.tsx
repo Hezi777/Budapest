@@ -110,7 +110,7 @@ export function Converter() {
       </p>
 
       <h2 className="section-title">
-        <span className="badge-icon" style={{ "--icon": "#7a5200", "--icon-bg": "#fcf0d4" } as React.CSSProperties}>
+        <span className="badge-icon">
           <CreditCard size={20} aria-hidden />
         </span>
         טיפ לתשלום בכרטיס

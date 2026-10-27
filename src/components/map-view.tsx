@@ -35,7 +35,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
   const [me, setMe] = useState<[number, number] | null>(null);
 
   const hotel = places.get(HOTEL_ID)!;
-  const hotelPin: Pin = { id: HOTEL_ID, lat: hotel.lat, lng: hotel.lng, color: "#b3372d", label: "🛏", hotel: true };
+  const hotelPin: Pin = { id: HOTEL_ID, lat: hotel.lat, lng: hotel.lng, color: "#111111", label: "🛏", hotel: true };
 
   const { pins, route, routeColor, legend } = useMemo(() => {
     const day = trip.days.find((d) => d.id === filter);
@@ -107,7 +107,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
 
   const chips: { id: Filter; label: string; color?: string }[] = [
     ...trip.days.map((d, i) => ({ id: d.id, label: `יום ${i + 1}`, color: d.color })),
-    { id: "all", label: "כל הימים", color: "#1f2a44" },
+    { id: "all", label: "כל הימים", color: "#111111" },
     { id: "kosher", label: "אוכל כשר", color: KOSHER_GREEN },
     { id: "ideas", label: "רעיונות", color: "#3b3b3b" },
   ];
@@ -165,7 +165,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
               </button>
             </div>
             <div className="btn-row">
-              <a className="btn btn-navy" href={directionsUrl(selected)} target="_blank" rel="noreferrer">
+              <a className="btn btn-primary" href={directionsUrl(selected)} target="_blank" rel="noreferrer">
                 <Navigation size={20} /> ניווט
               </a>
               <button type="button" className="btn btn-outline" onClick={() => setDetails(selected)}>

@@ -1,25 +1,23 @@
 /*
- * Visual language: Hen Helper's soft rounded cards and pill buttons, warmed up
- * for travel — a cream canvas, deep Danube navy, Budapest gold, and one accent
- * per trip day (--day). Inspired by Wanderlog's itinerary: photo-led cards on a
- * numbered timeline. Text runs a size above the usual — the readers are in
- * their 50s and 60s, on a phone, outdoors, in the cold.
+ * Visual language: Hen Helper — a white canvas, near-white cards with hairline
+ * borders and soft layered shadows, pill buttons, and black "ink" for every
+ * primary action and selected state. Colour is kept for meaning only: photos,
+ * the small per-day dots that match the map routes, kosher green, and red for
+ * emergency calls. Text runs a size above the usual — the readers are in their
+ * 50s and 60s, on a phone, outdoors, in the cold.
  */
 :root {
   color-scheme: light;
-  --canvas: #f4f1ec;
-  --surface: #ffffff;
-  --surface-soft: #faf8f5;
-  --surface-sunk: #efebe4;
-  --line: #e7e2d9;
-  --line-strong: #d6cfc3;
-  --text: #1b1d24;
-  --text-muted: #5d6170;
-  --text-soft: #8b8f9c;
-  --navy: #1f2a44;
-  --navy-deep: #131b31;
-  --gold: #e3b04b;
-  --gold-soft: #fbf1db;
+  --canvas: #ffffff;
+  --surface: #fafafa;
+  --surface-soft: #f5f5f5;
+  --surface-sunk: #f0f0f0;
+  --line: #ebebeb;
+  --line-strong: #d7d7d7;
+  --text: #181818;
+  --text-muted: #6b6b6b;
+  --text-soft: #8a8a8a;
+  --ink: #111111;
   --danger: #c8372d;
   --danger-soft: #fdecea;
   --white: #ffffff;
@@ -28,28 +26,20 @@
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 12px;
-  --shadow-card: 0 1px 2px rgb(27 29 36 / 5%), 0 6px 18px -6px rgb(27 29 36 / 10%);
-  --shadow-float: 0 12px 32px -8px rgb(19 27 49 / 28%);
+  --shadow-card: 0 0.8px 0.8px -0.9px rgb(0 0 0 / 9%), 0 2.4px 2.4px -1.9px rgb(0 0 0 / 8%),
+    0 6.4px 6.4px -2.8px rgb(0 0 0 / 7%), 0 20px 20px -3.8px rgb(0 0 0 / 3%);
+  --shadow-float: 0 12px 32px -12px rgb(0 0 0 / 24%), 0 2px 6px -2px rgb(0 0 0 / 8%);
 
-  --day: var(--navy);
+  --day: var(--ink);
   --walk: #2c7a4f;
   --walk-soft: #e5f3ea;
-  --taxi: #7a5600;
-  --taxi-soft: #fff4d6;
-  --taxi-line: #f0d382;
 
   --tag-kosher-bg: #e2f2e7;
   --tag-kosher: #1f6a3f;
-  --tag-dairy-bg: #e5edf9;
-  --tag-dairy: #2b4c80;
   --tag-no-bg: #fdeae8;
   --tag-no: #a3302a;
-  --tag-booking-bg: #fcf0d4;
-  --tag-booking: #7a5200;
-  --tag-xmas-bg: #fde6e6;
-  --tag-xmas: #9d2323;
-  --tag-plain-bg: #f0ece5;
-  --tag-plain: #514c44;
+  --tag-plain-bg: #f0f0f0;
+  --tag-plain: #4a4a4a;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
@@ -147,7 +137,8 @@ img {
   align-items: center;
   gap: 10px;
   padding-inline: var(--gutter);
-  background: rgb(244 241 236 / 88%);
+  background: rgb(255 255 255 / 85%);
+  border-block-end: 1px solid rgb(235 235 235 / 70%);
   backdrop-filter: saturate(1.4) blur(14px);
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
@@ -175,9 +166,8 @@ img {
   min-height: 42px;
   padding-inline: 14px;
   border-radius: 999px;
-  border: 0;
+  border: 1px solid var(--line);
   background: var(--surface);
-  box-shadow: var(--shadow-card);
   font-weight: 800;
   font-size: 0.88rem;
   text-decoration: none;
@@ -186,9 +176,9 @@ img {
 }
 
 .header-pill.is-sos {
-  background: var(--danger);
-  color: var(--white);
-  box-shadow: 0 4px 14px -4px rgb(200 55 45 / 55%);
+  border-color: transparent;
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .app-main {
@@ -210,6 +200,7 @@ img {
   grid-template-columns: repeat(5, 1fr);
   padding: 6px;
   border-radius: 26px;
+  border: 1px solid var(--line);
   background: rgb(255 255 255 / 92%);
   backdrop-filter: saturate(1.6) blur(18px);
   -webkit-backdrop-filter: saturate(1.6) blur(18px);
@@ -230,7 +221,7 @@ img {
 }
 
 .bottom-nav a[aria-current="page"] {
-  background: var(--navy);
+  background: var(--ink);
   color: var(--white);
 }
 
@@ -241,7 +232,7 @@ img {
 }
 
 .page-kicker {
-  color: var(--day);
+  color: var(--text-soft);
   font-weight: 800;
   font-size: 0.9rem;
 }
@@ -273,13 +264,18 @@ img {
   width: 36px;
   height: 36px;
   border-radius: 12px;
-  background: var(--icon-bg, var(--surface-sunk));
-  color: var(--icon, var(--navy));
+  background: var(--ink);
+  color: var(--white);
   flex: none;
+}
+
+.section-title .badge-icon.is-sos {
+  background: var(--danger);
 }
 
 .card {
   background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
 }
@@ -315,12 +311,7 @@ img {
 }
 
 .btn-primary {
-  background: var(--day, var(--navy));
-  color: var(--white);
-}
-
-.btn-navy {
-  background: var(--navy);
+  background: var(--ink);
   color: var(--white);
 }
 
@@ -396,11 +387,7 @@ img {
 }
 
 .tag-kosher { background: var(--tag-kosher-bg); color: var(--tag-kosher); }
-.tag-dairy,
-.tag-dairyOptions { background: var(--tag-dairy-bg); color: var(--tag-dairy); }
 .tag-nonKosher { background: var(--tag-no-bg); color: var(--tag-no); }
-.tag-booking { background: var(--tag-booking-bg); color: var(--tag-booking); }
-.tag-christmas { background: var(--tag-xmas-bg); color: var(--tag-xmas); }
 
 .chip-row {
   display: flex;
@@ -423,9 +410,8 @@ img {
   min-height: 44px;
   padding-inline: 16px;
   border-radius: 999px;
-  border: 0;
+  border: 1px solid var(--line);
   background: var(--surface);
-  box-shadow: var(--shadow-card);
   font-weight: 800;
   font-size: 0.92rem;
   cursor: pointer;
@@ -436,16 +422,17 @@ img {
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: var(--chip, var(--navy));
+  background: var(--chip, var(--ink));
 }
 
 .chip[aria-pressed="true"] {
-  background: var(--chip, var(--navy));
+  border-color: var(--ink);
+  background: var(--ink);
   color: var(--white);
 }
 
 .chip[aria-pressed="true"] .dot {
-  background: var(--white);
+  box-shadow: 0 0 0 2px var(--white);
 }
 
 .field {
@@ -471,7 +458,7 @@ img {
 }
 
 .input:focus {
-  outline: 2.5px solid var(--navy);
+  outline: 2.5px solid var(--ink);
   background: var(--surface);
 }
 
@@ -535,8 +522,8 @@ textarea.input {
 .note-box {
   padding: 14px 16px;
   border-radius: var(--radius-md);
-  background: var(--gold-soft);
-  color: #5b4300;
+  background: var(--surface-sunk);
+  color: var(--text);
   font-weight: 600;
 }
 
@@ -578,8 +565,8 @@ textarea.input {
   height: 46px;
   padding-inline: 8px;
   border-radius: 14px;
-  background: var(--icon-bg, var(--surface-sunk));
-  color: var(--icon, var(--navy));
+  background: var(--surface-sunk);
+  color: var(--ink);
   font-weight: 800;
   flex: none;
 }
@@ -591,10 +578,8 @@ textarea.input {
   overflow: hidden;
   display: grid;
   place-items: center;
-  color: rgb(255 255 255 / 92%);
-  background: linear-gradient(135deg, var(--c1), var(--c2));
-  --c1: #3d4f7a;
-  --c2: #1f2a44;
+  color: var(--text-soft);
+  background: linear-gradient(135deg, #f2f2f2, #e2e2e2);
 }
 
 .photo img {
@@ -605,16 +590,6 @@ textarea.input {
   object-fit: cover;
 }
 
-.cat-sight { --c1: #4a6aa5; --c2: #22325a; }
-.cat-food { --c1: #e07a52; --c2: #a8432a; }
-.cat-cafe { --c1: #b78457; --c2: #6f4a2c; }
-.cat-market { --c1: #cf4b43; --c2: #2f6b47; }
-.cat-shopping { --c1: #8a6bc2; --c2: #4c3584; }
-.cat-bath { --c1: #3fa3a8; --c2: #1d5f73; }
-.cat-jewish { --c1: #5b86c9; --c2: #23447d; }
-.cat-experience { --c1: #e3b04b; --c2: #b06a1d; }
-.cat-hotel { --c1: #c55b52; --c2: #7c2a24; }
-.cat-transport { --c1: #6d7891; --c2: #3b4459; }
 
 /* ================= Home: hero ================= */
 
@@ -623,9 +598,9 @@ textarea.input {
   margin-block-start: 6px;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  min-height: 300px;
+  min-height: 260px;
   color: var(--white);
-  background: var(--navy-deep);
+  background: var(--ink);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -645,7 +620,7 @@ textarea.input {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgb(12 17 33 / 92%) 0%, rgb(12 17 33 / 45%) 45%, rgb(12 17 33 / 0%) 75%);
+  background: linear-gradient(to top, rgb(0 0 0 / 85%) 0%, rgb(0 0 0 / 35%) 45%, rgb(0 0 0 / 0%) 75%);
 }
 
 .hero-top {
@@ -679,7 +654,7 @@ textarea.input {
 }
 
 .hero-dates {
-  color: var(--gold);
+  color: rgb(255 255 255 / 85%);
   font-weight: 800;
 }
 
@@ -709,9 +684,9 @@ textarea.input {
   justify-items: center;
   gap: 6px;
   padding: 14px 4px 12px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--surface);
-  box-shadow: var(--shadow-card);
   text-decoration: none;
   font-weight: 800;
   font-size: 0.82rem;
@@ -725,8 +700,8 @@ textarea.input {
   width: 46px;
   height: 46px;
   border-radius: 16px;
-  background: var(--q-bg);
-  color: var(--q);
+  background: var(--ink);
+  color: var(--white);
 }
 
 /* Hotel */
@@ -752,6 +727,56 @@ textarea.input {
   line-height: 1.2;
 }
 
+/* Next up: during the trip, the one stop that matters now. */
+
+.next-up {
+  display: grid;
+  gap: 12px;
+  margin-block-start: 14px;
+  padding: 14px;
+  background: var(--canvas);
+  box-shadow: var(--shadow-card);
+}
+
+.next-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: start;
+  cursor: pointer;
+}
+
+.next-head .grow {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.next-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  flex: none;
+}
+
+.next-kicker {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.next-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
 /* ================= Plan: days & timeline ================= */
 
 .day-strip {
@@ -763,7 +788,7 @@ textarea.input {
   gap: 8px;
   margin-inline: calc(var(--gutter) * -1);
   padding: 8px var(--gutter) 10px;
-  background: rgb(244 241 236 / 92%);
+  background: rgb(255 255 255 / 92%);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
@@ -774,11 +799,21 @@ textarea.input {
   gap: 1px;
   padding-block: 8px 9px;
   border-radius: 18px;
-  border: 0;
+  border: 1px solid var(--line);
   background: var(--surface);
-  box-shadow: var(--shadow-card);
   cursor: pointer;
   line-height: 1.15;
+}
+
+/* The day's colour, as on the map. */
+.day-chip .d-num::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin: 3px auto 0;
+  border-radius: 999px;
+  background: var(--chip);
 }
 
 .day-chip .d-week {
@@ -790,7 +825,7 @@ textarea.input {
 .day-chip .d-num {
   font-size: 1.45rem;
   font-weight: 800;
-  color: var(--chip);
+  line-height: 1;
 }
 
 .day-chip .d-month {
@@ -800,48 +835,32 @@ textarea.input {
 }
 
 .day-chip[aria-pressed="true"] {
-  background: var(--chip);
-  box-shadow: 0 8px 18px -8px var(--chip);
+  border-color: var(--ink);
+  background: var(--ink);
 }
 
 .day-chip[aria-pressed="true"] * {
   color: var(--white);
 }
 
+.day-chip[aria-pressed="true"] .d-num::after {
+  box-shadow: 0 0 0 2px var(--ink), 0 0 0 3.5px var(--white);
+}
+
 .day-card {
-  position: relative;
-  overflow: hidden;
-  margin-block: 10px 18px;
-  padding: 20px 20px 18px;
-  border-radius: var(--radius-xl);
-  background: var(--day);
-  color: var(--white);
-}
-
-.day-card::before {
-  content: "";
-  position: absolute;
-  inset-inline-end: -40px;
-  top: -40px;
-  width: 160px;
-  height: 160px;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 9%);
-}
-
-.day-card .page-kicker {
-  color: rgb(255 255 255 / 80%);
+  margin-block: 14px 18px;
 }
 
 .day-title {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  line-height: 1.12;
-  margin-block: 4px 8px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin-block: 2px 6px;
 }
 
 .day-summary {
-  opacity: 0.9;
+  color: var(--text-muted);
 }
 
 .day-card .btn-row {
@@ -849,21 +868,23 @@ textarea.input {
 }
 
 .day-card .btn {
-  background: rgb(255 255 255 / 18%);
-  color: var(--white);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
 }
 
 .day-card .btn[aria-pressed="true"] {
-  background: var(--white);
-  color: var(--day);
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .edit-banner {
   padding: 12px 16px;
   margin-block-end: 12px;
   border-radius: var(--radius-md);
-  background: var(--gold-soft);
-  color: #5b4300;
+  background: var(--surface-sunk);
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -878,10 +899,9 @@ textarea.input {
   inset-inline-start: 15px;
   top: 18px;
   bottom: 18px;
-  width: 3px;
-  border-radius: 3px;
-  background: repeating-linear-gradient(to bottom, var(--day) 0 6px, transparent 6px 12px);
-  opacity: 0.35;
+  width: 2px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(to bottom, var(--line-strong) 0 6px, transparent 6px 12px);
 }
 
 .tl-item {
@@ -897,7 +917,7 @@ textarea.input {
   width: 33px;
   height: 33px;
   border-radius: 999px;
-  background: var(--day);
+  background: var(--ink);
   color: var(--white);
   font-weight: 800;
   font-size: 0.9rem;
@@ -906,8 +926,8 @@ textarea.input {
 
 .tl-marker.is-rest {
   background: var(--surface);
-  color: var(--day);
-  box-shadow: 0 0 0 4px var(--canvas), inset 0 0 0 2px var(--day);
+  color: var(--ink);
+  box-shadow: 0 0 0 4px var(--canvas), inset 0 0 0 2px var(--ink);
 }
 
 .tl-marker.is-done {
@@ -954,7 +974,8 @@ textarea.input {
   gap: 6px;
   font-size: 0.84rem;
   font-weight: 800;
-  color: var(--day);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 
 .stop-meta .sep {
@@ -989,7 +1010,7 @@ textarea.input {
 
 .stop-desc {
   line-height: 1.55;
-  color: #33363f;
+  color: #333333;
 }
 
 .stop-desc.is-clamped {
@@ -1004,8 +1025,10 @@ textarea.input {
   border: 0;
   background: none;
   padding: 0;
-  color: var(--day);
+  color: var(--ink);
   font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
   min-height: 32px;
 }
@@ -1013,8 +1036,8 @@ textarea.input {
 .stop-note {
   padding: 10px 14px;
   border-radius: var(--radius-sm);
-  background: var(--gold-soft);
-  color: #5b4300;
+  background: var(--surface-sunk);
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -1070,7 +1093,7 @@ textarea.input {
 
 .rest .time {
   font-weight: 800;
-  color: var(--day);
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1093,6 +1116,39 @@ textarea.input {
 
 /* Legs between stops */
 
+.leg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.leg-taxi-top .grow {
+  flex: 1;
+}
+
+/* Directions from the previous stop to this one, opened in Google Maps. */
+.route-link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 36px;
+  padding-inline: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 160ms var(--ease-out);
+}
+
+.route-link:active {
+  transform: scale(0.97);
+}
+
 .leg {
   position: relative;
   padding-block: 10px;
@@ -1102,7 +1158,7 @@ textarea.input {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--walk);
+  color: var(--text-muted);
   font-weight: 800;
   font-size: 0.88rem;
 }
@@ -1112,9 +1168,9 @@ textarea.input {
   gap: 8px;
   padding: 10px 12px;
   border-radius: var(--radius-md);
-  background: var(--taxi-soft);
-  box-shadow: inset 0 0 0 1.5px var(--taxi-line);
-  color: var(--taxi);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
   font-weight: 800;
   font-size: 0.9rem;
 }
@@ -1132,12 +1188,12 @@ textarea.input {
   height: 28px;
   border-radius: 9px;
   flex: none;
-  background: var(--walk-soft);
+  background: var(--surface-sunk);
 }
 
 .leg-taxi .leg-icon {
-  background: #f7c948;
-  color: #3d2b00;
+  background: var(--ink);
+  color: var(--white);
 }
 
 .estimate {
@@ -1154,11 +1210,11 @@ textarea.input {
   padding-inline: 14px;
   border-radius: 12px;
   border: 0;
-  background: var(--surface);
+  background: var(--surface-sunk);
   font-weight: 700;
   cursor: pointer;
   text-align: start;
-  color: var(--taxi);
+  color: var(--text-muted);
 }
 
 .copy-address .addr {
@@ -1512,7 +1568,7 @@ textarea.input {
   height: 36px;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
-  background: var(--pin, var(--navy));
+  background: var(--pin, var(--ink));
   border: 3px solid var(--white);
   box-shadow: 0 3px 8px rgb(0 0 0 / 35%);
 }
@@ -1600,11 +1656,11 @@ textarea.input {
 }
 
 .money-box:focus-within {
-  outline: 2.5px solid var(--navy);
+  outline: 2.5px solid var(--ink);
 }
 
 .money-box.is-result {
-  background: var(--navy);
+  background: var(--ink);
   color: var(--white);
 }
 
@@ -1662,8 +1718,8 @@ textarea.input {
   width: 52px;
   height: 52px;
   border: 4px solid var(--canvas);
-  background: var(--gold);
-  color: var(--navy-deep);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .quick-amounts {
@@ -1730,7 +1786,7 @@ textarea.input {
 }
 
 .info-tile svg {
-  color: var(--icon, var(--navy));
+  color: var(--text-muted);
 }
 
 .link-tile {
@@ -1747,8 +1803,8 @@ textarea.input {
   width: 52px;
   height: 52px;
   border-radius: 18px;
-  background: var(--icon-bg);
-  color: var(--icon);
+  background: var(--ink);
+  color: var(--white);
   flex: none;
 }
 
@@ -1785,7 +1841,7 @@ textarea.input {
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  background: var(--step, var(--navy));
+  background: var(--ink);
   color: var(--white);
   font-weight: 800;
 }
@@ -1812,7 +1868,7 @@ textarea.input {
   padding: 14px 16px;
   border-radius: var(--radius-lg);
   background: var(--surface);
-  box-shadow: inset 0 0 0 2px var(--gold), var(--shadow-card);
+  border: 1.5px dashed var(--line-strong);
 }
 
 .coupon .code {
@@ -1845,6 +1901,13 @@ textarea.input {
   line-height: 1;
 }
 
+.group-title {
+  padding: 14px 16px 4px;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
 .footer-note {
   text-align: center;
   color: var(--text-soft);
@@ -1864,7 +1927,7 @@ textarea.input {
   max-width: calc(100% - 32px);
   padding: 13px 22px;
   border-radius: 999px;
-  background: var(--navy-deep);
+  background: var(--ink);
   color: var(--white);
   font-weight: 800;
   box-shadow: var(--shadow-float);
@@ -1892,7 +1955,7 @@ textarea.input {
   overflow: hidden;
   padding: 20px;
   border-radius: var(--radius-xl);
-  background: linear-gradient(135deg, #1f6a3f, #0f3d24);
+  background: var(--ink);
   color: var(--white);
   display: grid;
   gap: 6px;
@@ -1936,7 +1999,7 @@ textarea.input {
 .path {
   display: inline;
   font-weight: 800;
-  color: var(--navy);
+  color: var(--ink);
   background: var(--surface-sunk);
   padding: 1px 8px;
   border-radius: 8px;

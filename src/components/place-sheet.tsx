@@ -166,7 +166,7 @@ export function PlaceSheet({
       </div>
 
       <div className="btn-row">
-        <a className="btn btn-navy" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+        <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
           <Navigation size={20} /> ניווט ברגל
         </a>
         <a className="btn btn-outline" href={mapsUrl(place)} target="_blank" rel="noreferrer">
@@ -191,7 +191,7 @@ export function PlaceSheet({
             }}
             onTime={setTime}
           />
-          <button type="button" className="btn btn-navy" onClick={add} disabled={!time}>
+          <button type="button" className="btn btn-primary" onClick={add} disabled={!time}>
             <CalendarPlus size={20} /> הוספה ליום {dayNumber(trip, dayId)}
           </button>
         </div>
@@ -267,7 +267,7 @@ export function StopEditor({
           onChange={(e) => setNote(e.target.value)}
         />
       </label>
-      <button type="button" className="btn btn-navy" onClick={save} disabled={!time}>
+      <button type="button" className="btn btn-primary" onClick={save} disabled={!time}>
         שמירה
       </button>
       <button type="button" className="btn btn-danger" onClick={remove}>
@@ -328,7 +328,7 @@ export function AddStopSheet({ day, onClose }: { day: Day; onClose: () => void }
             placeholder="למשל: מנוחה במלון"
             onChange={(e) => setFreeText(e.target.value)}
           />
-          <button type="button" className="btn btn-navy" onClick={addNote} disabled={!freeText.trim()}>
+          <button type="button" className="btn btn-primary" onClick={addNote} disabled={!freeText.trim()}>
             הוספה
           </button>
         </div>

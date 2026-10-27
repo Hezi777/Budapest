@@ -2,7 +2,7 @@ import { HOTEL_ID } from "./places";
 import type { Day, Leg, Stop, Trip } from "./types";
 
 /** Bump when the seed plan changes in a way saved plans should pick up. */
-export const TRIP_VERSION = 1;
+export const TRIP_VERSION = 2;
 
 export const TRIP_INFO = {
   title: "בודפשט",
@@ -10,7 +10,7 @@ export const TRIP_INFO = {
   tagline: "טיול חורף, שווקי כריסמס ונוף על הדנובה",
 };
 
-export const DAY_COLORS = ["#b3372d", "#2c4a7c", "#2f6b47", "#a8741a"];
+export const DAY_COLORS = ["#3b6fb6", "#2f8f6a", "#c27c1a", "#8b5cc4"];
 
 const HOTEL_BOLT = "Kossuth Lajos utca 7-9";
 
