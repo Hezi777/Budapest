@@ -58,7 +58,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
         pins: [...dayPins, hotelPin],
         route: path,
         routeColor: day.color,
-        legend: `המספרים לפי סדר היום. הקו המקווקו מראה את הסדר, לא את הדרך המדויקת.`,
+        legend: "המספרים לפי סדר היום",
       };
     }
     if (filter === "all") {
@@ -72,13 +72,13 @@ export function MapView({ initialDay }: { initialDay?: string }) {
           all.push({ id: place.id, lat: place.lat, lng: place.lng, color: d.color, label: String(i + 1), small: true });
         }
       });
-      return { pins: [...all, hotelPin], route: [], routeColor: "", legend: "כל המקומות בתוכנית. המספר הוא היום." };
+      return { pins: [...all, hotelPin], route: [], routeColor: "", legend: "המספר על הנקודה הוא היום" };
     }
     if (filter === "kosher") {
       const kosher = allPlaces(trip)
         .filter(isKosher)
         .map((p) => ({ id: p.id, lat: p.lat, lng: p.lng, color: KOSHER_GREEN, label: "✓" }));
-      return { pins: [...kosher, hotelPin], route: [], routeColor: "", legend: "מסעדות ובתי קפה כשרים. רובם ברובע היהודי, 10 דקות הליכה מהמלון." };
+      return { pins: [...kosher, hotelPin], route: [], routeColor: "", legend: "רוב הכשרים ברובע היהודי, 10 דק' מהמלון" };
     }
     const ideas = IDEAS.filter((p) => p.lat > 47.4 && p.lat < 47.6).map((p) => ({
       id: p.id,
@@ -88,7 +88,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
       label: "★",
       small: true,
     }));
-    return { pins: [...ideas, hotelPin], route: [], routeColor: "", legend: "רעיונות נוספים. לוחצים על נקודה ואפשר להוסיף לתוכנית." };
+    return { pins: [...ideas, hotelPin], route: [], routeColor: "", legend: "לוחצים על נקודה כדי להוסיף לתוכנית" };
     // hotelPin is derived from places, already a dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, trip, places]);
@@ -107,9 +107,9 @@ export function MapView({ initialDay }: { initialDay?: string }) {
 
   const chips: { id: Filter; label: string; color?: string }[] = [
     ...trip.days.map((d, i) => ({ id: d.id, label: `יום ${i + 1}`, color: d.color })),
-    { id: "all", label: "כל הימים" },
+    { id: "all", label: "כל הימים", color: "#1f2a44" },
     { id: "kosher", label: "אוכל כשר", color: KOSHER_GREEN },
-    { id: "ideas", label: "רעיונות" },
+    { id: "ideas", label: "רעיונות", color: "#3b3b3b" },
   ];
 
   return (
@@ -128,12 +128,13 @@ export function MapView({ initialDay }: { initialDay?: string }) {
                 setSelected(null);
               }}
             >
+              {c.color && <span className="dot" />}
               {c.label}
             </button>
           ))}
         </div>
         <p className="map-legend">
-          <Info size={14} aria-hidden style={{ verticalAlign: "-2px" }} /> {legend}
+          <Info size={14} aria-hidden /> {legend}
         </p>
       </div>
       <div className="map-canvas">
@@ -146,28 +147,28 @@ export function MapView({ initialDay }: { initialDay?: string }) {
           onSelect={(id) => setSelected(places.get(id) ?? null)}
         />
         {!selected && (
-          <button type="button" className="secondary-button map-locate" onClick={locate}>
+          <button type="button" className="btn btn-outline map-locate" onClick={locate}>
             <LocateFixed size={20} /> איפה אני?
           </button>
         )}
         {selected && (
           <div className="card map-card" role="dialog" aria-label={selected.name}>
             <div className="map-card-top">
-              <Photo place={selected} className="stop-photo" iconSize={26} />
+              <Photo place={selected} className="stop-thumb" iconSize={26} />
               <div className="stop-info" style={{ flex: 1 }}>
                 <span className="stop-title">{selected.name}</span>
                 {selected.local !== selected.name && <span className="stop-local latin">{selected.local}</span>}
                 <Tags tags={selected.tags?.filter((t) => t !== "free")} />
               </div>
-              <button type="button" className="icon-button" aria-label="סגירה" onClick={() => setSelected(null)}>
+              <button type="button" className="icon-btn" aria-label="סגירה" onClick={() => setSelected(null)}>
                 <X size={20} />
               </button>
             </div>
-            <div className="button-row">
-              <a className="primary-button ink" href={directionsUrl(selected)} target="_blank" rel="noreferrer">
+            <div className="btn-row">
+              <a className="btn btn-navy" href={directionsUrl(selected)} target="_blank" rel="noreferrer">
                 <Navigation size={20} /> ניווט
               </a>
-              <button type="button" className="secondary-button" onClick={() => setDetails(selected)}>
+              <button type="button" className="btn btn-outline" onClick={() => setDetails(selected)}>
                 פרטים
               </button>
             </div>

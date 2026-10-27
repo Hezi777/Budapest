@@ -16,11 +16,14 @@ import {
   Phone,
   Plus,
   Share2,
+  Siren,
+  Snowflake,
   UtensilsCrossed,
+  Wifi,
 } from "lucide-react";
 import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
-import { CopyAddress, Photo, Tags } from "./ui";
-import { placeIndex } from "@/lib/catalog";
+import { BudapestScene, CopyAddress, Photo, Tags } from "./ui";
+import { CATEGORY_LABELS, placeIndex } from "@/lib/catalog";
 import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
 import { HOTEL_ID } from "@/lib/places";
 import { moveStop, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
@@ -39,12 +42,31 @@ const HERO: Place = {
   photo: { wiki: "Hungarian Parliament Building" },
 };
 
-const noop = () => () => {};
-const todayIso = () => new Date().toISOString().slice(0, 10);
+const MONTHS = ["ינו׳", "פבר׳", "מרץ", "אפר׳", "מאי", "יוני", "יולי", "אוג׳", "ספט׳", "אוק׳", "נוב׳", "דצמ׳"];
 
-/** Today's date on the client, null during server render. */
+const noop = () => () => {};
+const todayIso = () => {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+};
+
+/** Today's local date on the client, null during server render. */
 function useToday(): string | null {
   return useSyncExternalStore(noop, todayIso, () => null);
+}
+
+function daysBetween(fromIso: string, toIso: string): number {
+  return Math.round((Date.parse(toIso) - Date.parse(fromIso)) / 86_400_000);
+}
+
+function countdown(today: string | null, days: Day[]): string {
+  if (!today) return TRIP_INFO.dates;
+  const until = daysBetween(today, days[0].date);
+  if (until > 1) return `עוד ${until} ימים לטיסה`;
+  if (until === 1) return "טסים מחר!";
+  const index = days.findIndex((d) => d.date === today);
+  if (index >= 0) return `היום: יום ${index + 1} בטיול`;
+  return today > days[days.length - 1].date ? "היה טיול מקסים" : TRIP_INFO.dates;
 }
 
 /* ---------- Legs ---------- */
@@ -53,15 +75,13 @@ function LegRow({ leg, estimated }: { leg: Leg; estimated?: boolean }) {
   if (leg.mode === "walk") {
     return (
       <div className="leg">
-        <div className="leg-walk">
-          <span className="leg-badge">
-            <Footprints size={18} aria-hidden />
+        <span className="leg-walk">
+          <span className="leg-icon">
+            <Footprints size={16} aria-hidden />
           </span>
-          <span>
-            {leg.text}
-            {estimated && <span className="estimate"> (הערכה)</span>}
-          </span>
-        </div>
+          {leg.text}
+          {estimated && <span className="estimate">(הערכה)</span>}
+        </span>
       </div>
     );
   }
@@ -69,8 +89,8 @@ function LegRow({ leg, estimated }: { leg: Leg; estimated?: boolean }) {
     <div className="leg">
       <div className="leg-taxi">
         <div className="leg-taxi-top">
-          <span className="leg-badge">
-            <CarTaxiFront size={18} aria-hidden />
+          <span className="leg-icon">
+            <CarTaxiFront size={16} aria-hidden />
           </span>
           <span>
             {leg.text}
@@ -99,12 +119,15 @@ function resolveLeg(
 /** Pairs every stop with how you get there. Each day starts from the hotel. */
 function layoutDay(day: Day, places: Map<string, Place>, hotel: Place) {
   let prevPlace: Place | undefined = hotel;
+  let number = 0;
   const rows = day.stops.map((stop, i) => {
     const place = stop.placeId ? places.get(stop.placeId) : undefined;
     // Landing at the airport has no "getting there".
     const leg = place?.category === "transport" ? undefined : resolveLeg(stop.leg, prevPlace, place);
     if (place) prevPlace = place;
-    return { stop, place, leg, i };
+    const isRest = !!stop.compact || !place;
+    if (!isRest) number += 1;
+    return { stop, place, leg, i, isRest, number };
   });
   const endTo = day.end?.to ? places.get(day.end.to) : undefined;
   return { rows, endLeg: resolveLeg(day.end, prevPlace, endTo) };
@@ -112,36 +135,24 @@ function layoutDay(day: Day, places: Map<string, Place>, hotel: Place) {
 
 /* ---------- Stops ---------- */
 
-function StopCard({
+function EditBar({
   day,
   stop,
-  place,
-  places,
-  arrivesOnFoot,
-  editing,
   isFirst,
   isLast,
-  onOpenPlace,
   onEdit,
 }: {
   day: Day;
   stop: Stop;
-  place?: Place;
-  places: Map<string, Place>;
-  arrivesOnFoot: boolean;
-  editing: boolean;
   isFirst: boolean;
   isLast: boolean;
-  onOpenPlace: (place: Place) => void;
   onEdit: () => void;
 }) {
-  const title = stop.title ?? place?.name ?? "";
-
-  const editBar = editing && (
-    <div className="stop-edit-bar">
+  return (
+    <div className="edit-bar">
       <button
         type="button"
-        className="icon-button"
+        className="icon-btn"
         aria-label="להקדים"
         disabled={isFirst}
         onClick={() => moveStop(day.id, stop.id, -1)}
@@ -150,7 +161,7 @@ function StopCard({
       </button>
       <button
         type="button"
-        className="icon-button"
+        className="icon-btn"
         aria-label="לאחר"
         disabled={isLast}
         onClick={() => moveStop(day.id, stop.id, 1)}
@@ -158,78 +169,90 @@ function StopCard({
         <ChevronDown size={22} />
       </button>
       <span className="spacer" />
-      <button type="button" className="secondary-button" onClick={onEdit}>
-        <Pencil size={18} /> עריכה
+      <button type="button" className="btn btn-navy btn-sm" onClick={onEdit}>
+        <Pencil size={16} /> עריכה
       </button>
     </div>
   );
+}
 
-  if (stop.compact || !place) {
-    return (
-      <div className={editing ? "card stop-card" : undefined}>
-        <div className="stop-compact" style={editing ? { paddingInline: 16 } : undefined}>
-          <span className="stop-time">{stop.time}</span>
-          {place?.id === HOTEL_ID ? <BedDouble size={20} aria-hidden /> : <Moon size={20} aria-hidden />}
-          <span>
-            <strong>{title}.</strong> {stop.note}
-          </span>
-        </div>
-        {editBar}
-      </div>
-    );
-  }
+function StopCard({
+  day,
+  stop,
+  place,
+  places,
+  arrivesOnFoot,
+  onOpenPlace,
+}: {
+  day: Day;
+  stop: Stop;
+  place: Place;
+  places: Map<string, Place>;
+  arrivesOnFoot: boolean;
+  onOpenPlace: (place: Place) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const title = stop.title ?? place.name;
+  const long = place.description.length > 90;
 
   return (
-    <article className={`card stop-card${stop.done ? " is-done" : ""}`}>
-        <button type="button" className="stop-main" onClick={() => onOpenPlace(place)}>
-          <span className="stop-info" style={{ flex: 1 }}>
-            <span className="stop-time">{stop.time}</span>
-            <span className="stop-title">{title}</span>
-            {place.local !== place.name && <span className="stop-local latin">{place.local}</span>}
+    <>
+      <button type="button" className="stop-head" onClick={() => onOpenPlace(place)}>
+        <span className="stop-info">
+          <span className="stop-meta">
+            <span>{stop.time}</span>
+            <span className="sep">·</span>
+            <span className="cat">{CATEGORY_LABELS[place.category]}</span>
           </span>
-          <Photo place={place} className="stop-photo" />
-        </button>
-        <div className="stop-body">
-          {stop.note && <p className="stop-note">{stop.note}</p>}
-          <p className="stop-desc">{place.description}</p>
-          <Tags tags={place.tags} />
-          {stop.alts?.map((alt) => {
-            const altPlace = alt.placeId ? places.get(alt.placeId) : undefined;
-            return (
-              <button
-                key={alt.text}
-                type="button"
-                className={`stop-alt${alt.kosher ? " is-kosher" : ""}`}
-                onClick={() => altPlace && onOpenPlace(altPlace)}
-              >
-                <UtensilsCrossed size={18} aria-hidden />
-                <span>{alt.text}</span>
-              </button>
-            );
-          })}
-          <div className="button-row">
-            {arrivesOnFoot ? (
-              <a className="primary-button" href={directionsUrl(place)} target="_blank" rel="noreferrer">
-                <Navigation size={20} /> ניווט ברגל
-              </a>
-            ) : (
-              <a className="primary-button" href={mapsUrl(place)} target="_blank" rel="noreferrer">
-                <MapIcon size={20} /> פתיחה במפה
-              </a>
-            )}
+          <span className="stop-title">{title}</span>
+          {place.local !== title && <span className="stop-local latin">{place.local}</span>}
+        </span>
+        <Photo place={place} className="stop-thumb" iconSize={30} />
+      </button>
+      <div className="stop-body">
+        {stop.note && <p className="stop-note">{stop.note}</p>}
+        <p className={`stop-desc${long && !expanded ? " is-clamped" : ""}`}>{place.description}</p>
+        {long && (
+          <button type="button" className="more-link" onClick={() => setExpanded((v) => !v)}>
+            {expanded ? "פחות" : "לקרוא עוד"}
+          </button>
+        )}
+        <Tags tags={place.tags?.filter((t) => t !== "free")} />
+        {stop.alts?.map((alt) => {
+          const altPlace = alt.placeId ? places.get(alt.placeId) : undefined;
+          return (
             <button
+              key={alt.text}
               type="button"
-              className="done-toggle"
-              aria-pressed={!!stop.done}
-              onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
-              style={{ flex: "none" }}
+              className={`stop-alt${alt.kosher ? " is-kosher" : ""}`}
+              onClick={() => altPlace && onOpenPlace(altPlace)}
             >
-              <Check size={20} /> {stop.done ? "היינו!" : "סימון שהיינו"}
+              <UtensilsCrossed size={18} aria-hidden />
+              <span>{alt.text}</span>
             </button>
-          </div>
+          );
+        })}
+        <div className="stop-actions">
+          {arrivesOnFoot ? (
+            <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+              <Navigation size={18} /> ניווט ברגל
+            </a>
+          ) : (
+            <a className="btn btn-primary" href={mapsUrl(place)} target="_blank" rel="noreferrer">
+              <MapIcon size={18} /> פתיחה במפה
+            </a>
+          )}
+          <button
+            type="button"
+            className="btn btn-soft done-btn"
+            aria-pressed={!!stop.done}
+            onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
+          >
+            <Check size={18} /> {stop.done ? "היינו!" : "היינו"}
+          </button>
         </div>
-        {editBar}
-      </article>
+      </div>
+    </>
   );
 }
 
@@ -260,12 +283,11 @@ export function PlanView() {
 
   // A pick made today wins; otherwise jump to today's day during the trip.
   const picked = settings.dayPick?.on === today ? settings.dayPick.id : undefined;
-  const dayId =
-    picked ?? trip.days.find((d) => d.date === today)?.id ?? trip.days[0].id;
+  const dayId = picked ?? trip.days.find((d) => d.date === today)?.id ?? trip.days[0].id;
   const dayIndex = Math.max(0, trip.days.findIndex((d) => d.id === dayId));
   const day = trip.days[dayIndex];
   const hotel = places.get(HOTEL_ID)!;
-
+  const { rows, endLeg } = layoutDay(day, places, hotel);
 
   function pickDay(id: string) {
     updateSettings({ dayPick: { id, on: todayIso() } });
@@ -285,118 +307,188 @@ export function PlanView() {
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
   }
 
-  const { rows, endLeg } = layoutDay(day, places, hotel);
-
   return (
     <div style={{ "--day": day.color } as React.CSSProperties}>
       <section className="hero" aria-label="הטיול">
-        <Photo place={HERO} width={960} iconSize={1} />
+        <BudapestScene className="hero-art" />
+        <Photo place={HERO} width={960} iconSize={0} />
+        <div className="hero-top">
+          <span className="glass-pill">{countdown(today, trip.days)}</span>
+          <span className="glass-pill">
+            <Snowflake size={15} aria-hidden /> 0–7°
+          </span>
+        </div>
         <div className="hero-text">
-          <div className="hero-dates">{TRIP_INFO.dates}</div>
+          <div className="hero-dates">{TRIP_INFO.dates} · 4 ימים</div>
           <h1 className="hero-title">{TRIP_INFO.title}</h1>
           <p className="hero-tagline">{TRIP_INFO.tagline}</p>
         </div>
       </section>
 
-      <section className="card hotel-card" aria-label="המלון">
-        <div className="hotel-row">
-          <span className="hotel-icon">
-            <BedDouble size={26} aria-hidden />
+      <nav className="quick-grid" aria-label="קיצורים">
+        <a className="quick" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
+          <span className="q-icon" style={{ "--q": "#a3302a", "--q-bg": "#fdeae8" } as React.CSSProperties}>
+            <BedDouble size={22} aria-hidden />
           </span>
-          <div>
-            <div className="muted small">המלון שלכם</div>
-            <div className="hotel-name latin" style={{ textAlign: "start" }}>
-              {hotel.local}
-            </div>
-            <div className="muted latin" style={{ textAlign: "start" }}>
-              {hotel.address.replace(", Budapest", "")}
-            </div>
-            <div className="muted">ליד תחנת המטרו Astoria</div>
+          חזרה למלון
+        </a>
+        <Link className="quick" href={`/map?day=${day.id}`}>
+          <span className="q-icon" style={{ "--q": "#2b4c80", "--q-bg": "#e5edf9" } as React.CSSProperties}>
+            <MapIcon size={22} aria-hidden />
+          </span>
+          מפת היום
+        </Link>
+        <Link className="quick" href="/esim">
+          <span className="q-icon" style={{ "--q": "#1f6a3f", "--q-bg": "#e2f2e7" } as React.CSSProperties}>
+            <Wifi size={22} aria-hidden />
+          </span>
+          אינטרנט
+        </Link>
+        <Link className="quick" href="/info#sos">
+          <span className="q-icon" style={{ "--q": "#fff", "--q-bg": "#c8372d" } as React.CSSProperties}>
+            <Siren size={22} aria-hidden />
+          </span>
+          חירום
+        </Link>
+      </nav>
+
+      <section className="card hotel" aria-label="המלון">
+        <Photo place={hotel} iconSize={26} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="muted small">המלון שלכם</div>
+          <div className="hotel-name latin" style={{ textAlign: "start" }}>
+            {hotel.local}
           </div>
+          <div className="muted small latin" style={{ textAlign: "start" }}>
+            Kossuth Lajos utca 7-9
+          </div>
+          <div className="muted small">ליד תחנת המטרו Astoria</div>
         </div>
-        <div className="button-row">
-          <a className="primary-button" href={directionsUrl(hotel)} target="_blank" rel="noreferrer" style={{ "--day": "#b3372d" } as React.CSSProperties}>
-            <Navigation size={20} /> ניווט למלון
+        {hotel.phone && (
+          <a className="icon-btn" href={`tel:${hotel.phone.replace(/\s/g, "")}`} aria-label="התקשרות למלון">
+            <Phone size={20} />
           </a>
-          {hotel.phone && (
-            <a className="secondary-button" href={`tel:${hotel.phone.replace(/\s/g, "")}`} style={{ flex: "none" }}>
-              <Phone size={20} /> התקשרות
-            </a>
-          )}
-        </div>
+        )}
       </section>
 
-      <h2 className="section-heading">התוכנית</h2>
-      <div className="day-picker" role="group" aria-label="בחירת יום">
-        {trip.days.map((d, i) => (
-          <button
-            key={d.id}
-            type="button"
-            className="day-tab"
-            style={{ "--chip": d.color } as React.CSSProperties}
-            aria-pressed={d.id === day.id}
-            onClick={() => pickDay(d.id)}
-          >
-            <span className="day-tab-number">יום {i + 1}</span>
-            <span className="day-tab-name">{d.label.split(" · ")[0]}</span>
-          </button>
-        ))}
+      <h2 className="section-title">התוכנית</h2>
+      <div className="day-strip" role="group" aria-label="בחירת יום">
+        {trip.days.map((d) => {
+          const [, month, date] = d.date.split("-").map(Number);
+          return (
+            <button
+              key={d.id}
+              type="button"
+              className="day-chip"
+              style={{ "--chip": d.color } as React.CSSProperties}
+              aria-pressed={d.id === day.id}
+              onClick={() => pickDay(d.id)}
+            >
+              <span className="d-week">{d.label.split(" · ")[0]}</span>
+              <span className="d-num">{date}</span>
+              <span className="d-month">{MONTHS[month - 1]}</span>
+            </button>
+          );
+        })}
       </div>
 
-      <header className="day-header">
-        <div className="day-kicker">{day.label}</div>
+      <header className="day-card">
+        <div className="page-kicker">
+          יום {dayIndex + 1} · {day.label}
+        </div>
         <h2 className="day-title">{day.title}</h2>
-        <p className="muted">{day.summary}</p>
-        <div className="day-actions">
-          <Link className="secondary-button" href={`/map?day=${day.id}`} style={{ flex: 1 }}>
-            <MapIcon size={20} /> מפת היום
-          </Link>
+        <p className="day-summary">{day.summary}</p>
+        <div className="btn-row">
           <button
             type="button"
-            className="secondary-button"
+            className="btn btn-sm"
+            aria-pressed={editing}
             onClick={() => setEditing((v) => !v)}
-            style={{ flex: 1 }}
           >
-            <Pencil size={20} /> {editing ? "סיום עריכה" : "שינוי היום"}
+            <Pencil size={16} /> {editing ? "סיום עריכה" : "שינוי היום"}
+          </button>
+          <button type="button" className="btn btn-sm" onClick={shareDay}>
+            <Share2 size={16} /> שליחה בוואטסאפ
           </button>
         </div>
       </header>
 
       {editing && (
         <div className="edit-banner" role="status">
-          <span>מצב עריכה: חיצים להזזה, „עריכה” לשינוי שעה או מחיקה.</span>
+          מצב עריכה: החיצים מזיזים עצירה, „עריכה” משנה שעה, שם או יום, ואפשר גם למחוק.
         </div>
       )}
 
       <div className="timeline">
-        {rows.map(({ stop, place, leg, i }) => (
-          <div key={stop.id}>
+        {rows.map(({ stop, place, leg, i, isRest, number }) => (
+          <div key={stop.id} className="tl-item">
             {leg && <LegRow leg={leg.leg} estimated={leg.estimated} />}
-            <StopCard
-              day={day}
-              stop={stop}
-              place={place}
-              places={places}
-              arrivesOnFoot={leg?.leg.mode === "walk"}
-              editing={editing}
-              isFirst={i === 0}
-              isLast={i === rows.length - 1}
-              onOpenPlace={setOpenPlace}
-              onEdit={() => setEditStop(stop)}
-            />
+            <div style={{ position: "relative" }}>
+              <span
+                className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}`}
+                aria-hidden
+              >
+                {isRest ? (
+                  place?.id === HOTEL_ID ? <BedDouble size={15} /> : <Moon size={15} />
+                ) : stop.done ? (
+                  <Check size={16} />
+                ) : (
+                  number
+                )}
+              </span>
+              {isRest || !place ? (
+                <div className={editing ? "card" : undefined}>
+                  <div className={`rest${editing ? " in-card" : ""}`}>
+                    <span className="time">{stop.time}</span>
+                    <span>
+                      <strong>{stop.title ?? place?.name}.</strong> {stop.note}
+                    </span>
+                  </div>
+                  {editing && (
+                    <EditBar
+                      day={day}
+                      stop={stop}
+                      isFirst={i === 0}
+                      isLast={i === rows.length - 1}
+                      onEdit={() => setEditStop(stop)}
+                    />
+                  )}
+                </div>
+              ) : (
+                <article className={`card stop${stop.done ? " is-done" : ""}`}>
+                  <StopCard
+                    day={day}
+                    stop={stop}
+                    place={place}
+                    places={places}
+                    arrivesOnFoot={leg?.leg.mode === "walk"}
+                    onOpenPlace={setOpenPlace}
+                  />
+                  {editing && (
+                    <EditBar
+                      day={day}
+                      stop={stop}
+                      isFirst={i === 0}
+                      isLast={i === rows.length - 1}
+                      onEdit={() => setEditStop(stop)}
+                    />
+                  )}
+                </article>
+              )}
+            </div>
           </div>
         ))}
         {endLeg && <LegRow leg={endLeg.leg} estimated={endLeg.estimated} />}
       </div>
 
-      <div className="button-row" style={{ marginBlockStart: 20 }}>
-        <button type="button" className="primary-button" onClick={() => setAdding(true)}>
-          <Plus size={20} /> הוספת עצירה ליום הזה
-        </button>
-        <button type="button" className="secondary-button" onClick={shareDay}>
-          <Share2 size={20} /> שליחת היום בוואטסאפ
-        </button>
-      </div>
+      <button
+        type="button"
+        className="btn btn-primary btn-block"
+        style={{ marginBlockStart: 18 }}
+        onClick={() => setAdding(true)}
+      >
+        <Plus size={20} /> הוספת עצירה ליום {dayIndex + 1}
+      </button>
 
       {openPlace && (
         <PlaceSheet place={openPlace} defaultDayId={day.id} onClose={() => setOpenPlace(null)} />

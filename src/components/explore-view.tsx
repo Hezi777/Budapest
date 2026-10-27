@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CalendarCheck, Navigation, Search } from "lucide-react";
+import { CalendarCheck, Navigation, Plus, Search } from "lucide-react";
 import { PlaceSheet } from "./place-sheet";
-import { Photo, Tags } from "./ui";
-import { allPlaces, isKosher, plannedIds } from "@/lib/catalog";
+import { CategoryIcon, Photo, Tags } from "./ui";
+import { allPlaces, CATEGORY_LABELS, isKosher, plannedIds } from "@/lib/catalog";
 import { directionsUrl } from "@/lib/geo";
 import { IDEAS } from "@/lib/ideas";
 import { useTrip } from "@/lib/store";
@@ -21,30 +21,35 @@ type Filter = {
 
 const FILTERS: Filter[] = [
   { id: "all", label: "הכול", match: () => true },
-  { id: "kosher", label: "אוכל כשר", match: isKosher, color: "#24603d" },
+  { id: "kosher", label: "אוכל כשר", match: isKosher, color: "#1f6a3f" },
   { id: "christmas", label: "כריסמס", match: (p) => !!p.tags?.includes("christmas"), color: "#9d2323" },
   { id: "sight", label: "אתרים ונוף", match: (p) => p.category === "sight" },
-  { id: "jewish", label: "מורשת יהודית", match: (p) => p.category === "jewish" },
-  { id: "cafe", label: "קפה ומתוקים", match: (p) => p.category === "cafe" },
-  { id: "food", label: "מסעדות", match: (p) => p.category === "food" },
-  { id: "bath", label: "מרחצאות", match: (p) => p.category === "bath" },
-  { id: "experience", label: "חוויות", match: (p) => p.category === "experience" },
-  { id: "shopping", label: "קניות ושווקים", match: (p) => p.category === "shopping" || p.category === "market" },
+  { id: "jewish", label: "מורשת יהודית", match: (p) => p.category === "jewish", color: "#23447d" },
+  { id: "cafe", label: "קפה ומתוקים", match: (p) => p.category === "cafe", color: "#6f4a2c" },
+  { id: "food", label: "מסעדות", match: (p) => p.category === "food", color: "#a8432a" },
+  { id: "bath", label: "מרחצאות", match: (p) => p.category === "bath", color: "#1d5f73" },
+  { id: "experience", label: "חוויות", match: (p) => p.category === "experience", color: "#b06a1d" },
+  {
+    id: "shopping",
+    label: "קניות ושווקים",
+    match: (p) => p.category === "shopping" || p.category === "market",
+    color: "#4c3584",
+  },
 ];
 
 function KosherNote() {
   return (
-    <div className="tool-panel" style={{ display: "grid", gap: 8, marginBlockEnd: 14 }}>
-      <strong>לפני שיוצאים לאכול כשר</strong>
+    <div className="card card-pad stack" style={{ marginBlockEnd: 16, background: "var(--tag-kosher-bg)" }}>
+      <strong style={{ fontSize: "1.05rem" }}>לפני שיוצאים לאכול כשר</strong>
       <p>
         כמעט כל המקומות הכשרים נמצאים ברובע היהודי, 10 דקות הליכה מהמלון. הם נסגרים בשישי בצהריים ופותחים
         שוב במוצאי שבת או ביום ראשון.
       </p>
       <p>
-        <strong>ארוחות שבת:</strong> בכרמל ובחנה מגישים ארוחת ליל שבת וצהרי שבת רק בהזמנה ובתשלום מראש
-        (עד שישי ב־14:00). כדאי להזמין כבר עכשיו.
+        <strong>ארוחות שבת:</strong> בכרמל ובחנה מגישים ארוחת ליל שבת וצהרי שבת רק בהזמנה ובתשלום מראש (עד
+        שישי ב־14:00). כדאי להזמין כבר עכשיו.
       </p>
-      <p className="small muted">השעות משתנות. כדאי להתקשר לוודא לפני שהולכים, ולבקש לראות תעודת כשרות.</p>
+      <p className="small muted">השעות משתנות. כדאי להתקשר לפני, ולבקש לראות תעודת כשרות.</p>
     </div>
   );
 }
@@ -54,13 +59,14 @@ export function ExploreView() {
   const [filter, setFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState<Place | null>(null);
-  const planned = plannedIds(trip);
 
-  const rank = (p: Place) => (planned.has(p.id) ? 2 : IDEA_IDS.has(p.id) ? 0 : 1);
+  const planned = useMemo(() => plannedIds(trip), [trip]);
 
   const list = useMemo(() => {
     const f = FILTERS.find((x) => x.id === filter) ?? FILTERS[0];
     const q = query.trim().toLowerCase();
+    // Fresh ideas first, then the rest, and what's already planned last.
+    const rank = (p: Place) => (planned.has(p.id) ? 2 : IDEA_IDS.has(p.id) ? 0 : 1);
     return allPlaces(trip)
       .filter((p) => p.category !== "transport" && p.category !== "hotel")
       .filter(f.match)
@@ -71,29 +77,28 @@ export function ExploreView() {
           p.local.toLowerCase().includes(q) ||
           p.description.includes(q),
       )
-      // Fresh ideas first, then the rest, and what's already planned last.
       .sort((a, b) => rank(a) - rank(b));
-    // planned is derived from trip.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trip, filter, query]);
+  }, [trip, planned, filter, query]);
 
   return (
     <>
-      <h1 className="page-title">רעיונות</h1>
-      <p className="page-lead">עוד מקומות שכדאי להכיר. לוחצים על מקום כדי לראות פרטים ולהוסיף אותו לאחד הימים.</p>
+      <div className="page-head">
+        <h1 className="page-title">רעיונות</h1>
+        <p className="page-lead">עוד מקומות שכדאי להכיר. לוחצים על מקום ומוסיפים אותו לאחד הימים.</p>
+      </div>
 
-      <div className="search-field">
+      <div className="search" style={{ marginBlockEnd: 10 }}>
         <Search size={20} />
         <input
-          className="field-control"
+          className="input"
           type="search"
           value={query}
-          placeholder="חיפוש מקום"
+          placeholder="חיפוש: שוק, קפה, בית כנסת…"
           onChange={(e) => setQuery(e.target.value)}
           aria-label="חיפוש מקום"
         />
       </div>
-      <div className="chip-row" role="group" aria-label="סינון" style={{ marginBlockEnd: 16 }}>
+      <div className="chip-row" role="group" aria-label="סינון" style={{ marginBlockEnd: 12 }}>
         {FILTERS.map((f) => (
           <button
             key={f.id}
@@ -103,6 +108,7 @@ export function ExploreView() {
             style={f.color ? ({ "--chip": f.color } as React.CSSProperties) : undefined}
             onClick={() => setFilter(f.id)}
           >
+            {f.color && <span className="dot" />}
             {f.label}
           </button>
         ))}
@@ -110,40 +116,37 @@ export function ExploreView() {
 
       {filter === "kosher" && <KosherNote />}
 
-      <div className="place-list">
+      <div className="idea-list">
         {list.map((place) => (
-          <article key={place.id} className="card place-card">
-            <button
-              type="button"
-              onClick={() => setOpen(place)}
-              style={{ all: "unset", display: "block", width: "100%", cursor: "pointer" }}
-              aria-label={`פרטים על ${place.name}`}
-            >
-              <Photo place={place} className="place-card-photo" width={960} iconSize={40} />
-              <div className="place-card-body">
-                <h2 className="place-card-title">{place.name}</h2>
-                {place.local !== place.name && (
-                  <div className="stop-local latin" style={{ textAlign: "start" }}>
-                    {place.local}
-                  </div>
-                )}
-                <Tags tags={place.tags} />
-                <p className="stop-desc">{place.description}</p>
-                {place.why && <p className="place-card-why">{place.why}</p>}
-                {planned.has(place.id) && (
-                  <span className="in-plan">
-                    <CalendarCheck size={18} aria-hidden /> כבר בתוכנית
-                  </span>
-                )}
-              </div>
+          <article key={place.id} className="card idea">
+            <button type="button" className="idea-hero" onClick={() => setOpen(place)} aria-label={place.name}>
+              <Photo place={place} width={960} iconSize={56} />
+              {planned.has(place.id) && (
+                <span className="idea-planned">
+                  <CalendarCheck size={14} aria-hidden /> בתוכנית
+                </span>
+              )}
+              <span className="idea-hero-text">
+                <span className="idea-cat">
+                  <CategoryIcon category={place.category} size={14} />
+                  {CATEGORY_LABELS[place.category]}
+                  {place.duration && ` · ${place.duration}`}
+                </span>
+                <span className="idea-title">{place.name}</span>
+              </span>
             </button>
-            <div className="button-row" style={{ padding: "0 16px 16px" }}>
-              <button type="button" className="primary-button ink" onClick={() => setOpen(place)}>
-                פרטים והוספה
-              </button>
-              <a className="secondary-button" href={directionsUrl(place)} target="_blank" rel="noreferrer">
-                <Navigation size={20} /> ניווט
-              </a>
+            <div className="idea-body">
+              <Tags tags={place.tags} />
+              <p className="stop-desc is-clamped">{place.description}</p>
+              {place.why && <p className="idea-why">💡 {place.why}</p>}
+              <div className="btn-row">
+                <button type="button" className="btn btn-navy" onClick={() => setOpen(place)}>
+                  <Plus size={18} /> פרטים והוספה
+                </button>
+                <a className="btn btn-soft" href={directionsUrl(place)} target="_blank" rel="noreferrer" style={{ flex: "none" }}>
+                  <Navigation size={18} /> ניווט
+                </a>
+              </div>
             </div>
           </article>
         ))}

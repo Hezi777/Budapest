@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
-import { CalendarDays, Coins, Compass, Lightbulb, Map } from "lucide-react";
+import { CalendarDays, Coins, Compass, Info, Map, Siren } from "lucide-react";
 import { ToastProvider } from "./ui";
 import { updateSettings, useSettings, type TextSize } from "@/lib/store";
 
@@ -12,7 +12,7 @@ const NAV = [
   { href: "/map", label: "מפה", Icon: Map },
   { href: "/explore", label: "רעיונות", Icon: Compass },
   { href: "/money", label: "כסף", Icon: Coins },
-  { href: "/tips", label: "טיפים", Icon: Lightbulb },
+  { href: "/info", label: "מידע", Icon: Info },
 ];
 
 const NEXT_SIZE: Record<TextSize, TextSize> = {
@@ -33,22 +33,22 @@ export function AppShell({ children }: { children: ReactNode }) {
     <ToastProvider>
       <header className="app-header">
         <Link href="/" className="app-brand">
-          <span className="app-brand-mark">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon.svg" alt="" width={36} height={36} />
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon.svg" alt="" width={34} height={34} />
           בודפשט
         </Link>
         <button
           type="button"
-          className="text-size-button"
+          className="header-pill"
           onClick={() => updateSettings({ textSize: NEXT_SIZE[textSize] })}
-          aria-label="שינוי גודל הטקסט"
+          aria-label="הגדלת הטקסט"
         >
           <span aria-hidden style={{ fontSize: "0.8em" }}>א</span>
-          <span aria-hidden style={{ fontSize: "1.2em" }}>א</span>
-          גודל טקסט
+          <span aria-hidden style={{ fontSize: "1.25em", marginInlineStart: -2 }}>א</span>
         </button>
+        <Link href="/info#sos" className="header-pill is-sos">
+          <Siren size={17} aria-hidden /> חירום
+        </Link>
       </header>
       <main className="app-main">{children}</main>
       <nav className="bottom-nav" aria-label="ניווט ראשי">
@@ -56,9 +56,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
           return (
             <Link key={href} href={href} aria-current={active ? "page" : undefined}>
-              <span className="nav-icon">
-                <Icon size={22} aria-hidden />
-              </span>
+              <Icon size={22} aria-hidden />
               {label}
             </Link>
           );

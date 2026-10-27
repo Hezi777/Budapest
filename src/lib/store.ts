@@ -172,7 +172,7 @@ export type Settings = {
 
 const settingsStore = createStore<Settings>(
   "budapest-settings",
-  { textSize: "large" },
+  { textSize: "normal" },
   (v): v is Settings => typeof v === "object" && v !== null && "textSize" in v,
 );
 

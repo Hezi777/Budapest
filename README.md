@@ -9,11 +9,12 @@ The design follows Hen Helper.
 
 | Tab | |
 |---|---|
-| התוכנית (Plan) | Four days with stops, photos, walking/taxi legs with Bolt-ready addresses, Google Maps navigation, "we were here" ticks. Edit mode: reorder, change time/name/note, move to another day, delete, add stops. Share a day to WhatsApp. |
-| מפה (Map) | Numbered pins per day with the route, all days, kosher places, or ideas. "Where am I?" button. |
-| רעיונות (Ideas) | ~30 researched extra places plus the kosher list, searchable and filterable, one tap to add to any day. |
+| התוכנית (Plan) | Illustrated hero with a countdown, quick actions (hotel, day map, internet, emergency), date strip, and a numbered timeline: photo cards with expandable descriptions, walking/taxi legs with Bolt-ready addresses, navigation and "we were here" ticks. Edit mode: reorder, retime, rename, move day, delete, add. Share a day to WhatsApp. |
+| מפה (Map) | Numbered pins per day with the route, all days, kosher, or ideas. "Where am I?" button. |
+| רעיונות (Ideas) | ~30 researched extra places plus the kosher list as photo cards, searchable and filterable, one tap to add to any day. |
 | כסף (Money) | Live HUF ⇄ ILS rate, quick amounts, common prices, card-payment tip. |
-| טיפים (Tips) | Bolt how-to, weather, Christmas markets, kosher & Shabbat, bookings, phone numbers, text size, reset plan. |
+| מידע (Info) | Emergency numbers (Hungary, Israeli MFA and embassy, doctors, insurers, cards), Bolt how-to, Christmas markets, kosher & Shabbat, bookings, settings. |
+| `/esim` | Airalo eSIM guide: which plan, compatibility check, discount codes, iPhone and Samsung steps, troubleshooting. |
 
 Changes are saved on the phone (localStorage). Each phone keeps its own copy.
 

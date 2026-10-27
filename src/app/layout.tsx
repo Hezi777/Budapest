@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#f4f1ec",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -26,7 +26,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="he" dir="rtl" data-text="large" className={assistant.variable}>
+    <html lang="he" dir="rtl" data-text="normal" className={assistant.variable}>
       <body>
         <AppShell>{children}</AppShell>
       </body>

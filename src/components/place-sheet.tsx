@@ -13,7 +13,7 @@ import {
   Trash,
 } from "lucide-react";
 import { Photo, Sheet, Tags, useToast } from "./ui";
-import { allPlaces, CATEGORY_LABELS, plannedIds } from "@/lib/catalog";
+import { allPlaces, plannedIds } from "@/lib/catalog";
 import { directionsUrl, mapsUrl } from "@/lib/geo";
 import {
   addStop,
@@ -53,28 +53,29 @@ function DayTimePicker({
 }) {
   return (
     <>
-      <div className="field-group">
+      <div className="field">
         <span className="field-label">באיזה יום?</span>
-        <div className="day-picker" style={{ position: "static", margin: 0, padding: 0, border: 0 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
           {days.map((d, i) => (
             <button
               key={d.id}
               type="button"
-              className="day-tab"
+              className="day-chip"
               style={{ "--chip": d.color } as React.CSSProperties}
               aria-pressed={d.id === dayId}
               onClick={() => onDay(d.id)}
             >
-              <span className="day-tab-number">יום {i + 1}</span>
-              <span className="day-tab-name">{d.label.split(" · ")[0]}</span>
+              <span className="d-week">{d.label.split(" · ")[0]}</span>
+              <span className="d-num">{i + 1}</span>
+              <span className="d-month">יום</span>
             </button>
           ))}
         </div>
       </div>
-      <label className="field-group">
+      <label className="field">
         <span className="field-label">באיזו שעה?</span>
         <input
-          className="field-control"
+          className="input"
           type="time"
           value={time}
           onChange={(e) => onTime(e.target.value)}
@@ -113,14 +114,16 @@ export function PlaceSheet({
   return (
     <Sheet title={place.name} onClose={onClose}>
       <Photo place={place} className="sheet-photo" width={960} iconSize={48} />
-      <div className="latin muted" style={{ textAlign: "end" }}>
-        {place.local}
-      </div>
+      {place.local !== place.name && (
+        <div className="latin muted" style={{ textAlign: "end", marginBlockStart: -6 }}>
+          {place.local}
+        </div>
+      )}
       <Tags tags={place.tags} />
       <p className="stop-desc">{place.description}</p>
-      {place.why && <p className="place-card-why">{place.why}</p>}
+      {place.why && <p className="idea-why">{place.why}</p>}
 
-      <div className="facts">
+      <div className="card facts">
         <div className="fact">
           <MapPin size={20} />
           <span className="latin">{place.address}</span>
@@ -156,27 +159,27 @@ export function PlaceSheet({
           </a>
         )}
         {scheduled.length > 0 && (
-          <div className="in-plan">
+          <div className="fact in-plan">
             כבר בתוכנית: {scheduled.map((d) => `יום ${dayNumber(trip, d.id)}`).join(", ")}
           </div>
         )}
       </div>
 
-      <div className="button-row">
-        <a className="primary-button ink" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+      <div className="btn-row">
+        <a className="btn btn-navy" href={directionsUrl(place)} target="_blank" rel="noreferrer">
           <Navigation size={20} /> ניווט ברגל
         </a>
-        <a className="secondary-button" href={mapsUrl(place)} target="_blank" rel="noreferrer">
+        <a className="btn btn-outline" href={mapsUrl(place)} target="_blank" rel="noreferrer">
           <ExternalLink size={20} /> בגוגל מפות
         </a>
       </div>
 
       {!adding ? (
-        <button type="button" className="secondary-button" onClick={() => setAdding(true)}>
+        <button type="button" className="btn btn-outline" onClick={() => setAdding(true)}>
           <CalendarPlus size={20} /> הוספה לתוכנית
         </button>
       ) : (
-        <div className="tool-panel" style={{ display: "grid", gap: 14 }}>
+        <div className="card card-pad" style={{ display: "grid", gap: 14 }}>
           <DayTimePicker
             days={trip.days}
             dayId={dayId}
@@ -188,12 +191,11 @@ export function PlaceSheet({
             }}
             onTime={setTime}
           />
-          <button type="button" className="primary-button ink" onClick={add} disabled={!time}>
+          <button type="button" className="btn btn-navy" onClick={add} disabled={!time}>
             <CalendarPlus size={20} /> הוספה ליום {dayNumber(trip, dayId)}
           </button>
         </div>
       )}
-      <p className="small muted">קטגוריה: {CATEGORY_LABELS[place.category]}</p>
     </Sheet>
   );
 }
@@ -246,29 +248,29 @@ export function StopEditor({
 
   return (
     <Sheet title="עריכת עצירה" onClose={onClose}>
-      <label className="field-group">
+      <label className="field">
         <span className="field-label">שם</span>
         <input
-          className="field-control"
+          className="input"
           value={title}
           placeholder={place?.name ?? "למשל: מנוחה במלון"}
           onChange={(e) => setTitle(e.target.value)}
         />
       </label>
       <DayTimePicker days={trip.days} dayId={dayId} time={time} onDay={setDayId} onTime={setTime} />
-      <label className="field-group">
+      <label className="field">
         <span className="field-label">הערה שלנו</span>
         <textarea
-          className="field-control"
+          className="input"
           value={note}
           placeholder="למשל: להזמין שולחן, לקנות מגנט"
           onChange={(e) => setNote(e.target.value)}
         />
       </label>
-      <button type="button" className="primary-button ink" onClick={save} disabled={!time}>
+      <button type="button" className="btn btn-navy" onClick={save} disabled={!time}>
         שמירה
       </button>
-      <button type="button" className="secondary-button danger-button" onClick={remove}>
+      <button type="button" className="btn btn-danger" onClick={remove}>
         <Trash size={20} /> {confirmDelete ? "בטוח? ללחוץ שוב למחיקה" : "מחיקה מהתוכנית"}
       </button>
     </Sheet>
@@ -312,32 +314,32 @@ export function AddStopSheet({ day, onClose }: { day: Day; onClose: () => void }
 
   return (
     <Sheet title={`הוספה ליום ${dayNumber(trip, day.id)}`} onClose={onClose}>
-      <label className="field-group">
+      <label className="field">
         <span className="field-label">באיזו שעה?</span>
-        <input className="field-control" type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+        <input className="input" type="time" value={time} onChange={(e) => setTime(e.target.value)} />
       </label>
 
-      <div className="field-group">
+      <div className="field">
         <span className="field-label">משהו משלנו (מנוחה, פגישה, קניות)</span>
         <div style={{ display: "flex", gap: 8 }}>
           <input
-            className="field-control"
+            className="input"
             value={freeText}
             placeholder="למשל: מנוחה במלון"
             onChange={(e) => setFreeText(e.target.value)}
           />
-          <button type="button" className="primary-button ink" onClick={addNote} disabled={!freeText.trim()}>
+          <button type="button" className="btn btn-navy" onClick={addNote} disabled={!freeText.trim()}>
             הוספה
           </button>
         </div>
       </div>
 
-      <div className="field-group">
+      <div className="field">
         <span className="field-label">או לבחור מקום מהרשימה</span>
-        <div className="search-field" style={{ margin: 0 }}>
+        <div className="search" style={{ margin: 0 }}>
           <Search size={20} />
           <input
-            className="field-control"
+            className="input"
             type="search"
             value={query}
             placeholder="חיפוש: כשר, שוק, קפה…"
@@ -345,15 +347,15 @@ export function AddStopSheet({ day, onClose }: { day: Day; onClose: () => void }
           />
         </div>
       </div>
-      <div className="place-list" style={{ gap: 8 }}>
+      <div className="stack" style={{ gap: 8 }}>
         {places.map((place) => (
           <button
             key={place.id}
             type="button"
-            className="card stop-main"
+            className="card stop-head"
             onClick={() => addPlace(place)}
           >
-            <Photo place={place} className="stop-photo" iconSize={26} />
+            <Photo place={place} className="stop-thumb" iconSize={26} />
             <span className="stop-info">
               <span className="stop-title">{place.name}</span>
               {place.local !== place.name && <span className="stop-local latin">{place.local}</span>}

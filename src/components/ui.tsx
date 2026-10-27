@@ -103,10 +103,8 @@ export function Photo({
   );
 
   return (
-    <div className={`photo ${className ?? ""}`}>
-      <span className="photo-fallback">
-        <CategoryIcon category={place.category} size={iconSize} />
-      </span>
+    <div className={`photo cat-${place.category} ${className ?? ""}`}>
+      {iconSize > 0 && <CategoryIcon category={place.category} size={iconSize} />}
       {src && !broken && (
         <Image
           ref={checkLoaded}
@@ -175,7 +173,7 @@ export function Sheet({
         <div className="sheet-handle" />
         <div className="sheet-head">
           <h2 className="sheet-title">{title}</h2>
-          <button type="button" className="icon-button" onClick={onClose} aria-label="סגירה">
+          <button type="button" className="icon-btn" onClick={onClose} aria-label="סגירה">
             <X size={22} />
           </button>
         </div>
@@ -240,5 +238,76 @@ export function CopyAddress({ address, label = "יעד ל־Bolt" }: { address: s
       </span>
       {copied ? <Check size={20} aria-label="הועתק" /> : <Copy size={20} aria-label="העתקה" />}
     </button>
+  );
+}
+
+/* ---------- Illustrated Budapest ---------- */
+
+/**
+ * Parliament on the Danube at dusk, drawn so the home screen looks right even
+ * before (or without) a photo.
+ */
+export function BudapestScene({ className }: { className?: string }) {
+  const stars = [
+    [40, 30], [92, 58], [150, 22], [210, 44], [262, 18], [318, 52], [362, 26],
+    [70, 96], [300, 90], [180, 76], [24, 70], [380, 84],
+  ];
+  return (
+    <svg className={className} viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden>
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#0d1530" />
+          <stop offset="0.55" stopColor="#2a2f63" />
+          <stop offset="1" stopColor="#8b5a7a" />
+        </linearGradient>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#1b2548" />
+          <stop offset="1" stopColor="#0b1126" />
+        </linearGradient>
+        <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ffd98a" />
+          <stop offset="1" stopColor="#d9963a" />
+        </linearGradient>
+        <g id="parliament" fill="url(#gold)">
+          {/* central dome and spire */}
+          <rect x="196" y="96" width="8" height="18" />
+          <path d="M200 70 l3 26 h-6z" />
+          <path d="M176 150 c0-26 10-40 24-44 c14 4 24 18 24 44z" />
+          <rect x="172" y="148" width="56" height="16" />
+          {/* side towers */}
+          <path d="M150 164 v-34 l5-14 5 14 v34z" />
+          <path d="M240 164 v-34 l5-14 5 14 v34z" />
+          {/* wings */}
+          <rect x="60" y="164" width="280" height="40" />
+          <rect x="84" y="150" width="70" height="14" />
+          <rect x="246" y="150" width="70" height="14" />
+          {[70, 96, 122, 278, 304, 330].map((x) => (
+            <path key={x} d={`M${x} 150 v-14 l4-10 4 10 v14z`} />
+          ))}
+          <rect x="44" y="176" width="16" height="28" />
+          <rect x="340" y="176" width="16" height="28" />
+        </g>
+      </defs>
+      <rect width="400" height="300" fill="url(#sky)" />
+      <circle cx="322" cy="62" r="16" fill="#fbe6b0" opacity="0.9" />
+      <circle cx="329" cy="57" r="14" fill="#2a2f63" opacity="0.55" />
+      {stars.map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="1.3" fill="#fff" opacity="0.75" />
+      ))}
+      {/* Buda hills behind */}
+      <path d="M0 176 C60 150 110 160 160 168 S280 150 400 166 V210 H0z" fill="#1d2149" />
+      <use href="#parliament" />
+      {/* windows */}
+      <g fill="#2a1f10" opacity="0.55">
+        {Array.from({ length: 22 }, (_, i) => (
+          <rect key={i} x={68 + i * 12.4} y="180" width="4" height="14" rx="2" />
+        ))}
+      </g>
+      <rect y="204" width="400" height="96" fill="url(#water)" />
+      <use href="#parliament" transform="matrix(1 0 0 -0.6 0 326)" opacity="0.28" />
+      <g stroke="#ffd98a" strokeLinecap="round" opacity="0.5">
+        <path d="M120 222 h40 M220 230 h56 M90 244 h30 M180 252 h70 M250 266 h40 M140 274 h50" strokeWidth="2" />
+      </g>
+    </svg>
   );
 }

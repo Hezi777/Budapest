@@ -12,6 +12,7 @@ parents in their 50s–60s. The UI is Hebrew and RTL.
 - `src/lib/places.ts` — places in the plan, plus the kosher list.
 - `src/lib/ideas.ts` — extra places for the Ideas tab.
 - `src/lib/trip.ts` — the four days: stops, times, how to get between them.
+- `src/lib/emergency.ts` — phone numbers on the Info page.
 - `src/lib/store.ts` — the plan and settings, saved in localStorage.
 - `src/app/api/photo` — resolves a real photo per place (Google Places if a
   key is set, else Wikipedia, else a matching Wikimedia Commons file).

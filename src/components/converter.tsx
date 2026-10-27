@@ -16,6 +16,7 @@ const QUICK: Record<Currency, number[]> = {
 
 const LABEL: Record<Currency, string> = { HUF: "פורינט", ILS: "שקל" };
 const SYMBOL: Record<Currency, string> = { HUF: "Ft", ILS: "₪" };
+const FLAG: Record<Currency, string> = { HUF: "🇭🇺 HUF", ILS: "🇮🇱 ILS" };
 
 function format(n: number, currency: Currency): string {
   const digits = currency === "ILS" ? (n < 100 ? 1 : 0) : 0;
@@ -63,8 +64,8 @@ export function Converter() {
     <div className="converter">
       <label className="money-box">
         <span className="money-label">
-          <span>יש לי ({LABEL[from]})</span>
-          <span className="latin">{SYMBOL[from]}</span>
+          <span>מחיר ב{LABEL[from]}</span>
+          <span className="currency-flag">{FLAG[from]}</span>
         </span>
         <input
           className="money-input"
@@ -76,14 +77,14 @@ export function Converter() {
         />
       </label>
 
-      <button type="button" className="secondary-button swap-button" onClick={swap}>
-        <ArrowUpDown size={20} /> החלפת כיוון
+      <button type="button" className="icon-btn swap" onClick={swap} aria-label="החלפת כיוון">
+        <ArrowUpDown size={22} />
       </button>
 
       <div className="money-box is-result" aria-live="polite">
         <span className="money-label">
           <span>שווה ב{LABEL[to]}</span>
-          <span className="latin">{SYMBOL[to]}</span>
+          <span className="currency-flag">{FLAG[to]}</span>
         </span>
         <div className="money-result">
           {SYMBOL[to] === "₪" ? "₪" : ""}
@@ -108,17 +109,20 @@ export function Converter() {
         {status === "offline" && `אין חיבור. שער אחרון שנשמר: ${formatDate(rate.date)}`}
       </p>
 
-      <h2 className="section-heading">
-        <CreditCard size={24} aria-hidden /> טיפ לתשלום בכרטיס
+      <h2 className="section-title">
+        <span className="badge-icon" style={{ "--icon": "#7a5200", "--icon-bg": "#fcf0d4" } as React.CSSProperties}>
+          <CreditCard size={20} aria-hidden />
+        </span>
+        טיפ לתשלום בכרטיס
       </h2>
-      <div className="tool-panel">
+      <div className="note-box">
         כשהמכשיר או המלצר שואלים באיזה מטבע לחייב, תמיד לבחור <strong>פורינט (HUF)</strong>. בחירה
         בשקלים נשמעת נוחה, אבל השער שלהם גרוע ומשלמים יותר. ב־Bolt ובשווקים משלמים בכרטיס בלי בעיה.
       </div>
 
-      <h2 className="section-heading">מחירים נפוצים בשקלים</h2>
-      <div className="card" style={{ padding: "4px 20px" }}>
-        <div className="cheat-sheet">
+      <h2 className="section-title">מחירים נפוצים בשקלים</h2>
+      <div className="card">
+        <div className="list">
           {[
             ["קפה", 1200],
             ["קירטוש בשוק", 2500],
@@ -127,11 +131,13 @@ export function Converter() {
             ["ארוחה במסעדה לאדם", 9000],
             ["מונית לשדה", 13000],
           ].map(([label, huf]) => (
-            <div key={label} className="cheat-row">
+            <div key={label} className="price-row">
               <span>
-                {label} <span className="muted small latin">~{Number(huf).toLocaleString("en-US")} Ft</span>
+                {label}
+                <br />
+                <span className="muted small">כ־{Number(huf).toLocaleString("en-US")} פורינט</span>
               </span>
-              <span>≈ ₪{Math.round(Number(huf) * rate.value)}</span>
+              <strong>₪{Math.round(Number(huf) * rate.value)}</strong>
             </div>
           ))}
         </div>
