@@ -77,7 +77,7 @@ export function Converter() {
         />
       </label>
 
-      <button type="button" className="icon-btn swap" onClick={swap} aria-label="החלפת כיוון">
+      <button type="button" className={`icon-btn swap${from === "ILS" ? " is-flipped" : ""}`} onClick={swap} aria-label="החלפת כיוון">
         <ArrowUpDown size={22} />
       </button>
 

@@ -419,9 +419,10 @@ export function PlanView() {
         </div>
       )}
 
-      <div className="timeline">
+      {/* Keyed by day so switching days replays the stops' entrance. */}
+      <div className="timeline" key={day.id}>
         {rows.map(({ stop, place, leg, i, isRest, number }) => (
-          <div key={stop.id} className="tl-item">
+          <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
             {leg && <LegRow leg={leg.leg} estimated={leg.estimated} />}
             <div style={{ position: "relative" }}>
               <span

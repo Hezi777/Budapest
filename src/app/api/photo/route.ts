@@ -25,7 +25,9 @@ async function getJson(url: string, init?: RequestInit): Promise<unknown> {
     headers: { "User-Agent": UA, ...init?.headers },
     signal: AbortSignal.timeout(6000),
   });
-  if (!res.ok) return undefined;
+  if (res.status === 404) return undefined;
+  // Throttled or down: throw, so the miss isn't cached as "no photo".
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
@@ -135,6 +137,7 @@ export async function GET(request: NextRequest) {
   if (wiki) attempts.push(() => fromWikipedia(wiki, lang, width));
   if (commons) attempts.push(() => fromCommons(commons, width));
 
+  let upstreamFailed = false;
   for (const attempt of attempts) {
     try {
       const url = await attempt();
@@ -145,11 +148,12 @@ export async function GET(request: NextRequest) {
         });
       }
     } catch {
+      upstreamFailed = true;
       // Try the next source.
     }
   }
   return new Response("No photo", {
     status: 404,
-    headers: { "Cache-Control": CACHE_MISS },
+    headers: { "Cache-Control": upstreamFailed ? "no-store" : CACHE_MISS },
   });
 }

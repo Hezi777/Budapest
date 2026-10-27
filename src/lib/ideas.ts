@@ -194,7 +194,7 @@ export const IDEAS: Place[] = [
       "מוזיאון בבניין שבו ישבו המשטרות החשאיות של הנאצים ושל הקומוניסטים, כולל פרק על שואת יהודי הונגריה. חוויה כבדה ומרשימה, לא לכל אחד.",
     hours: "ג׳–א׳ 10:00–18:00 · שני סגור",
     duration: "שעה וחצי",
-    photo: { wiki: "House of Terror" },
+    photo: { commons: "House of Terror Budapest" },
   },
 
   /* ---------- Cafés & sweets ---------- */

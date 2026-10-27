@@ -17,7 +17,7 @@ export const PLAN_PLACES: Place[] = [
     category: "transport",
     description:
       "יוצאים מהטרמינל לעמדת המוניות הרשמית (Főtaxi), או מזמינים Bolt באפליקציה.",
-    photo: { wiki: "Budapest Ferenc Liszt International Airport" },
+    photo: { commons: "Liszt Ferenc Airport Entrance Terminal" },
   },
   {
     id: HOTEL_ID,
@@ -30,7 +30,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "ליד תחנת המטרו Astoria. הצ'ק־אין רשמית אחר הצהריים, אבל אפשר להשאיר מזוודות בקבלה ולצאת מיד.",
     phone: "+36 1 445 4800",
-    photo: { commons: "Kossuth Lajos utca Astoria Budapest", google: "Exe Budapest Center hotel" },
+    photo: { google: "Exe Budapest Center hotel" },
   },
   {
     id: "twentysix",

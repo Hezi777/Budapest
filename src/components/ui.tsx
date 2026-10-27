@@ -147,9 +147,22 @@ export function Sheet({
   children: ReactNode;
 }) {
   const panel = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ y: number; t: number } | null>(null);
+  const [closing, setClosing] = useState(false);
+
+  // Slide out, then unmount. Exit is quicker than the entrance.
+  const close = useCallback(() => {
+    const el = panel.current;
+    if (!el || closing) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return onClose();
+    setClosing(true);
+    el.style.transition = "transform 220ms var(--ease-out)";
+    el.style.transform = "translateY(100%)";
+    setTimeout(onClose, 220);
+  }, [closing, onClose]);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -158,10 +171,37 @@ export function Sheet({
       document.body.style.overflow = overflow;
       window.removeEventListener("keydown", onKey);
     };
-  }, [onClose]);
+  }, [close]);
+
+  function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+    if (drag.current || closing || (e.target as Element).closest("button")) return;
+    drag.current = { y: e.clientY, t: Date.now() };
+    e.currentTarget.setPointerCapture(e.pointerId);
+    if (panel.current) panel.current.style.transition = "none";
+  }
+
+  function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (!drag.current || !panel.current) return;
+    const dy = e.clientY - drag.current.y;
+    // Pulling up past the top meets growing resistance instead of a wall.
+    panel.current.style.transform = `translateY(${dy > 0 ? dy : -Math.sqrt(-dy) * 2}px)`;
+  }
+
+  function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
+    const start = drag.current;
+    const el = panel.current;
+    drag.current = null;
+    if (!start || !el) return;
+    const dy = e.clientY - start.y;
+    const velocity = dy / Math.max(1, Date.now() - start.t);
+    // A quick flick closes it, no matter how short.
+    if (dy > el.offsetHeight * 0.25 || (dy > 10 && velocity > 0.11)) return close();
+    el.style.transition = "transform 320ms var(--ease-drawer)";
+    el.style.transform = "";
+  }
 
   return (
-    <div className="sheet-backdrop" onClick={onClose}>
+    <div className={`sheet-backdrop${closing ? " is-closing" : ""}`} onClick={close}>
       <div
         ref={panel}
         className="sheet"
@@ -170,12 +210,20 @@ export function Sheet({
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sheet-handle" />
-        <div className="sheet-head">
-          <h2 className="sheet-title">{title}</h2>
-          <button type="button" className="icon-btn" onClick={onClose} aria-label="סגירה">
-            <X size={22} />
-          </button>
+        <div
+          className="sheet-grab"
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+        >
+          <div className="sheet-handle" />
+          <div className="sheet-head">
+            <h2 className="sheet-title">{title}</h2>
+            <button type="button" className="icon-btn" onClick={close} aria-label="סגירה">
+              <X size={22} />
+            </button>
+          </div>
         </div>
         <div className="sheet-body">{children}</div>
       </div>

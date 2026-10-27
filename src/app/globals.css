@@ -51,6 +51,9 @@
   --tag-plain-bg: #f0ece5;
   --tag-plain: #514c44;
 
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
   --nav-height: 68px;
   --header-height: 58px;
   --gutter: 16px;
@@ -224,7 +227,6 @@ img {
   color: var(--text-soft);
   font-size: 0.74rem;
   font-weight: 800;
-  transition: background 0.15s, color 0.15s;
 }
 
 .bottom-nav a[aria-current="page"] {
@@ -305,11 +307,6 @@ img {
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
-  transition: transform 0.08s;
-}
-
-.btn:active {
-  transform: scale(0.97);
 }
 
 .btn:disabled {
@@ -1188,7 +1185,12 @@ textarea.input {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  animation: fade-in 0.18s ease-out;
+  animation: fade-in 0.2s ease-out;
+  transition: opacity 0.22s ease;
+}
+
+.sheet-backdrop.is-closing {
+  opacity: 0;
 }
 
 .sheet {
@@ -1199,12 +1201,19 @@ textarea.input {
   background: var(--canvas);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   padding: 10px var(--gutter) calc(24px + env(safe-area-inset-bottom));
-  animation: slide-up 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: slide-up 0.32s var(--ease-drawer);
   overscroll-behavior: contain;
 }
 
 .sheet:focus {
   outline: none;
+}
+
+/* Handle + title row: drag down to close. */
+.sheet-grab {
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
 }
 
 .sheet-handle {
@@ -1271,11 +1280,103 @@ textarea.input {
   to { opacity: 1; }
 }
 
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= Motion ================= */
+
+/* Everything tappable answers the finger. */
+.btn,
+.chip,
+.day-chip,
+.quick,
+.header-pill,
+.icon-btn,
+.segmented button,
+.quick-amounts button,
+.copy-address,
+.bottom-nav a {
+  transition:
+    transform 160ms var(--ease-out),
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.btn:active,
+.chip:active,
+.day-chip:active,
+.quick:active,
+.header-pill:active,
+.icon-btn:active:not(:disabled),
+.segmented button:active,
+.quick-amounts button:active,
+.copy-address:active,
+.bottom-nav a:active {
+  transform: scale(0.97);
+}
+
+/* Big tiles: a gentler press so the whole card doesn't lurch. */
+.link-tile,
+.sos-call {
+  transition: transform 160ms var(--ease-out);
+}
+
+.link-tile:active,
+.sos-call:active {
+  transform: scale(0.985);
+}
+
+.btn:disabled {
+  transform: none;
+}
+
+.swap svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+.swap.is-flipped svg {
+  transform: rotate(180deg);
+}
+
+/* Stops rise in, one after another, when a day opens. */
+.tl-item {
+  animation: rise 320ms var(--ease-out) backwards;
+  animation-delay: calc(min(var(--i, 0), 8) * 40ms);
+}
+
+.map-card {
+  animation: rise 260ms var(--ease-out);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sheet,
-  .sheet-backdrop,
-  .toast {
-    animation: none;
+  .toast,
+  .map-card,
+  .tl-item {
+    animation: fade-in 0.2s ease-out;
+  }
+
+  .tl-item {
+    animation-delay: 0s;
+  }
+
+  .btn:active,
+  .chip:active,
+  .day-chip:active,
+  .quick:active,
+  .header-pill:active,
+  .icon-btn:active,
+  .segmented button:active,
+  .quick-amounts button:active,
+  .copy-address:active,
+  .bottom-nav a:active,
+  .link-tile:active,
+  .sos-call:active,
+  .swap.is-flipped svg {
+    transform: none;
   }
 }
 
@@ -1767,7 +1868,13 @@ textarea.input {
   color: var(--white);
   font-weight: 800;
   box-shadow: var(--shadow-float);
-  animation: fade-in 0.2s ease-out;
+  animation: rise 260ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: fade-in 0.2s ease-out;
+  }
 }
 
 .settings-row {
