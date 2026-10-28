@@ -34,3 +34,21 @@ One line per file: `<file>` — source URL.
 - `twentysix.webp` — https://www.google.com/maps/place/Twentysix+Budapest+Restaurant/@47.4995792,19.0587484,17z/data=!3m1!4b1!4m6!3m5!1s0x4741ddc7f4156575:0xc84bdea787e31076!8m2!3d47.4995792!4d19.0587484!16s%2Fg%2F11fqtbvqvf
 - `varoshaza-park.webp` — https://www.google.com/maps/place/V%C3%A1rosh%C3%A1za+park/@47.4967072,19.0560456,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4191031cc7:0x6b3f5cd4631ca79d!8m2!3d47.4967072!4d19.0560456!16s%2Fg%2F11b7r7g75s
 - `westend.webp` — https://www.google.com/maps/place/%D7%A7%D7%A0%D7%99%D7%95%D7%9F+%D7%95%D7%A1%D7%98%D7%90%D7%A0%D7%93%E2%80%AD/@47.5138536,19.0592581,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc0a61285cb9:0xd1f3dcf641fea51c!8m2!3d47.5138536!4d19.0592581!16zL20vMGR6ZzBn
+
+- `tt-passata.webp` — https://www.tiktok.com/@kathys.gallery/video/7567829265803119894 (TikTok, @kathys.gallery, slide 02-09)
+- `tt-vagon.webp` — https://www.tiktok.com/@yana.lts/video/7560728936703986965 (TikTok, @yana.lts, slide 03-01)
+- `tt-bechamel.webp` — https://www.tiktok.com/@talbonen/video/7567835429089611028 (TikTok, @talbonen, slide 05-02)
+- `tt-pastamore.webp` — https://www.tiktok.com/@talbonen/video/7569609943842573588 (TikTok, @talbonen, slide 06-04)
+- `tt-nour.webp` — https://www.tiktok.com/@barkrauss5/video/7543672039454854422 (TikTok, @barkrauss5, frame 14-03)
+- `tt-comme-chez-soi.webp` — https://www.tiktok.com/@meytarmiran/video/7559902290014997776 (TikTok, @meytarmiran, slide 26-14)
+- `tt-horizont.webp` — https://www.tiktok.com/@yotammichael24/video/7552852638358867218 (TikTok, @yotammichael24, slide 23-07)
+- `tt-pichler.webp` — https://www.tiktok.com/@or_lev25/video/7562954354752277778 (TikTok, @or_lev25, slide 12-13)
+- `tt-ashis.webp` — https://www.tiktok.com/@shilat__azulay/video/7545838051524709639 (TikTok, @shilat__azulay, slide 21-14)
+- `tt-slow-moes.webp` — https://www.tiktok.com/@shilat__azulay/video/7545838051524709639 (TikTok, @shilat__azulay, slide 21-16)
+- `tt-meshuga.webp` — https://www.tiktok.com/@shilat__azulay/video/7545838051524709639 (TikTok, @shilat__azulay, slide 21-07)
+- `tt-karavan.webp` — https://www.tiktok.com/@ktav_/video/7564491220521684246 (TikTok, @ktav_, slide 10-09)
+- `tt-for-sale-pub.webp` — https://www.tiktok.com/@noa.123444/video/7565212766022192405 (TikTok, @noa.123444, slide 09-27)
+- `tt-high-note.webp` — https://www.tiktok.com/@meytarmiran/video/7559902290014997776 (TikTok, @meytarmiran, slide 26-08)
+- `tt-leo-rooftop.webp` — https://www.tiktok.com/@talbonen/video/7569609943842573588 (TikTok, @talbonen, slide 06-07)
+- `tt-360-bar.webp` — https://www.tiktok.com/@travlprep/video/7558950560238472470 (TikTok, @travlprep, slide 19-10)
+- `tt-retrock.webp` — https://www.tiktok.com/@metfits/video/7567065754760252694 (TikTok, @metfits, slide 08-02)

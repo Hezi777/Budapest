@@ -1,6 +1,6 @@
 # Handoff: Budapest trip app
 
-State as of 2026-10-27. `AGENTS.md` and `agent_docs/` cover conventions and
+State as of 2026-10-28. `AGENTS.md` and `agent_docs/` cover conventions and
 architecture; this file is only "where we are and what's next".
 
 ## How Hen works
@@ -24,19 +24,16 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
 
 ## Open items
 
-1. **Restaurant photos (no API, Hen's choice)**: fetch real photos manually
-   (venue website, Google Maps listing, Commons) into `public/places/<id>.webp`
-   and add a `file` option to `PhotoSource`/`photoUrl`. An agent started this
-   and was stopped at the usage limit; its partial downloads are uncommitted in
-   the worktree `.claude/worktrees/agent-ab7be357f5fbba0b2` (`public/places/`).
-2. **TikTok collection**: Hen's account is private, so the collection only
-   loads while signed in (Hen is signed in to TikTok in the desktop app's
-   built-in browser). All 29 posts (captions, on-screen text, 212 slideshow
-   image URLs, video/subtitle URLs) are saved in `.tiktok-collection.json` at
-   the repo root (git-excluded; slide URLs expire ~29 Oct 2026). Next: read the
-   slides (place names are written on them), dedupe against `ideas.ts` and
-   `places.ts`, verify each place, and add to `src/lib/ideas.ts` with a `why`
-   saying it came from Hen's TikTok.
+1. **Place photos**: done 2026-10-28. 32 places that had no working photo now
+   use a hand-checked file in `public/places/` (sources in `SOURCES.md` there).
+   Still without a photo: Jamie's (no candidate clearly the Budapest branch),
+   King's (only other hotels), Szentendre (Commons showed a tram museum).
+2. **TikTok collection**: done 2026-10-28. 24 places from Hen's saved TikToks
+   are in `src/lib/ideas.ts` (`tt-` ids, block at the end of `IDEAS`), 17 with
+   a photo cropped from the TikTok. Coordinates of `tt-` places are estimates
+   (geocoders were blocked in the cloud session); a few facts are marked
+   „כדאי לבדוק לפני” (Tokio identity, Slow Moe's location and kashrut,
+   Karaván in winter, Museum of Illusions reopening).
 3. **Plan content to confirm with the parents** (client-facing):
    - Day 1 has the hotel at 11:15 after a 10:00 landing; EES passport queues
      may make that tight.

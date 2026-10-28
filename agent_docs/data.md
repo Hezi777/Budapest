@@ -9,6 +9,11 @@ Researched by web search in October 2026. Re-check a week before the trip.
   operating. Kosher Deli, Brooklyn Bagel and Kings are medium/low confidence
   and labelled "check before". Shabbat meals need booking and prepayment by
   Fri 14:00. Friday dinner and Saturday lunch stops carry kosher `alts`.
+- **TikTok ideas** (`tt-` in `ideas.ts`): each checked by web search on
+  2026-10-28, mostly from search snippets (official sites couldn't be opened).
+  Coordinates are estimates from neighbouring known places. Ashi's (Mehadrin,
+  meat) and Slow Moe's (parve, certifier disputed) are tagged kosher with a
+  "check before" note.
 - **Closed**: Gellért Baths (until ~2028), deliberately excluded.
 - **Emergency numbers** (`src/lib/emergency.ts`): Hungary 112/104/107/105,
   the Israeli MFA situation room and the embassy are from official pages.
