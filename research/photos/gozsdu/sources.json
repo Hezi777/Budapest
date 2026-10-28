@@ -1,0 +1,18 @@
+{
+ "id": "gozsdu",
+ "name": "חצרות גוז'דו",
+ "local": "Gozsdu Udvar",
+ "address": "Király utca 13, Budapest",
+ "candidates": [
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest, Gozsdu Udvar, 2.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Budapest%2C_Gozsdu_Udvar%2C_2.jpg/960px-Budapest%2C_Gozsdu_Udvar%2C_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest, Gozsdu Udvar, 3.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Budapest%2C_Gozsdu_Udvar%2C_3.jpg/960px-Budapest%2C_Gozsdu_Udvar%2C_3.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

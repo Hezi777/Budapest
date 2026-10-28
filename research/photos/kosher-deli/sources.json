@@ -1,0 +1,27 @@
+{
+ "id": "kosher-deli",
+ "name": "Kosher Deli",
+ "local": "Kosher Deli (S12)",
+ "address": "Síp utca 12, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Kosher+Land+grocery+and+Restaurant+(+%D7%9E%D7%A1%D7%A2%D7%93%D7%94+%D7%9B%D7%A9%D7%A8%D7%94+%D7%95%D7%9E%D7%9B%D7%95%D7%9C%D7%AA+%D7%91%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98)%E2%80%8E%E2%80%AD/@47.4966531,19.0618711,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003aa7e799:0xc36fc9530effc9c4!8m2!3d47.4966531!4d19.0618711!16s%2Fg%2F11x6djjp49?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfrlsTjU6Plr5ADziG2eQ5PaXLkxChuqgrY0ArwjA5c4jRzOTS7JGTvs-f79qACF8m-epHnDi_cc9sB3gTSZaljTgX3Vxq-YXUdOrGy912tdopnuMKhcjk0p8s8Y1XO7v_6b92UACpgKn0O=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Kosher+Land+grocery+and+Restaurant+(+%D7%9E%D7%A1%D7%A2%D7%93%D7%94+%D7%9B%D7%A9%D7%A8%D7%94+%D7%95%D7%9E%D7%9B%D7%95%D7%9C%D7%AA+%D7%91%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98)%E2%80%8E%E2%80%AD/@47.4966531,19.0618711,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003aa7e799:0xc36fc9530effc9c4!8m2!3d47.4966531!4d19.0618711!16s%2Fg%2F11x6djjp49?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeTCHwKtt_dhL9JP46Kv_IzhiWcO1uXTPQ1gsjxRAsliAuG4_s2j85f4I1m3Ttex4kELBXYU3eoBa4UUCGvzrtvZ3HqxoaJV9T91i9HxtOCA0NdZi7e_a7X1hmCITjewGInIiDbXwGsLe8=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Kosher+Land+grocery+and+Restaurant+(+%D7%9E%D7%A1%D7%A2%D7%93%D7%94+%D7%9B%D7%A9%D7%A8%D7%94+%D7%95%D7%9E%D7%9B%D7%95%D7%9C%D7%AA+%D7%91%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98)%E2%80%8E%E2%80%AD/@47.4966531,19.0618711,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003aa7e799:0xc36fc9530effc9c4!8m2!3d47.4966531!4d19.0618711!16s%2Fg%2F11x6djjp49?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/a-/ALV-UjUzQJydNhlS7d-WVQEWHseMaUHeQJJYUtNgCeFlF6epUcSFIkMcKA=w1200-h900-k-no"
+  }
+ ]
+}

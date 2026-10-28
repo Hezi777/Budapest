@@ -1,0 +1,33 @@
+{
+ "id": "hospital-rock",
+ "name": "בית החולים בסלע",
+ "local": "Hospital in the Rock · Sziklakórház",
+ "address": "Lovas út 4/c, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Hospital+in+the+Rock/@47.5007642,19.0315115,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc22481762bb:0x7e1ee242e28cf88a!8m2!3d47.5007642!4d19.0315115!16s%2Fm%2F012hr3mp?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcv18r1p-0b82H2Jmri3cuYVmvjrVddMO9YjMKkCOJUia6-NuofbKY8-S1T_s01yKTdxa6Jyn8kJESdxBAqSEjSJKbvi4XpcuOhjvP7oY86xa0PKTtPQDstgzeoRZZho_dZKUhQ=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Hospital+in+the+Rock/@47.5007642,19.0315115,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc22481762bb:0x7e1ee242e28cf88a!8m2!3d47.5007642!4d19.0315115!16s%2Fm%2F012hr3mp?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcJbZ6N5yAyjeChBgOcXiwvChnbiLai_gYDYAkVFaLjI9s-okfRdMDaxLeLFBtk3eSgDttqTGa5RqlUcZppOKOyWz0utV40oqF5Ml9CnTm4UvtrKzT-qPFKd0LbaHINTcwqpMU=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Hospital+in+the+Rock/@47.5007642,19.0315115,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc22481762bb:0x7e1ee242e28cf88a!8m2!3d47.5007642!4d19.0315115!16s%2Fm%2F012hr3mp?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcOIrN3sDy1HeRGyfYCL3ZqgbI4au3F7Hgth_SzQmus-6pNvaFisSKDKyXUfqjJnNNcHQuUSH5YC5ozFDhPNGS7e_1abHf0aw0MdmTb7KDWw5_tBskthDWByjJE6KrcEUuiys5Yvg=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest. I. Lovas út 4.- Hospital in the Rock and Castle Walls. Sour Soup tower.JPG",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Budapest._I._Lovas_%C3%BAt_4.-_Hospital_in_the_Rock_and_Castle_Walls._Sour_Soup_tower.JPG/960px-Budapest._I._Lovas_%C3%BAt_4.-_Hospital_in_the_Rock_and_Castle_Walls._Sour_Soup_tower.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest. I. Lovas út. 4.- Hospital in the Rock - Secret Military Hospital and Nuclear Bunker.JPG",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Budapest._I._Lovas_%C3%BAt._4.-_Hospital_in_the_Rock_-_Secret_Military_Hospital_and_Nuclear_Bunker.JPG/960px-Budapest._I._Lovas_%C3%BAt._4.-_Hospital_in_the_Rock_-_Secret_Military_Hospital_and_Nuclear_Bunker.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

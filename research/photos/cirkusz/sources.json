@@ -1,0 +1,27 @@
+{
+ "id": "cirkusz",
+ "name": "Cirkusz Café",
+ "local": "Cirkusz Café",
+ "address": "Dob utca 25, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Cirkusz+Caf%C3%A9/@47.4984569,19.061539,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc69c95503fd:0x853cb18d97944465!8m2!3d47.4984569!4d19.061539!16s%2Fg%2F11b6_jhnh9?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfVpHrsA36tn5jzVFViEEj_KT2v9DncIREYQxti28DsnKkc4bjS03Ai-P5xQDMSoZdigjAbhwZWX8kGxgtN1AOrWfyqCD16l_L5xi5dMRU7Hz3p3HtNdVHYudS707997zvuTj7Uby6fZBI=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Cirkusz+Caf%C3%A9/@47.4984569,19.061539,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc69c95503fd:0x853cb18d97944465!8m2!3d47.4984569!4d19.061539!16s%2Fg%2F11b6_jhnh9?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfXDCJSOKsgqHGwKnP0ub5czJ542SNgsUga0ixjdL0YA7ICMxxPLPQ-ksWMIq_MEnTrWbDRg9yNBHtXzz9F8X9ib0qqY7_CqMvJHsVaprX2io06Jpf_Q6kZb7it6b1q5bLmaNC7AwTLBoj-=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Cirkusz+Caf%C3%A9/@47.4984569,19.061539,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc69c95503fd:0x853cb18d97944465!8m2!3d47.4984569!4d19.061539!16s%2Fg%2F11b6_jhnh9?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/a-/ALV-UjVOh3Kov3rE7fmxDyAq92QzglXCYG0mhKbcc5B_jcwdhBAwNFxq=w1200-h900-k-no"
+  }
+ ]
+}

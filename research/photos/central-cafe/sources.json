@@ -1,0 +1,37 @@
+{
+ "id": "central-cafe",
+ "name": "קפה סנטרל",
+ "local": "Centrál Kávéház",
+ "address": "Károlyi utca 9, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Centr%C3%A1l+Grand+Cafe+%26+Bar/@47.491985,19.056884,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4465de643d:0x414750ff2b927031!8m2!3d47.491985!4d19.056884!16s%2Fg%2F1tf7ffsb?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcIrW4JY2HrQZLBHXJyopkohBGi-kC8lsMh61cjrrgC8GtHzHweynmD6F4kwDiX0FQM6-sizBI1Zr-BxDikbGheuyN9_fTQ_hy4oOLke3khUp3vSc-C-775QJLIfgOdcOhTmpJ9FlZ8wBp5=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Centr%C3%A1l+Grand+Cafe+%26+Bar/@47.491985,19.056884,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4465de643d:0x414750ff2b927031!8m2!3d47.491985!4d19.056884!16s%2Fg%2F1tf7ffsb?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeAUVUSNlu8l04xCLuiCkemrxzbR2nBE12NFQcxk6kzp3ntlDL9CAVXmaaJu8PGdAXaTbK3AbI64q8N_3eEuDpRQ3n-U9ShE2W__qLX11eiFQfkzjVPii5nky6pNmK7wdsr-Pb30w=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Centr%C3%A1l+Grand+Cafe+%26+Bar/@47.491985,19.056884,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4465de643d:0x414750ff2b927031!8m2!3d47.491985!4d19.056884!16s%2Fg%2F1tf7ffsb?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdyJosTzluxc0WESg2LGl8sKHxaj4yp7HPvc9LZRvf-ezjyOYWujaU9Uv1n75WXuXbiu-c8--niuJorISJ4pqBnoDsMMVzO327WF2Nf9EK3Mf3jU4LrCXtKwwnH3OPecFMu3V-l5w=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Central Café Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Central_Caf%C3%A9_Budapest.jpg/960px-Central_Caf%C3%A9_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Central Café Budapest-2022.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Central_Caf%C3%A9_Budapest-2022.jpg/960px-Central_Caf%C3%A9_Budapest-2022.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

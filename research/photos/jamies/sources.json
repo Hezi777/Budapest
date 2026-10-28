@@ -1,0 +1,27 @@
+{
+ "id": "jamies",
+ "name": "Jamie's Italian",
+ "local": "Jamie's Italian Budapest",
+ "address": "Szentháromság tér 9-11, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Jamie's+Italian+Budapest/@47.5011501,19.0326873,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc226bb70759:0x1897dc56bea53239!8m2!3d47.5011501!4d19.0326873!16s%2Fg%2F11cnb_wbn_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLckHCJL2PGJa2g4aJQipVXUqnVLX1r6l4QPu854kcuuBDK6LqttW2_-vOWU56Gxyhr5pgfryFEoNwNvcOffcl-37ol1W_2JktwQRjj9dNbqiIl7xTrSVCmKkR5SK3LXQxwb_Vi2=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Jamie's+Italian+Budapest/@47.5011501,19.0326873,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc226bb70759:0x1897dc56bea53239!8m2!3d47.5011501!4d19.0326873!16s%2Fg%2F11cnb_wbn_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcLOQ2HPOCfRnY-bUvTNNeZRIdzPR7QvkuWrGfGoqA9URh7LFcBQyIM4UNQImi7Ilb1HCgCBbz5uOyeMweAlzne71aabjPsAPpfMJR1Lng1bHf2wEHFJuln0MpYEE_eeqZmr-Gk=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Jamie's+Italian+Budapest/@47.5011501,19.0326873,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc226bb70759:0x1897dc56bea53239!8m2!3d47.5011501!4d19.0326873!16s%2Fg%2F11cnb_wbn_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLc-fWyum22WAw15xfzRxt1WL26z8c46b1-pzP0mElkAbsgLxoyEQpAKc9ah-29x4VpivkDixOX3eiiea_Ndq2f_txkBklRSTUIgj6OHIgYe7kD1B3laKAT161lskr9Ekh2RLugvKIoxXrhq=w1200-h900-k-no"
+  }
+ ]
+}

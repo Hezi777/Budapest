@@ -1,0 +1,33 @@
+{
+ "id": "szimpla",
+ "name": "סימפלה קרט",
+ "local": "Szimpla Kert",
+ "address": "Kazinczy utca 14, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A9%D7%95%D7%A7+%D7%A1%D7%99%D7%9E%D7%A4%D7%9C%D7%94+%D7%94%D7%95%D7%A0%D7%92%D7%A8%D7%99%D7%94%E2%80%AD/@47.4969648,19.0633459,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc42a0d20de5:0x267742d3fb311da4!8m2!3d47.4969648!4d19.0633459!16s%2Fg%2F187cd6lb?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe8Yzsuxf8b4QbjTAuBKG7b2mfGXw70jDteEhlKWeIPw0Gc6mwqniFchYv3ITjqwK2RaQvUPsfF1HP_oP155ToLZW6gxxm4eib7VU-UnqlOZxwf16PNv7N2KJAgwcoQzLv409aiHg=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A9%D7%95%D7%A7+%D7%A1%D7%99%D7%9E%D7%A4%D7%9C%D7%94+%D7%94%D7%95%D7%A0%D7%92%D7%A8%D7%99%D7%94%E2%80%AD/@47.4969648,19.0633459,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc42a0d20de5:0x267742d3fb311da4!8m2!3d47.4969648!4d19.0633459!16s%2Fg%2F187cd6lb?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLejpVzCrwU6xIH_LtmOJT48gQ1kOLUiVLCeM-pHPHvhQAxrRWEAJLMCLXCyZc6ciO-fdy6dHY3JpWZDd78HXL0_QKhoTonm8m0AsZTfkcVJhHnCoLTUYM7tfVigCtikFq1YCLM=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A9%D7%95%D7%A7+%D7%A1%D7%99%D7%9E%D7%A4%D7%9C%D7%94+%D7%94%D7%95%D7%A0%D7%92%D7%A8%D7%99%D7%94%E2%80%AD/@47.4969648,19.0633459,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc42a0d20de5:0x267742d3fb311da4!8m2!3d47.4969648!4d19.0633459!16s%2Fg%2F187cd6lb?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfeo5YvvKNpqcJIZg8vZv0TA59Vq746yyP7_WNKlWUTkhFy4n-OPtvplB-I9P78w6HzL_BD27Ya5qC6dAn9GkcsPIwPahmrcNcTVdJ_XjpPidqvLCQorWNJ_M5TkX3rc8sF4Bg=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Szimpla Kert Budapest 1.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Szimpla_Kert_Budapest_1.jpg/960px-Szimpla_Kert_Budapest_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest Szimpla Kert (54328707747).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Budapest_Szimpla_Kert_%2854328707747%29.jpg/960px-Budapest_Szimpla_Kert_%2854328707747%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

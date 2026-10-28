@@ -1,0 +1,37 @@
+{
+ "id": "twentysix",
+ "name": "Twentysix",
+ "local": "Twentysix Budapest",
+ "address": "Király utca 26, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Twentysix+Budapest+Restaurant/@47.4995792,19.0587484,17z/data=!3m1!4b1!4m6!3m5!1s0x4741ddc7f4156575:0xc84bdea787e31076!8m2!3d47.4995792!4d19.0587484!16s%2Fg%2F11fqtbvqvf?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfIG3lb-M65t_71eaWOZMmDWmyb8v4rYC9czrYs-qky0Y_3J43_JkSoHINTMVW1eVeYmLlat5uG9InvHf6uVjqexrtuWgW92c1wGxTeS7HZw5XBQ0B_AVsRi4VcIf0ZjmQhDyXVXlc9s3-v=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Twentysix+Budapest+Restaurant/@47.4995792,19.0587484,17z/data=!3m1!4b1!4m6!3m5!1s0x4741ddc7f4156575:0xc84bdea787e31076!8m2!3d47.4995792!4d19.0587484!16s%2Fg%2F11fqtbvqvf?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLf6Q9CkYvjkvXAH9v1fI1MSLwjMBDTNdKMYwjIUDNYFoKYhplCBwe_BNEOikWtASd-Gq0Ix3aSNpULX1xpf56aHTUiiODlh3AHhgsOMLlqVCuqefUG5u2MRzrhCDMvQQ7w70LYl=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Twentysix+Budapest+Restaurant/@47.4995792,19.0587484,17z/data=!3m1!4b1!4m6!3m5!1s0x4741ddc7f4156575:0xc84bdea787e31076!8m2!3d47.4995792!4d19.0587484!16s%2Fg%2F11fqtbvqvf?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeQVBddgVzv6OLecFPdiOqwFZ_eWPxF2vn674183uFCd2Nmz7JZLhUAt19nHB-YrjpPU52rQzRIm1-sXwymFOXK7V2YJvLvf11g61gLCbA1kxwgY-LYNgyCYB0VONZeGDfzeqkpXDsuXBwx=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest - Twentysix 2.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Budapest_-_Twentysix_2.jpg/960px-Budapest_-_Twentysix_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest - Twentysix 1.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Budapest_-_Twentysix_1.jpg/960px-Budapest_-_Twentysix_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "id": "budapest-eye",
+ "name": "גלגל הענק",
+ "local": "Budapest Eye",
+ "address": "Erzsébet tér, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%92%D7%9C%D7%92%D7%9C+%D7%A2%D7%A0%D7%A7%E2%80%AD/@47.4981503,19.0520441,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc40178fc961:0x876ccf2875ecd525!8m2!3d47.4981503!4d19.0520441!16s%2Fg%2F11c74d_05c?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdXFQnLQqp9oPxhsDDmi0YS_xOBvW6uUXG8Vhal1RN2DUi6dMqjk4KcnpoYntyj4S9qzkvLz4cEg9khF-p_i5kIMM0PISBOgaAOoCCtxX3BKwxv_VdYy8pn1pxAYz5fFySpaq_1Yw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%92%D7%9C%D7%92%D7%9C+%D7%A2%D7%A0%D7%A7%E2%80%AD/@47.4981503,19.0520441,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc40178fc961:0x876ccf2875ecd525!8m2!3d47.4981503!4d19.0520441!16s%2Fg%2F11c74d_05c?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe7vBSsX_CZFXhb0jdoJPexL06vaOv8L24I0pNeH3KvkaTVsfhA9rtoKDMBo2EwWP8-Y1v-GcJ9JqqV9f9VwWqQPnXgi4sUs6UKq8HOj7ZW5pJoC9EksExM7FW28rIrgzxScjhKbw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%92%D7%9C%D7%92%D7%9C+%D7%A2%D7%A0%D7%A7%E2%80%AD/@47.4981503,19.0520441,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc40178fc961:0x876ccf2875ecd525!8m2!3d47.4981503!4d19.0520441!16s%2Fg%2F11c74d_05c?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeHV8hig3tdLuSTwTLCKzYWbtdqVq8pUmYmmq-V_keIqhYefP6ZC2UbvStg6IPXsqyPxyYbbp2aiuV4llT5tKS7scpgncKneakJya5E2CLu28Ps4B7cB2kKlEbhvWb63LfNfH2l=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest Eye.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Budapest_Eye.jpg/960px-Budapest_Eye.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest - Budapest Eye 2.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Budapest_-_Budapest_Eye_2.jpg/960px-Budapest_-_Budapest_Eye_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

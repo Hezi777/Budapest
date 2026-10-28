@@ -1,0 +1,33 @@
+{
+ "id": "gerbeaud",
+ "name": "קפה ז'רבו",
+ "local": "Café Gerbeaud",
+ "address": "Vörösmarty tér 7, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Caf%C3%A9+Gerbeaud/@47.496964,19.0502535,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4087020079:0xe8e750d57289ee54!8m2!3d47.496964!4d19.0502535!16s%2Fm%2F05b3c_f?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfexT0xUX4PY2E176FJ3WL7Dn75Hr0A8FWIBxQePi6UbZLOTnAEtD9dzVQV2r54_e0IDBWT_74je1pJhPQ-oN8duXrpcoGV6hvY1RmTI1sSSg9ZcNzfGoVuofSP1I1ol4zs5vJ3pA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Caf%C3%A9+Gerbeaud/@47.496964,19.0502535,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4087020079:0xe8e750d57289ee54!8m2!3d47.496964!4d19.0502535!16s%2Fm%2F05b3c_f?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfE6rIO8G9fuf4P3RqSC0JWnP1AUKcQL41sdY1l1LGmQ3pZiWnuhK1ege_aGM5y5JCw-eKwuzR6bJ-1b4gezh0g6Vd4ddkJhg3WKfKyq1ddjacNZl9BT0RwzYZeE9NrXNJ7EmRR=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Caf%C3%A9+Gerbeaud/@47.496964,19.0502535,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4087020079:0xe8e750d57289ee54!8m2!3d47.496964!4d19.0502535!16s%2Fm%2F05b3c_f?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdPAwXptT186z8jYBy-IidNW_7h34dYD1E_QWowOHBKEGZ0QIY4yj3uAecR8WXRvoyRCkdIW90EVdClq0eJQNfmvZUiQnis0I6Agzxo_us2ffY8teeBJOTAD_Qh5QeGHywKtWq2=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Gerbeaud Budapest 2005 078.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Gerbeaud_Budapest_2005_078.jpg/960px-Gerbeaud_Budapest_2005_078.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Café Gerbeaud, Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Caf%C3%A9_Gerbeaud%2C_Budapest.jpg/960px-Caf%C3%A9_Gerbeaud%2C_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

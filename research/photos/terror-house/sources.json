@@ -1,0 +1,33 @@
+{
+ "id": "terror-house",
+ "name": "בית הטרור",
+ "local": "House of Terror · Terror Háza",
+ "address": "Andrássy út 60, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%99%D7%AA+%D7%94%D7%98%D7%A8%D7%95%D7%A8%E2%80%AD/@47.5068935,19.0651261,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc6e1d41b419:0xade1459037fed6dd!8m2!3d47.5068935!4d19.0651261!16zL20vMDd0cmti?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfZuh1995RG3KWSswf6ZVIR-UL-wYq6RNjuRV7_qnYqJFbfEbYpFgoD1Nd7AFDxyh6_cH-lhywQVEqnk--TO7bsyglNH0pvnk_W3kbuWOihdRi3TYU_fPu_WDKml3Z5nCCzKxrV=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%99%D7%AA+%D7%94%D7%98%D7%A8%D7%95%D7%A8%E2%80%AD/@47.5068935,19.0651261,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc6e1d41b419:0xade1459037fed6dd!8m2!3d47.5068935!4d19.0651261!16zL20vMDd0cmti?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdNKgTP11TikBr_SF-f-UFvHeJjP9PjK_mOCmBY8ieBLfX-ZTwZYam4Wlh5INXjUZUZ6XplXzYeDtrwDRpoVKuZ0ZHxMj46WpH1kb1kcywyKhaO-zAGAPbZaFAZ9511OJJ_7gdl=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%99%D7%AA+%D7%94%D7%98%D7%A8%D7%95%D7%A8%E2%80%AD/@47.5068935,19.0651261,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc6e1d41b419:0xade1459037fed6dd!8m2!3d47.5068935!4d19.0651261!16zL20vMDd0cmti?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcA8HsDowdZm7D1Oiu6rJkwt8cLxdzirUnEXOlwbSW7-5-gE8SodDhW-cPbzhJLvJVcQ6_EDhmQqqoveImsO7rALY1BXtdC5w_Isyzc2hiHv8gJWlehv6ok8IxSfLFg6Usgp3nz=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest Terror Háza Múzeum contrasted narrative in exhibition.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Budapest_Terror_H%C3%A1za_M%C3%BAzeum_contrasted_narrative_in_exhibition.jpg/960px-Budapest_Terror_H%C3%A1za_M%C3%BAzeum_contrasted_narrative_in_exhibition.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:House of Terror, Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/House_of_Terror%2C_Budapest.jpg/960px-House_of_Terror%2C_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

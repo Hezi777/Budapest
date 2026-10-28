@@ -1,0 +1,33 @@
+{
+ "id": "city-park-rink",
+ "name": "מגרש הקרח בפארק העירוני",
+ "local": "Városligeti Műjégpálya",
+ "address": "Olof Palme sétány 5, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/City+Park+Ice+Rink+%26+Boating/@47.5147653,19.0799971,17z/data=!3m1!4b1!4m6!3m5!1s0x4741db87915e05d3:0x495f8690c9a4db8!8m2!3d47.5147653!4d19.0799971!16s%2Fm%2F0hr1flg?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLczC1NGTW5qb5z3GKlAAhmx0aneXFxBaMJu0F5pc_p0knNguzD6EDqWnDacEbcOOjiPFgzTIsSZ-h3xKcakPsnVKgr4wxn6D_Meg9vE5HkhXW1VHjLF4CJds7VIBIeyH9F66Dyztw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/City+Park+Ice+Rink+%26+Boating/@47.5147653,19.0799971,17z/data=!3m1!4b1!4m6!3m5!1s0x4741db87915e05d3:0x495f8690c9a4db8!8m2!3d47.5147653!4d19.0799971!16s%2Fm%2F0hr1flg?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLex1ia-u2HO0qZdrz0A2NqlP4SxCP3yKtIOLrCHKSzDEqfWsfL_k-Pl1MSzZODysBSQgmy3GE_eP3dFQ2Bt45iSZA-FOUjpSOYqA9aa02mk2vJnA5cW_kseUh9hA7c0Xi3Ggwv2Hg=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/City+Park+Ice+Rink+%26+Boating/@47.5147653,19.0799971,17z/data=!3m1!4b1!4m6!3m5!1s0x4741db87915e05d3:0x495f8690c9a4db8!8m2!3d47.5147653!4d19.0799971!16s%2Fm%2F0hr1flg?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe4ie_xXGdHPO3DVitDu2BaAJC1bzEeiqWxX7B3NrVH6yQxsbz_IaENM4qpy_48wJZAxnUzy6ktYZ7GLNMsukftoXE_r54vwYutK_bB0u746pqdky_Bqs7XDhZw92qxfcMhQJ-dRw=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest District XIV., Schoch Frigyes Városligeti Műjégpálya 1907.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Budapest_District_XIV.%2C_Schoch_Frigyes_V%C3%A1rosligeti_M%C5%B1j%C3%A9gp%C3%A1lya_1907.jpg/960px-Budapest_District_XIV.%2C_Schoch_Frigyes_V%C3%A1rosligeti_M%C5%B1j%C3%A9gp%C3%A1lya_1907.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest, Városligeti Műjégpálya, 2.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Budapest%2C_V%C3%A1rosligeti_M%C5%B1j%C3%A9gp%C3%A1lya%2C_2.jpg/960px-Budapest%2C_V%C3%A1rosligeti_M%C5%B1j%C3%A9gp%C3%A1lya%2C_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

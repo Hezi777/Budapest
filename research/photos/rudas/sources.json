@@ -1,0 +1,33 @@
+{
+ "id": "rudas",
+ "name": "מרחצאות רודאש",
+ "local": "Rudas Baths",
+ "address": "Döbrentei tér 9, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A8%D7%97%D7%A6%D7%90%D7%95%D7%AA+%D7%A8%D7%95%D7%93%D7%90%D7%A9%E2%80%AD/@47.4891599,19.0479716,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc48793a07bf:0xe30c631dc2a0f87a!8m2!3d47.4891599!4d19.0479716!16zL20vMGJiMXNt?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfwvC6Ht0_jFEKOUoRW70IoMXjdFSP5YQxSFaouPZsxv4_ssNaj2Jr2VlaMmwqPv9oZ2GGyOxNWW6Ydf4rZ1798JW1nDYQyY9W6FIbrQErhOWVuRVxJ4mAUj7mzXbR0waNeTyTs=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A8%D7%97%D7%A6%D7%90%D7%95%D7%AA+%D7%A8%D7%95%D7%93%D7%90%D7%A9%E2%80%AD/@47.4891599,19.0479716,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc48793a07bf:0xe30c631dc2a0f87a!8m2!3d47.4891599!4d19.0479716!16zL20vMGJiMXNt?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcSnixB-p9PwGfeNiXvp4qJvSbixw4rdX0DSszK3JvLT5u0n25LNkNFmZbY5ONcM_K0GIGR60yhnkINbHzJgkaVinBwo8Rh36c4qCglNIk7Acfi1nC8u0JjItx2A87xFaQ4m2qtPw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A8%D7%97%D7%A6%D7%90%D7%95%D7%AA+%D7%A8%D7%95%D7%93%D7%90%D7%A9%E2%80%AD/@47.4891599,19.0479716,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc48793a07bf:0xe30c631dc2a0f87a!8m2!3d47.4891599!4d19.0479716!16zL20vMGJiMXNt?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLemv0QDd6vZv7hsKGQ9ItlLuvpy5v-rT2oNI2OPVeMQN9t_-VwoaQ0N2P4FSMsXsFDyBXEwicJxpXSxKD3dmdYpO2UXjh7KUHMa61FhbOcCuKnyoflc_d5HPzNfVNpk0z6ct1VvSQ=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Rudas Baths central part and Gellert Hill in Tabán, 2016 Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Rudas_Baths_central_part_and_Gellert_Hill_in_Tab%C3%A1n%2C_2016_Budapest.jpg/960px-Rudas_Baths_central_part_and_Gellert_Hill_in_Tab%C3%A1n%2C_2016_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Rudas Baths connecting building in Tabán, 2016 Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Rudas_Baths_connecting_building_in_Tab%C3%A1n%2C_2016_Budapest.jpg/960px-Rudas_Baths_connecting_building_in_Tab%C3%A1n%2C_2016_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

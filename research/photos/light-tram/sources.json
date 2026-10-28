@@ -1,0 +1,33 @@
+{
+ "id": "light-tram",
+ "name": "החשמלית המוארת",
+ "local": "Fényvillamos",
+ "address": "Deák Ferenc tér, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/De%C3%A1k+Ferenc+t%C3%A9r/@47.4975743,19.0538154,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc41b415dbf1:0xa8d003cf7d78427!8m2!3d47.4975743!4d19.0538154!16s%2Fg%2F11bc684bq8?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe1Zaw7upy1lRt6xfqMgRIy8_0c5F9tBFKIFAOFJXqwK58ab7tcPRu8aYpBvjJKCQvVnn2SQ4RbEK2uzjDaXYMjygTaOi6d_H8klCYdI8yLaqd54IZJ0_vwzr2LOzER3DuSItV5=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/De%C3%A1k+Ferenc+t%C3%A9r/@47.4975743,19.0538154,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc41b415dbf1:0xa8d003cf7d78427!8m2!3d47.4975743!4d19.0538154!16s%2Fg%2F11bc684bq8?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLec5QHu4_HJ-4AyGbsgpmKPd2gxH9aI3syMSfmkS0NusxIxUlz7g5vvp-HEDbBz0wUiLQRYW_Kut3UhN4Iwy7pcFTORTbCE03GEuWTMhepwnUN29CG-w1tGS6GVB82G9rBPncXhWg=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/De%C3%A1k+Ferenc+t%C3%A9r/@47.4975743,19.0538154,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc41b415dbf1:0xa8d003cf7d78427!8m2!3d47.4975743!4d19.0538154!16s%2Fg%2F11bc684bq8?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLccOGI-wd8F0qWUi_o19vJTJ9zzTPTWcFj74jur83pXBnYKIiLCzJ3kUxsNaGbUfvYOYUzwRHw8iTWiie2sOezonNtOuRZi1zMCHY6ttuVSOXGHVnjHZulwMGCTjJoj_rPIlUYP=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest, Határ út, fényvillamos, 4.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Budapest%2C_Hat%C3%A1r_%C3%BAt%2C_f%C3%A9nyvillamos%2C_4.jpg/960px-Budapest%2C_Hat%C3%A1r_%C3%BAt%2C_f%C3%A9nyvillamos%2C_4.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest, Újbuda-központ, fényvillamos, 2.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Budapest%2C_%C3%9Ajbuda-k%C3%B6zpont%2C_f%C3%A9nyvillamos%2C_2.jpg/960px-Budapest%2C_%C3%9Ajbuda-k%C3%B6zpont%2C_f%C3%A9nyvillamos%2C_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

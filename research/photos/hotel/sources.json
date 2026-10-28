@@ -1,0 +1,37 @@
+{
+ "id": "hotel",
+ "name": "המלון: Exe Budapest Center",
+ "local": "Exe Budapest Center",
+ "address": "Kossuth Lajos utca 7-9, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/?api=1&query=Exe%20Budapest%20Center%2C%20Kossuth%20Lajos%20utca%207-9%2C%20Budapest",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfMGiNRw63RBDX8mJ_Xd47nx_MeypGoEl7iYV0OXoF9J2rhOwbbAXUjZ4-5C_3xruhOQD00wG-0AUacZDxsLWlxVsVLhyUqyJD57-VWaadIZQ00MhsaHkpxXx1rHGBkXTWNaKEK=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/?api=1&query=Exe%20Budapest%20Center%2C%20Kossuth%20Lajos%20utca%207-9%2C%20Budapest",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe6ragRe60F1CsJKzr98mTC6b-103KwrssNx6YiqhvkWAEh--gbPUN85G4ahXm0xKzPvT6ukA-rcVjV6A9Yx4nox3JHDgO3JVP3rpMMHaqZ_vwk0gaNOfoh87zfsnF00wSbFNSu=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Eurostars+Budapest+Center/@47.4935262,19.0582077,17z/data=!4m9!3m8!1s0x4741dc4390eb2101:0x61666d657b2cb3e4!5m2!4m1!1i2!8m2!3d47.4935262!4d19.0582077!16s%2Fg%2F1tdfrxyy?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdz1yn7VFjt99Pwsh3k-ZzTERlvyb-MYkepg9D0QHM5EsbfMI4u0U9CpkCqls-7oC_a7xflWEeH9DdlsRtnV9zOqWqCTqfly1vHj5iFgtPDprpuKMJ94TdkZgwZSzuYZ38Ce9cftAzRtzk2=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Brunnen, Kossuthstrasse 9, Reáltanodastrasse 8, Hof, 2022 Belváros-Lipótváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Brunnen%2C_Kossuthstrasse_9%2C_Re%C3%A1ltanodastrasse_8%2C_Hof%2C_2022_Belv%C3%A1ros-Lip%C3%B3tv%C3%A1ros.jpg/960px-Brunnen%2C_Kossuthstrasse_9%2C_Re%C3%A1ltanodastrasse_8%2C_Hof%2C_2022_Belv%C3%A1ros-Lip%C3%B3tv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Brunnenskulptur, Kossuthstrasse 9, Reáltanodastrasse 8, Hof, 2022 Belváros-Lipótváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Brunnenskulptur%2C_Kossuthstrasse_9%2C_Re%C3%A1ltanodastrasse_8%2C_Hof%2C_2022_Belv%C3%A1ros-Lip%C3%B3tv%C3%A1ros.jpg/960px-Brunnenskulptur%2C_Kossuthstrasse_9%2C_Re%C3%A1ltanodastrasse_8%2C_Hof%2C_2022_Belv%C3%A1ros-Lip%C3%B3tv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

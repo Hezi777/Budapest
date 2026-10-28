@@ -1,0 +1,32 @@
+{
+ "id": "telaviv",
+ "name": "Tel Aviv Café",
+ "local": "Tel Aviv Café",
+ "address": "Kazinczy utca 28, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Tel+Aviv+Cafe/@47.4981346,19.0626144,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc6837353e7d:0xcc876724bea81788!8m2!3d47.4981346!4d19.0626144!16s%2Fg%2F1q66_whh1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcuTwuskf8tJAG6v1VZDA62MYDsUb4w7ONKJf9B6k_ay6nOERizKo0x9AVRU47PDHc73tE-CR7aGDK8vX1vzR1JVR5dj1joBmTdqIJQzNuWYdEC3urPAU_W40are5KSh2AneWQ=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Tel+Aviv+Cafe/@47.4981346,19.0626144,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc6837353e7d:0xcc876724bea81788!8m2!3d47.4981346!4d19.0626144!16s%2Fg%2F1q66_whh1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdRfE2Mss09RJdOeVZydcrroV6zqllep6vXYEjDom75cvIQl_0Yv4Lpp2kiSEit47uUOdhQOW9Aincsc-bXZSaXnN6q-tkOxyOhncEtj8kBtf0bDugUiKLyhyYHR_bQ67bMLOWlZQ=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Tel+Aviv+Cafe/@47.4981346,19.0626144,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc6837353e7d:0xcc876724bea81788!8m2!3d47.4981346!4d19.0626144!16s%2Fg%2F1q66_whh1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfjkp01O5CeaZPUntZ2P6I-x_H4wAKTKOI5doeQ4dabeqwEepztE0VtZrHZpCZPKefRQUaIPRQczb30jFyEvrJDnD6G-9vCSTDy6zuAEUlY9kIV3MLTLnGWyOHdkA_V6sLHZdah=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Kazinczystrasse 28, 2024 Erzsébetváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Kazinczystrasse_28%2C_2024_Erzs%C3%A9betv%C3%A1ros.jpg/960px-Kazinczystrasse_28%2C_2024_Erzs%C3%A9betv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

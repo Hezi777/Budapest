@@ -1,0 +1,33 @@
+{
+ "id": "szechenyi",
+ "name": "מרחצאות סצ'ני",
+ "local": "Széchenyi Thermal Bath",
+ "address": "Állatkerti körút 9-11, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A8%D7%97%D7%A6%D7%90%D7%95%D7%AA+%D7%A1%D7%A6'%D7%A0%D7%99%D7%99%E2%80%AD/@47.5186568,19.0823791,17z/data=!3m1!4b1!4m6!3m5!1s0x4741db8605675577:0xcbc0c308b68d2412!8m2!3d47.5186568!4d19.0823791!16zL20vMDdyczF5?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeV3133gCamZ7MMWp8pC3wehdwt_17fBFKBxa0V2cxnMZ4WxgkkP2GsC_whv9fvKGvP_-_MNoswYIXniTJT4IS6x-q0qmhC-lJTxclVM8naAC3sajNdXLmqZlhW-YlIr8oX7pM=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A8%D7%97%D7%A6%D7%90%D7%95%D7%AA+%D7%A1%D7%A6'%D7%A0%D7%99%D7%99%E2%80%AD/@47.5186568,19.0823791,17z/data=!3m1!4b1!4m6!3m5!1s0x4741db8605675577:0xcbc0c308b68d2412!8m2!3d47.5186568!4d19.0823791!16zL20vMDdyczF5?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcuvdLMUeUEoqv8Ba2gWjs2aSzl3or905TZrN1GslHEFdNmh1sTjOg6Cti-avTC9rQyXotMise2j6_ga9jJkS2akGSMMTMfIWiOekF2iJAI-pGYq2dc9k3BH7PRMbudmBR6xN11IA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A8%D7%97%D7%A6%D7%90%D7%95%D7%AA+%D7%A1%D7%A6'%D7%A0%D7%99%D7%99%E2%80%AD/@47.5186568,19.0823791,17z/data=!3m1!4b1!4m6!3m5!1s0x4741db8605675577:0xcbc0c308b68d2412!8m2!3d47.5186568!4d19.0823791!16zL20vMDdyczF5?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdSSxkOvVFQGBF4OCiScEWkWY4ye77uB1a7zEohkTbJcGo7k1kE683tz8GF65_ZQ3M2D_VZjw1R3E7c-4s_Ph2fxbotoBJoEPdxEDD_H8c3sR8Lparc8eh3VMmEFVdjhEei1xS3-w=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest Széchenyi Baths R03.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Budapest_Sz%C3%A9chenyi_Baths_R03.jpg/960px-Budapest_Sz%C3%A9chenyi_Baths_R03.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest Széchenyi Baths R04.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Budapest_Sz%C3%A9chenyi_Baths_R04.jpg/960px-Budapest_Sz%C3%A9chenyi_Baths_R04.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

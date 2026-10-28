@@ -1,0 +1,27 @@
+{
+ "id": "hotstone",
+ "name": "Hot Stone Steakhouse",
+ "local": "Hot Stone Steakhouse",
+ "address": "Október 6. utca 7, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Hot+Stone+Steakhouse+Budapest/@47.50025,19.051249,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc1547da02d5:0x9de801a01c3e83f7!8m2!3d47.50025!4d19.051249!16s%2Fg%2F11c2nsvl2_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfrS7aKNV2ygKjmxTjVNlqA81YQsjYBAImqXCzqyACwS5vlS6dthp9dW02eojwo3JoQiFOEAeRDzKvaTHtAwkXxj7qd85a9W2Ms5hVvW3ZJBOYK92mfwqxGF46l4aePMd-MWUuiB85jzSvA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Hot+Stone+Steakhouse+Budapest/@47.50025,19.051249,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc1547da02d5:0x9de801a01c3e83f7!8m2!3d47.50025!4d19.051249!16s%2Fg%2F11c2nsvl2_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcZLgX-tY552f_In2uZ2Ti3ssOODPyXA-5Ko1jqZMMXZTQ02rwvpbEREYbhGXpR-7zGLSLxVL13e-_GhOLhPmP2pVFRv91UurxaDzaEWnXbiTYnoE0EdZ86NzApAOhzgx5tz6NR2eYv9Dgo=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Hot+Stone+Steakhouse+Budapest/@47.50025,19.051249,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc1547da02d5:0x9de801a01c3e83f7!8m2!3d47.50025!4d19.051249!16s%2Fg%2F11c2nsvl2_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/a-/ALV-UjUD82QlJV5qV8Im9XvIZsQMnr1zVPOp9WvTVSCYpNrXXS3uBaY=w1200-h900-k-no"
+  }
+ ]
+}

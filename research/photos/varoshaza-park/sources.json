@@ -1,0 +1,33 @@
+{
+ "id": "varoshaza-park",
+ "name": "שוק וקרח בפארק העירייה",
+ "local": "Városháza Park",
+ "address": "Városház utca, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/V%C3%A1rosh%C3%A1za+park/@47.4967072,19.0560456,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4191031cc7:0x6b3f5cd4631ca79d!8m2!3d47.4967072!4d19.0560456!16s%2Fg%2F11b7r7g75s?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLer-9yvQw8gcRKM44zAt5NTWNciEkl5TzF3qEqvyE2PIF_Cg3dnggB8u8Hiy_sHi4UYINV2Zop3d8TR6wYZdxjTI6p3KYdotter7XhfVqdU4677Yk_l67gz0UT1Y4Wc1Egsc6j6=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/V%C3%A1rosh%C3%A1za+park/@47.4967072,19.0560456,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4191031cc7:0x6b3f5cd4631ca79d!8m2!3d47.4967072!4d19.0560456!16s%2Fg%2F11b7r7g75s?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcWfTeeAJtuVef28RU70oDbBZrSATsSJ1wQ6wskuAMxd46VwU9qRV2Tg9QGisX-7grU_cL0BDdHG_wE2Vs5TIHeMWELXkFboSmisyu3Eg-W6gocBW42MdMeVemaQoYclQLvj7axTA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/V%C3%A1rosh%C3%A1za+park/@47.4967072,19.0560456,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc4191031cc7:0x6b3f5cd4631ca79d!8m2!3d47.4967072!4d19.0560456!16s%2Fg%2F11b7r7g75s?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfuAAa7p4AuOlvy8q4BZOKFsPfnxqG10-DZ0tMZa2aZU2T2ocreBmT8nTeDN3HKVyLf5tUdteDHJ2U-YHWDK4au1F273HJSKyahGB2Ex3uk7Eo7FXmJaZdSgrJ0YYDpG-A8xD0knA=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Városháza Park (11).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/25/V%C3%A1rosh%C3%A1za_Park_%2811%29.jpg/960px-V%C3%A1rosh%C3%A1za_Park_%2811%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Városháza Park (10).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/V%C3%A1rosh%C3%A1za_Park_%2810%29.jpg/960px-V%C3%A1rosh%C3%A1za_Park_%2810%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "id": "art-of-sushi",
+ "name": "Art of Sushi",
+ "local": "Art of Sushi",
+ "address": "Sas utca, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Art+of+sushi+Bazilika/@47.4998144,19.0521313,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd4cfcd9907f:0xf5949670b6c94224!8m2!3d47.4998144!4d19.0521313!16s%2Fg%2F11xzfnrfxv?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcSVqhmRODENOpARdxZVuaMdbmm8vUN85sh1CqQbZguIUuZH_sYcGNC8vhWTEpTI6c7if_Drd45bRlhiMXIZSlArJcaWsYMQCY2dp6n8hT1wfVSDj1jUiFVB8GuAEE1ffKoGP42V8934c5O=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Art+of+sushi+Bazilika/@47.4998144,19.0521313,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd4cfcd9907f:0xf5949670b6c94224!8m2!3d47.4998144!4d19.0521313!16s%2Fg%2F11xzfnrfxv?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdUC5MtUHZHEIoh3YFaRaWrZgSFnb-6774YEYBxVYWWUwSFbyLbSeCce7u05M4VH4fgs9gueSrOdcgnWm7Z31fMFIPjLwjnQZTQCTCZLoESqH9eVR0eghK0yxaU6zKEg8G0ob203mO3pZg=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Art+of+sushi+Bazilika/@47.4998144,19.0521313,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd4cfcd9907f:0xf5949670b6c94224!8m2!3d47.4998144!4d19.0521313!16s%2Fg%2F11xzfnrfxv?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/a-/ALV-UjUJ69DCDmHHt-Fj4FAkBa2p4JeUsO8WzT2fuYMNebP3RKkSoHr9Wg=w1200-h900-k-no"
+  }
+ ]
+}

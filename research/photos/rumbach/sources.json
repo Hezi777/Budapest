@@ -1,0 +1,33 @@
+{
+ "id": "rumbach",
+ "name": "בית הכנסת ברחוב רומבך",
+ "local": "Rumbach Street Synagogue",
+ "address": "Rumbach Sebestyén utca 11-13, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%99%D7%AA+%D7%94%D7%9B%D7%A0%D7%A1%D7%AA+%D7%A8%D7%95%D7%9E%D7%91%D7%9A%E2%80%AD/@47.4977215,19.0586486,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc42081362bf:0xee6817f97d1c6b26!8m2!3d47.4977215!4d19.0586486!16s%2Fm%2F03wj1xm?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfZ_pUxfqggPJhrV0qKkfzBCRtiDfy0iQmGQCq3gG3iPI3KFbh9yzmFjke-2ApfdIx5eXQcmAHsMBGJo-hsxZ8KpxQieuR7YfCAXnPqQDVgdsEJBX8WIYEnetgi0KguMZ6fHFVnOw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%99%D7%AA+%D7%94%D7%9B%D7%A0%D7%A1%D7%AA+%D7%A8%D7%95%D7%9E%D7%91%D7%9A%E2%80%AD/@47.4977215,19.0586486,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc42081362bf:0xee6817f97d1c6b26!8m2!3d47.4977215!4d19.0586486!16s%2Fm%2F03wj1xm?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RwDX3oeuQX8ehbmC0nHjQDBh1phFgbclb9bJXc47PXBrTtLa1Ue9xVCmmVrDAJllzCuGWzBhHf-nbYMNYfCoZcYa8MYirKxp3ZClptqxoG04o6zUQd-84SBfpwrdhmAWlldkaxzQ=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%99%D7%AA+%D7%94%D7%9B%D7%A0%D7%A1%D7%AA+%D7%A8%D7%95%D7%9E%D7%91%D7%9A%E2%80%AD/@47.4977215,19.0586486,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc42081362bf:0xee6817f97d1c6b26!8m2!3d47.4977215!4d19.0586486!16s%2Fm%2F03wj1xm?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9ShxwiWxFpA7Q7ix_qMJfU6ecgE6ed19yDyTpk28S6_JE7nD7i83StY0y_rTHxJQrJ-Ks6SkMYCA2HVbDBIs3sXMiL6Aa3g8bkvGUADGI_qGwYS5TjwJULN3g1ulyk_kE47J9XbZljX_roh=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Rumbach zsinagoga.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Rumbach_zsinagoga.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Rumbach Street Synagogue, 2011 Budapešť 1237.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Rumbach_Street_Synagogue%2C_2011_Budape%C5%A1%C5%A5_1237.jpg/960px-Rumbach_Street_Synagogue%2C_2011_Budape%C5%A1%C5%A5_1237.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

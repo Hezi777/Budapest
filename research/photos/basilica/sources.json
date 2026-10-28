@@ -1,0 +1,33 @@
+{
+ "id": "basilica",
+ "name": "שוק הכריסמס בבזיליקה",
+ "local": "St. Stephen's Basilica · Szent István tér",
+ "address": "Szent István tér 1, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%96%D7%99%D7%9C%D7%99%D7%A7%D7%AA+%D7%90%D7%99%D7%A9%D7%98%D7%95%D7%95%D7%9F+%D7%94%D7%A7%D7%93%D7%95%D7%A9+%D7%91%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98%E2%80%AD/@47.5008902,19.0539887,17z/data=!3m1!4b1!4m6!3m5!1s0x4741c15e3aa3cdf7:0xdd42fcacae7fbccb!8m2!3d47.5008902!4d19.0539887!16zL20vMDQwM3N0?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfpzPB8_Ww63agf5fk3dal_p3IsWIsBhA-WwxRpU2pWlfk3fFVUsl9AmORpTeEKf2ZufKfhUpCpRpuOfSUZJwYc66WQPELU-bOR_emFcl6hyPCuiUPyMaegJCJlnI3SEhc-jKOP=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%96%D7%99%D7%9C%D7%99%D7%A7%D7%AA+%D7%90%D7%99%D7%A9%D7%98%D7%95%D7%95%D7%9F+%D7%94%D7%A7%D7%93%D7%95%D7%A9+%D7%91%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98%E2%80%AD/@47.5008902,19.0539887,17z/data=!3m1!4b1!4m6!3m5!1s0x4741c15e3aa3cdf7:0xdd42fcacae7fbccb!8m2!3d47.5008902!4d19.0539887!16zL20vMDQwM3N0?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9TOo-9wUfaz5vVhCOI-zqh8kSCTibAk516qb7Ma8mNQv3TtJjO4PiwXkU3tKlaYwxDwH2i3iNAV3uXVCaRtzKxJnQlcMoDAWMHkDmnnzgnrxWCGsDxAMfEZqV7m1h91CcaWP8Vu=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%96%D7%99%D7%9C%D7%99%D7%A7%D7%AA+%D7%90%D7%99%D7%A9%D7%98%D7%95%D7%95%D7%9F+%D7%94%D7%A7%D7%93%D7%95%D7%A9+%D7%91%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98%E2%80%AD/@47.5008902,19.0539887,17z/data=!3m1!4b1!4m6!3m5!1s0x4741c15e3aa3cdf7:0xdd42fcacae7fbccb!8m2!3d47.5008902!4d19.0539887!16zL20vMDQwM3N0?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9S8nc4GjkmHsCmYbGT_7vE6EEuatXyzB6ataMtsJZuYNUfKolfUKANyTrO3WdXY11kKTMNA-GFsGutyqeEMCmPQ69OlXqmNQ_ObroSlvBOkVmXawuI0DzCQfGidO11a2Pgw46v8GFx_OBQ3=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:View from St Stephen's Basilica (Budapest) 2.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/View_from_St_Stephen%27s_Basilica_%28Budapest%29_2.jpg/960px-View_from_St_Stephen%27s_Basilica_%28Budapest%29_2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Saint Stephen's Basilica from Szent István tér Budapest 2026.JPG",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Saint_Stephen%27s_Basilica_from_Szent_Istv%C3%A1n_t%C3%A9r_Budapest_2026.JPG/960px-Saint_Stephen%27s_Basilica_from_Szent_Istv%C3%A1n_t%C3%A9r_Budapest_2026.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

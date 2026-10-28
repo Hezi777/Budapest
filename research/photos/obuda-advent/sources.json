@@ -1,0 +1,23 @@
+{
+ "id": "obuda-advent",
+ "name": "שוק הכריסמס באובודה",
+ "local": "Óbuda Advent · Fő tér",
+ "address": "Fő tér, Budapest (Óbuda)",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/%C3%93buda+Advent+%C2%B7+F%C5%91+t%C3%A9r,+F%C5%91+t%C3%A9r,+Budapest+(%C3%93buda)/@47.541476,19.045314,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLf7VaabWpch1KEDaohvRxl8kLQ26mSQwjRXKRz5rK2FJk1fCwQCG0cUSjxGB015jndFq__8ecyIE-ofsDW5TJTzGV2N0ZiHLS9HfOtefyxTMQUBeigl865iojz1OR-BMXp3bdcy=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/%C3%93buda+Advent+%C2%B7+F%C5%91+t%C3%A9r,+F%C5%91+t%C3%A9r,+Budapest+(%C3%93buda)/@47.541476,19.045314,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdhGqyUVi5uZKlih8rsBrNz_rOJrh72uherO4hD-rls7Eq0gjdUeNcKPIDQb8WCYcK3azi1uHr5xMinnV88Wiaxvbn4gCWEBvhSjAgpEE07em_jyfsa4YVGd1w6ApQfziyjjwizkA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/%C3%93buda+Advent+%C2%B7+F%C5%91+t%C3%A9r,+F%C5%91+t%C3%A9r,+Budapest+(%C3%93buda)/@47.541476,19.045314,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeO2xzVevMi1fGvqHUESnnfA3GyQuP2YdvPj1Qqhy2a2rqAN1hPenCLMHO0EJijPeWYNpG7YqmOQP_MuAoz-m51mDFSRibsa4_D5PrVwVGXFl0PnK-IouJS7JpYNiVQf1dyPQbiBg=w1200-h900-k-no"
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+{
+ "id": "shoes",
+ "name": "הנעליים על גדת הדנובה",
+ "local": "Shoes on the Danube Bank",
+ "address": "Id. Antall József rakpart, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%90%D7%A0%D7%93%D7%A8%D7%98%D7%AA+%D7%94%D7%A0%D7%A2%D7%9C%D7%99%D7%99%D7%9D%E2%80%AD/@47.5039274,19.0448015,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc16742d64df:0xf68e196cbecb6ad6!8m2!3d47.5039274!4d19.0448015!16s%2Fm%2F027vxfj?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe7gltNHaog26YaGuBJXPOVsbCnBRAgri6H4IIkIGsraht7m6BRe8Dj5bUzc-FRsP8R5DV87FvgeP8gyHDx4wRiPhjUhymdeNiGjeva60FctUrvilh7AOvQ7PLMxle39-EWJfMRzg=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%90%D7%A0%D7%93%D7%A8%D7%98%D7%AA+%D7%94%D7%A0%D7%A2%D7%9C%D7%99%D7%99%D7%9D%E2%80%AD/@47.5039274,19.0448015,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc16742d64df:0xf68e196cbecb6ad6!8m2!3d47.5039274!4d19.0448015!16s%2Fm%2F027vxfj?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdeuIa3SuPo6sZm9k_XZQNqgj9GDtDoQAKCvuxol0hypPfh4AOjFyjUm0AXLckjhzpA5iz_KmfiisHdmGuKaoKx1cgtsarxzxCrBugmlTXAXCdSxkPB6s9EIRjWc9iY9ZcJlLBSRw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%90%D7%A0%D7%93%D7%A8%D7%98%D7%AA+%D7%94%D7%A0%D7%A2%D7%9C%D7%99%D7%99%D7%9D%E2%80%AD/@47.5039274,19.0448015,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc16742d64df:0xf68e196cbecb6ad6!8m2!3d47.5039274!4d19.0448015!16s%2Fm%2F027vxfj?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfe_jAzhdQFiFBiHqapyaafGW1UF8mgqZT5BgjL4XiAxV5YbWxFz6PEXwowBoEdw535ilSqjPt8qE1RdNqrG5FKJZ1dfM9WzFvgcsqePWTULuCoD_Y9pPqm_UTT6tCga81rZpVO8Q=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Shoes Danube Promenade IMGP1297.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Shoes_Danube_Promenade_IMGP1297.jpg/960px-Shoes_Danube_Promenade_IMGP1297.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Girl contemplates Shoes on the Danube Bank (Budapest, Hungary).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Girl_contemplates_Shoes_on_the_Danube_Bank_%28Budapest%2C_Hungary%29.jpg/960px-Girl_contemplates_Shoes_on_the_Danube_Bank_%28Budapest%2C_Hungary%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

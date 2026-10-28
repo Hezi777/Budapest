@@ -1,0 +1,33 @@
+{
+ "id": "westend",
+ "name": "Westend",
+ "local": "Westend City Center",
+ "address": "Váci út 1-3, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A7%D7%A0%D7%99%D7%95%D7%9F+%D7%95%D7%A1%D7%98%D7%90%D7%A0%D7%93%E2%80%AD/@47.5138536,19.0592581,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc0a61285cb9:0xd1f3dcf641fea51c!8m2!3d47.5138536!4d19.0592581!16zL20vMGR6ZzBn?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdFE0c-Az1XdU-0v8h5FzWQqetRFUbbXSxi08S10KgFDeoQXsTr1tVcESGTTKcHq67RmYjCj_wem3NgYXPhNQsGG19YRI4JUM3MZvamem7qTqhJeeVTdLU05zK_w7wL8SrxuktQTpKCNDg=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A7%D7%A0%D7%99%D7%95%D7%9F+%D7%95%D7%A1%D7%98%D7%90%D7%A0%D7%93%E2%80%AD/@47.5138536,19.0592581,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc0a61285cb9:0xd1f3dcf641fea51c!8m2!3d47.5138536!4d19.0592581!16zL20vMGR6ZzBn?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdD4X9HS828iThfGAdK2L5P1UbwMcjrtkn_rY81h57azik1icDDAqRMdbOdbeajDOubU2_jXryBxThYlLXnzYWUHClWxj1mOVD8Yky_mFIDBotyqZ8yZkj4DkskxjiERMvwpa9GCQ=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A7%D7%A0%D7%99%D7%95%D7%9F+%D7%95%D7%A1%D7%98%D7%90%D7%A0%D7%93%E2%80%AD/@47.5138536,19.0592581,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc0a61285cb9:0xd1f3dcf641fea51c!8m2!3d47.5138536!4d19.0592581!16zL20vMGR6ZzBn?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLf8I8LkZULopJdCxRoMkZA9Wyft3_sodVEd5SbeAFl_NmQPSVPASBn7amqCnmi07odtYzSRl_XeaKPTECIUvZdoHB3DQdSTwuNKbIqvrkFsMygFswS9ZQouDfrUs31EwpfkOnzHFA=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Budapest, WestEnd City Center, 12.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c4/Budapest%2C_WestEnd_City_Center%2C_12.jpg/960px-Budapest%2C_WestEnd_City_Center%2C_12.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Budapest, WestEnd City Center, 44.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Budapest%2C_WestEnd_City_Center%2C_44.jpg/960px-Budapest%2C_WestEnd_City_Center%2C_44.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

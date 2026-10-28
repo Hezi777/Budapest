@@ -1,0 +1,22 @@
+{
+ "id": "timeout",
+ "name": "Time Out Market",
+ "local": "Time Out Market · Corvin Palace",
+ "address": "Blaha Lujza tér 1, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Austellung, Vitrine, Blaha Lujza Platz 1-2, 2026 Józsefváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/Austellung%2C_Vitrine%2C_Blaha_Lujza_Platz_1-2%2C_2026_J%C3%B3zsefv%C3%A1ros.jpg/960px-Austellung%2C_Vitrine%2C_Blaha_Lujza_Platz_1-2%2C_2026_J%C3%B3zsefv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Blaha Lujza Platz 1-2, Inneres, 2026 Józsefváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8a/Blaha_Lujza_Platz_1-2%2C_Inneres%2C_2026_J%C3%B3zsefv%C3%A1ros.jpg/960px-Blaha_Lujza_Platz_1-2%2C_Inneres%2C_2026_J%C3%B3zsefv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

@@ -1,0 +1,37 @@
+{
+ "id": "carmel",
+ "name": "Carmel",
+ "local": "Carmel Restaurant",
+ "address": "Kazinczy utca 31, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A1%D7%A2%D7%93%D7%AA+%D7%9B%D7%A8%D7%9E%D7%9C%E2%80%AD/@47.498608,19.0620729,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc69b544523d:0x1572b8f2dd9307d9!8m2!3d47.498608!4d19.0620729!16s%2Fg%2F11gzbz10p?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLf9TAlG2SeQlNzC2jQaEg5chxXnlaS8BgFsK92fHZjQ2XXgZzlkJonhVLFxcHdZcAqk5Flp6uck0o2uNZrUByEKE2gYgIpgX0WsTfMVbELCJ6VV7HCh_5BKGRZt7HjS-8IRXPdhBbS5Png5=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A1%D7%A2%D7%93%D7%AA+%D7%9B%D7%A8%D7%9E%D7%9C%E2%80%AD/@47.498608,19.0620729,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc69b544523d:0x1572b8f2dd9307d9!8m2!3d47.498608!4d19.0620729!16s%2Fg%2F11gzbz10p?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcddIjICCWDf89MxjlWs0uYJkyVDzaJCt15dWbntCfMREivnaEMs41DHfCRVy-JNb93ZRRkxTyWDPXVMTxbdOydLYPptR1MlRIt8U1LSVTBf_tNBTfi2fy_Jf0AswBQ_hY0rb-k4g=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%9E%D7%A1%D7%A2%D7%93%D7%AA+%D7%9B%D7%A8%D7%9E%D7%9C%E2%80%AD/@47.498608,19.0620729,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc69b544523d:0x1572b8f2dd9307d9!8m2!3d47.498608!4d19.0620729!16s%2Fg%2F11gzbz10p?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcG3Lve1Bb1TkHtsvMfSFiKmnOEEpk6icZ4ddDSuLOG4pXP208JSE1q8IiT3aQ5QN0HhyG5HFFgDWVC6H4BMFuqnTXmISIZ_UJPeXKhVuuu9tZijZQFuyZbrToTDLo2fuIaJ_ERCXYYdTM=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Un restaurant Casher à Budapest.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Un_restaurant_Casher_%C3%A0_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Izrael77, Imbisswagen Carmel, 2025 Újlipótváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Izrael77%2C_Imbisswagen_Carmel%2C_2025_%C3%9Ajlip%C3%B3tv%C3%A1ros.jpg/960px-Izrael77%2C_Imbisswagen_Carmel%2C_2025_%C3%9Ajlip%C3%B3tv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

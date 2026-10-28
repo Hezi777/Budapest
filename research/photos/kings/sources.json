@@ -1,0 +1,33 @@
+{
+ "id": "kings",
+ "name": "Kings",
+ "local": "King's Hotel Restaurant",
+ "address": "Nagy Diófa utca 25-27, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/King's+Hotel+Restaurant,+Nagy+Di%C3%B3fa+utca+25-27,+Budapest/@47.5019197,19.05387,15z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-proxy/AIM7gW1c2yVwfn-pv_YtyYVuWno35VrdK9gE9V8au7YDUCsxMllMDOFJWaya8m3OJT8D7CQ7lZuvTK084uFhpxmb9Wl-_ZsCtt7eFI8zt_fWbkn1VZShFSIAGUnBCCGaTsEDMFv_-Z85U9icWk09_VEkYVjldUSrb2OuHWmn9_ieeAVuu3lIK8tVBWWk=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/King's+Hotel+Restaurant,+Nagy+Di%C3%B3fa+utca+25-27,+Budapest/@47.5019197,19.05387,15z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh4.googleusercontent.com/proxy/Yk4QUZDekA1kzBXvHGGi3sEQREToAE_7fresXuVAb3NchtWF4hsShOt8SJtPPm5p7tZLOKN8aqQI_zgpiXiNaQt3YBUnP5LNNa7wWecDlysX4W_IfY_eCnIeXidaJlJ3RqAzQpeffAjOJf4rJVrpfMfGC08IWA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/King's+Hotel+Restaurant,+Nagy+Di%C3%B3fa+utca+25-27,+Budapest/@47.5019197,19.05387,15z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLc-_lwAEcvPZK11OAp2uaJehTyw42VCTKRt6PoQCwC7zdDiT1gerXsH6mIIbaW30GHedaT3TwgTlg0DSznAyB2ipAeifu8QbfbttYZNbL-Q6f2z_yMu8_-rsCRMyzcRI8lQw5DX=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Ferenc Brei house (1855) in Lipótváros, 2016 Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Ferenc_Brei_house_%281855%29_in_Lip%C3%B3tv%C3%A1ros%2C_2016_Budapest.jpg/960px-Ferenc_Brei_house_%281855%29_in_Lip%C3%B3tv%C3%A1ros%2C_2016_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Apáczai Csere János Straße 4-6, Fassade Detail, 2026 Belváros-Lipótváros.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5a/Ap%C3%A1czai_Csere_J%C3%A1nos_Stra%C3%9Fe_4-6%2C_Fassade_Detail%2C_2026_Belv%C3%A1ros-Lip%C3%B3tv%C3%A1ros.jpg/960px-Ap%C3%A1czai_Csere_J%C3%A1nos_Stra%C3%9Fe_4-6%2C_Fassade_Detail%2C_2026_Belv%C3%A1ros-Lip%C3%B3tv%C3%A1ros.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

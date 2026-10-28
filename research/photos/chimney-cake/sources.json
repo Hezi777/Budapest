@@ -1,0 +1,33 @@
+{
+ "id": "chimney-cake",
+ "name": "קירטוש (עוגת ארובה)",
+ "local": "Kürtőskalács",
+ "address": "Váci utca 31, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/K%C3%BCrt%C5%91skal%C3%A1cs,+V%C3%A1ci+utca+31,+Budapest/@47.4917289,19.0541532,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeIebxf7KtKOzOVrYPQYnKcevSPPVvZK0XxKt_jIWLHBPtMO7Ez9XyNvL9OZvqQu50VYckFDV03fSExtEf11Q_OF-YcQwaPJdsAbaUP9MuNF3A5KZcxMf688ThVWgAJAlzRj1OLQppYYiU=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/K%C3%BCrt%C5%91skal%C3%A1cs,+V%C3%A1ci+utca+31,+Budapest/@47.4917289,19.0541532,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfHvNCSvvBfw3P1SVFMHruS60QhwbXnoK5LkC6NpVCGlaZI3CVYuryHw6LPBvh2nVD0d2OlW9xGm47TSmV37b0CIoKdgWLAg0bmtpdptiSYxGJKvg5XxRR2r22AUzL8JJzJbRg2=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/search/K%C3%BCrt%C5%91skal%C3%A1cs,+V%C3%A1ci+utca+31,+Budapest/@47.4917289,19.0541532,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfrnR3s8R8R_MTotI6BDx45hze55j_PDWkgay3T3a45qAVouuFcDRPsrSIfqlnz8BEDekejyzEV2lSQPBExCv4b3DkSjHbX5EMaOJn_a8vxW6239xbh32Qb1Z7jfYBpjzLLIrVuW1pM4cQL=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Kürtőskalács in Budapest.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/K%C3%BCrt%C5%91skal%C3%A1cs_in_Budapest.jpg/960px-K%C3%BCrt%C5%91skal%C3%A1cs_in_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Kürtőskalács Budapest 2008.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/K%C3%BCrt%C5%91skal%C3%A1cs_Budapest_2008.jpg/960px-K%C3%BCrt%C5%91skal%C3%A1cs_Budapest_2008.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

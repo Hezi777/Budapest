@@ -1,0 +1,37 @@
+{
+ "id": "mazel-tov",
+ "name": "Mazel Tov",
+ "local": "Mazel Tov",
+ "address": "Akácfa utca 47, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Mazel+Tov/@47.5002778,19.0655242,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc68eb5c0b91:0xf5991cd91e93b8f8!8m2!3d47.5002778!4d19.0655242!16s%2Fg%2F11b6qhjx3q?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdK-DZAft9ITKHl4P7VP4yoieYROv1RE57rpnhvNvy6PnkKMe50bW20QUOGcYSURNjM9-JLLsyST8lQD3f_SHLH7_Yupb8K85FhBzH5HYoHasDaPXu7wxab2j_-07k5lZKO374=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Mazel+Tov/@47.5002778,19.0655242,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc68eb5c0b91:0xf5991cd91e93b8f8!8m2!3d47.5002778!4d19.0655242!16s%2Fg%2F11b6qhjx3q?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdlIeFWO1BvLaJ6dvZKDgbQqKBcPHMprTceCif4s10TOlzmOWhe2HvhxIwCuelB6j7gOHJth4ygyHexJJJIx7v5ZDzMeiZOAJ3XZwe9C3sqQVixcNL2FrLjfGMGRNvC-LNPtlIR52CwCB9e=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Mazel+Tov/@47.5002778,19.0655242,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc68eb5c0b91:0xf5991cd91e93b8f8!8m2!3d47.5002778!4d19.0655242!16s%2Fg%2F11b6qhjx3q?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/a-/ALV-UjV-sssirPZFQ7FfzghMsV91Avit47kq4Bxen0-vhqCxOHSdnaj3RQ=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:MazelTovFotoThalerTamas.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/MazelTovFotoThalerTamas.jpg/960px-MazelTovFotoThalerTamas.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Mazel Tov Ruin Bar (42253982234).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/00/Mazel_Tov_Ruin_Bar_%2842253982234%29.jpg/960px-Mazel_Tov_Ruin_Bar_%2842253982234%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "id": "strudel",
+ "name": "בית השטרודל",
+ "local": "Első Pesti Rétesház · Strudel House",
+ "address": "Október 6. utca 22, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Strudel+House+Budapest,+Els%C5%91+Pesti+R%C3%A9tesh%C3%A1z/@47.5017043,19.0506658,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc14fb54a1b9:0x8cebde25eead2d8f!8m2!3d47.5017043!4d19.0506658!16s%2Fg%2F1tm1p71_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeTF4t_WKEiu9YTIH9T5UTgY2dDAVuCGAfndwCaOQaCfX8uWpq-Z77kOIVFkGRw8hcrora7ki6e4Go_xi69QkG84uLivuANHAbjhrfdRPNDm55lBlOrz-nN-h5HJ2kigBGVMoqQbjyeXoqq=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Strudel+House+Budapest,+Els%C5%91+Pesti+R%C3%A9tesh%C3%A1z/@47.5017043,19.0506658,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc14fb54a1b9:0x8cebde25eead2d8f!8m2!3d47.5017043!4d19.0506658!16s%2Fg%2F1tm1p71_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfuEFTPt9SPrY2wcqpBNVyeDAJhLmQoJg-36LqYlhqjCbUZgtK4rbG9aH0-sNSxb-yd6qi960TlvjIlbpPWpH9ufmdBz3yUAUDj4OE8Fr6B1muAMelH19OsG7IPeF82vcKJqJlmoQ=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/Strudel+House+Budapest,+Els%C5%91+Pesti+R%C3%A9tesh%C3%A1z/@47.5017043,19.0506658,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc14fb54a1b9:0x8cebde25eead2d8f!8m2!3d47.5017043!4d19.0506658!16s%2Fg%2F1tm1p71_?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLchOGtOXZgaxFNFOFAgGQWSAd1Rh_QavZS3iXPmbZtyiuMurjfEQtJcqYjFnEYbk4aAFyqr5bOCxYMuKZlDqsoduaXNGfIpa5WRpgh9bq_pMu94O29XoMLxXJUUmnXp2Ze8fC_fQWFMvSo=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Bar dans une rue de Budapest.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Bar_dans_une_rue_de_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  }
+ ]
+}

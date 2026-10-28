@@ -1,0 +1,33 @@
+{
+ "id": "new-york-cafe",
+ "name": "קפה ניו יורק",
+ "local": "New York Café",
+ "address": "Erzsébet körút 9-11, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A7%D7%A4%D7%94+%D7%A0%D7%99%D7%95+%D7%99%D7%95%D7%A8%D7%A7%E2%80%AD/@47.4987259,19.0704556,17z/data=!4m9!3m8!1s0x4741dc66e2a0e799:0x3b24d300deeee120!5m2!4m1!1i2!8m2!3d47.4987259!4d19.0704556!16s%2Fg%2F1q6j8vbd5?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLduTr6o3qc8dE2vu-oFFFaualUTQjf2b4VlQ0a-hGNEUezpx23q9mnp8YPEJmNE6BGU5nugdU66p72swljYEq6PZUyQHkFsJAUpevlC7dO8MpA03NRCjFKLCtVcedkC_vc3ReDeBA=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A7%D7%A4%D7%94+%D7%A0%D7%99%D7%95+%D7%99%D7%95%D7%A8%D7%A7%E2%80%AD/@47.4987259,19.0704556,17z/data=!4m9!3m8!1s0x4741dc66e2a0e799:0x3b24d300deeee120!5m2!4m1!1i2!8m2!3d47.4987259!4d19.0704556!16s%2Fg%2F1q6j8vbd5?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLe7cf5i5I4Gl_Gkao-6TPsMN78mDQiJzP7jfIFYn7Mu05Xs0GvwA2nfw4K4UYDvqk35tk0Mm3De71rfYJN2EJsq50nn2k4PFXMstBt1drQUjecJ1D68PIu6G_ZxYkScHY1Pgv-v=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A7%D7%A4%D7%94+%D7%A0%D7%99%D7%95+%D7%99%D7%95%D7%A8%D7%A7%E2%80%AD/@47.4987259,19.0704556,17z/data=!4m9!3m8!1s0x4741dc66e2a0e799:0x3b24d300deeee120!5m2!4m1!1i2!8m2!3d47.4987259!4d19.0704556!16s%2Fg%2F1q6j8vbd5?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLdEboR7jh8ahOyi4tW1GhEOM8Ytj-lzyL83Zilnxe9DtRp2cXd8Wz-x6KGaXKSSokZhPQUHxHegdeacvEBKApBACvuel6WkMu1leyOaYUKYbd8Lz3Uv39Jgl7b0dyFpt1W_KV-rTWeAmiqw=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Clocks in New York Café Budapest (2).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Clocks_in_New_York_Caf%C3%A9_Budapest_%282%29.jpg/960px-Clocks_in_New_York_Caf%C3%A9_Budapest_%282%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Clocks in New York Café Budapest (1).jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Clocks_in_New_York_Caf%C3%A9_Budapest_%281%29.jpg/960px-Clocks_in_New_York_Caf%C3%A9_Budapest_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

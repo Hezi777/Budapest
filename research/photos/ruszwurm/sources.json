@@ -1,0 +1,33 @@
+{
+ "id": "ruszwurm",
+ "name": "קונדיטוריית רוסוורם",
+ "local": "Ruszwurm Cukrászda",
+ "address": "Szentháromság utca 7, Budapest",
+ "candidates": [
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A8%D7%95%D7%96%D7%95%D7%95%D7%A8%D7%9D%E2%80%AD/@47.5012276,19.0330045,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc226bdc6e95:0xe4f230bfcd9d8088!8m2!3d47.5012276!4d19.0330045!16s%2Fg%2F1v2d_8mw?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeUt4qGaRnAr9TUS_MRkVP3ifHdUkShNiYYGnGADK0MxNdVdDW1nvXva1DNXqb_7ZTjxtxA-4wich1lO4WudCz2gYmMKyOlZepJkDs3X8_Dk7BnimgqOiQKa5YbT3fr0Naoy2TT1dc-qHo=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A8%D7%95%D7%96%D7%95%D7%95%D7%A8%D7%9D%E2%80%AD/@47.5012276,19.0330045,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc226bdc6e95:0xe4f230bfcd9d8088!8m2!3d47.5012276!4d19.0330045!16s%2Fg%2F1v2d_8mw?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLeSV33YAbcau5k60HNoPGY3SXpllbVyCyjnbnVFfoPpJ5BC5eB_gBElLyopNplRbcgC5v8gxIo-2NzYAljDGCo0SGMiWvdaubXvJPdTsaTeHWi2E-iXrV26ltzh6q48UrP4woyv=w1200-h900-k-no"
+  },
+  {
+   "file": "maps3.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%A8%D7%95%D7%96%D7%95%D7%95%D7%A8%D7%9D%E2%80%AD/@47.5012276,19.0330045,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc226bdc6e95:0xe4f230bfcd9d8088!8m2!3d47.5012276!4d19.0330045!16s%2Fg%2F1v2d_8mw?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLfDw0YoDqQycIkoWg1uHhcMtoji_LqSLpJRFu7iVIOjUAVg-cQnSViASvbhV_4PGIWN2kx_V1e0sdmNcUSTAZfDNwhpaiFburBmcEgmtvBvwflsVJjIfyDuBNnHpqtYxxoAbdr5ihLca3PL=w1200-h900-k-no"
+  },
+  {
+   "file": "commons1.jpg",
+   "from": "Wikimedia Commons: File:Ruszwurm Cukrászda, Budapest.jpg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/Ruszwurm_Cukr%C3%A1szda%2C_Budapest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled"
+  },
+  {
+   "file": "commons2.jpg",
+   "from": "Wikimedia Commons: File:Ruszwurm-interior.jpg",
+   "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Ruszwurm-interior.jpg/960px-Ruszwurm-interior.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail"
+  }
+ ]
+}

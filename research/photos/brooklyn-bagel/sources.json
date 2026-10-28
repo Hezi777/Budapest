@@ -1,0 +1,22 @@
+{
+ "id": "brooklyn-bagel",
+ "name": "Brooklyn Bagel",
+ "local": "Brooklyn Bagel",
+ "address": "Újpesti rakpart 1, Budapest",
+ "candidates": [
+  {
+   "file": "earlier.jpg",
+   "from": "earlier agent download, source unknown"
+  },
+  {
+   "file": "maps1.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%A8%D7%95%D7%A7%D7%9C%D7%99%D7%9F+%D7%91%D7%99%D7%99%D7%92%D7%9C+%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98%E2%80%AD/@47.5144076,19.0477402,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd95388a9e41:0x26dd8cb86cb3fe72!8m2!3d47.5144076!4d19.0477402!16s%2Fg%2F11t0m14j5n?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLcjvMLU6vSuFYgLaNbdgMVBoz8cgF5Ijx_v0mBk0YxYo2_O27T866hVmIuxiMFSgITX8wy2cA-e8FDplLvDLXnVBbv_9BpklDHtRowU1gbATGBC9rbNLMANdAzzIOqc5nht0S9Wzw=w1200-h900-k-no"
+  },
+  {
+   "file": "maps2.jpg",
+   "from": "Google Maps listing: https://www.google.com/maps/place/%D7%91%D7%A8%D7%95%D7%A7%D7%9C%D7%99%D7%9F+%D7%91%D7%99%D7%99%D7%92%D7%9C+%D7%91%D7%95%D7%93%D7%A4%D7%A9%D7%98%E2%80%AD/@47.5144076,19.0477402,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd95388a9e41:0x26dd8cb86cb3fe72!8m2!3d47.5144076!4d19.0477402!16s%2Fg%2F11t0m14j5n?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+   "url": "https://lh3.googleusercontent.com/grass-cs/AABkmLf3nEQDqpAVSYhaiHe73TNaZFumYMnTX__GOUF7suyEb4vwyA61ksYECCRFUQhwuk75RlX2F6HBicX9B4EYZOBp4IuUHFHkJ8liu1bECN13xTWi-fQhqKWmOiL68U_7Mj8edhwv=w1200-h900-k-no"
+  }
+ ]
+}
