@@ -63,6 +63,7 @@ export function mapsUrl(place: Place): string {
 export function photoUrl(place: Place, width: 500 | 960 | 1280 = 500): string | undefined {
   const photo = place.photo;
   if (!photo) return undefined;
+  if (photo.file) return `/places/${photo.file}`;
   const params = new URLSearchParams({ w: String(width) });
   if (photo.wiki) params.set("wiki", photo.wiki);
   if (photo.lang) params.set("lang", photo.lang);

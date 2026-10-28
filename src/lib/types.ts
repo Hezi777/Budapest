@@ -32,6 +32,8 @@ export type PhotoSource = {
   commons?: string;
   /** Text query for Google Places, used only when a key is configured. */
   google?: string;
+  /** A photo saved in public/places/, used as is (sources in SOURCES.md there). */
+  file?: string;
 };
 
 export type Place = {
