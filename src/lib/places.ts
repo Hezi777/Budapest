@@ -43,7 +43,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "ליד תחנת המטרו Astoria. הצ'ק־אין רשמית אחר הצהריים, אבל אפשר להשאיר מזוודות בקבלה ולצאת מיד.",
     phone: "+36 1 445 4800",
-    photo: { google: "Exe Budapest Center hotel" },
+    photo: { file: "hotel.webp" },
   },
   {
     id: "twentysix",
@@ -56,7 +56,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "המסעדה מהטיול שלנו: מלאה צמחים, אוכל ים־תיכוני ושפע מנות צמחוניות וחלביות.",
     tags: ["dairyOptions"],
-    photo: { commons: "Twentysix Budapest restaurant", google: "Twentysix Budapest Király utca 26" },
+    photo: { file: "twentysix.webp" },
   },
   {
     id: "vorosmarty",
@@ -113,7 +113,7 @@ export const PLAN_PLACES: Place[] = [
     hours: "א׳–ה׳ בערך 12:00–22:30 · שישי עד 14:00 · ארוחות שבת בהזמנה מראש",
     phone: "+36 1 322 1834",
     website: "https://reservours.com/en/carmelrestaurant",
-    photo: { commons: "Carmel restaurant Kazinczy utca Budapest", google: "Carmel Restaurant Kazinczy utca 31 Budapest" },
+    photo: { file: "carmel.webp" },
   },
   {
     id: "cirkusz",
@@ -126,7 +126,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "בית קפה קטן ואהוב מהטיול שלנו: ביצים, שקשוקה ופנקייקס. אין הזמנות, ולפעמים יש תור קצר. נסגר ב־16:00.",
     tags: ["dairy"],
-    photo: { commons: "Cirkusz Cafe Budapest Dob utca", google: "Cirkusz Café Dob utca 25 Budapest" },
+    photo: { file: "cirkusz.webp" },
   },
   {
     id: "bastion",
@@ -205,7 +205,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "בית השטרודל מהרשימה שלנו. שטרודל תפוחים או גבינה חם, עם קפה.",
     tags: ["dairy"],
-    photo: { commons: "Első Pesti Rétesház Budapest", google: "Első Pesti Rétesház Október 6. utca 22" },
+    photo: { file: "strudel.webp" },
   },
   {
     id: "arena",
@@ -285,7 +285,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "שוק אוכל בבניין היסטורי: עשרות דוכנים של שפים מקומיים וכל אחד בוחר מה שבא לו. יש פסטה, פיצה, דגים ומנות צמחוניות.",
     tags: ["dairyOptions"],
-    photo: { google: "Time Out Market Budapest", wiki: "Corvin Áruház", lang: "hu" },
+    photo: { file: "timeout.webp" },
   },
   {
     id: "westend",
@@ -298,7 +298,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "הקניון הגדול במרכז העיר, ליד תחנת Nyugati. מאות חנויות, כל רשתות האופנה, ובתי קפה לעצירה באמצע. החנויות פתוחות בערך עד 21:00.",
     hours: "בערך עד 21:00",
-    photo: { wiki: "WestEnd City Center" },
+    photo: { file: "westend.webp" },
   },
   {
     id: "basilica",
@@ -312,7 +312,7 @@ export const PLAN_PLACES: Place[] = [
       "השוק הכי יפה בעיר (נבחר שוב לשוק הכריסמס הטוב באירופה), עם עץ ענק ומופע אורות על חזית הבזיליקה מ־17:30, כל חצי שעה. בערב הכול מואר. טוב גם לקניית מתנות ומזכרות.",
     tags: ["christmas", "free"],
     hours: "11:00–22:00 (שישי־שבת עד 23:00) · מופע אורות מ־17:30",
-    photo: { wiki: "St. Stephen's Basilica" },
+    photo: { file: "basilica.webp" },
   },
   {
     id: "hotstone",
@@ -325,7 +325,7 @@ export const PLAN_PLACES: Place[] = [
     description:
       "הסטייקיה שהיינו בה: מקבלים אבן לוהטת וצולים את הסטייק לבד על השולחן. חוויה.",
     tags: ["optional", "nonKosher", "booking"],
-    photo: { commons: "Hot Stone Steakhouse Budapest", google: "Hot Stone Steakhouse Október 6. utca 7 Budapest" },
+    photo: { file: "hotstone.webp" },
   },
   {
     id: "art-of-sushi",
@@ -337,7 +337,7 @@ export const PLAN_PLACES: Place[] = [
     category: "food",
     description: "סושי, סלמון וטונה. הסניף ברחוב Sas, ליד הבזיליקה. לא כשר.",
     tags: ["nonKosher"],
-    photo: { google: "Art of Sushi Budapest" },
+    photo: { file: "art-of-sushi.webp" },
   },
   {
     id: "telaviv",
@@ -351,7 +351,7 @@ export const PLAN_PLACES: Place[] = [
       "בית קפה כשר חלבי: ביצים, שקשוקה, סלטים וקפה טוב, כמה דלתות מכרמל. כדאי לבדוק שעות פתיחה ביום ראשון.",
     tags: ["kosher", "dairy"],
     hours: "א׳–ה׳ 08:30–22:00 · שישי עד 15:00 · שבת סגור",
-    photo: { commons: "Tel Aviv Cafe Kazinczy Budapest", google: "Tel Aviv Café Kazinczy utca 28 Budapest" },
+    photo: { file: "telaviv.webp" },
   },
   {
     id: "hanna",
@@ -385,7 +385,7 @@ export const KOSHER_PLACES: Place[] = [
     tags: ["kosher", "dairy", "grocery"],
     hours: "שישי עד 14:00 · שבת סגור · ראשון פתוח (שעות משתנות)",
     phone: "+36 30 150 0150",
-    photo: { google: "Kosher Deli Síp utca 12 Budapest" },
+    photo: { file: "kosher-deli.webp" },
     why: "ליד בית הכנסת הגדול. כדאי לוודא תעודת כשרות בכניסה.",
   },
   {
@@ -401,7 +401,7 @@ export const KOSHER_PLACES: Place[] = [
     tags: ["kosher", "dairy"],
     hours: "שישי עד 14:00 · שבת סגור · ראשון פתוח",
     website: "https://reservours.com/en/brooklynbagelbp",
-    photo: { google: "Brooklyn Bagel Újpesti rakpart Budapest" },
+    photo: { file: "brooklyn-bagel.webp" },
   },
   {
     id: "kings",

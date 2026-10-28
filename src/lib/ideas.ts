@@ -105,7 +105,7 @@ export const IDEAS: Place[] = [
       "גלגל ענק בכיכר ארז'בט, 5 דקות מוורשמרטי. סיבוב של 10–15 דקות בתא סגור ומחומם, עם נוף על הגגות והבזיליקה. נחמד בערב כשהכול מואר.",
     duration: "20–30 דק'",
     price: "כ־4,900 פורינט למבוגר",
-    photo: { wiki: "Budapest Eye" },
+    photo: { file: "budapest-eye.webp" },
   },
   {
     id: "andrassy",
@@ -152,7 +152,7 @@ export const IDEAS: Place[] = [
       "60 זוגות נעליים מברזל על שפת הנהר, לזכר היהודים שנורו שם בחורף 1944–45. עצירה קצרה ושקטה, ליד הפרלמנט. מבקרים משאירים נרות ואבנים.",
     tags: ["free"],
     duration: "15–20 דק'",
-    photo: { wiki: "Shoes on the Danube Bank" },
+    photo: { file: "shoes.webp" },
   },
   {
     id: "kazinczy-synagogue",
@@ -180,7 +180,7 @@ export const IDEAS: Place[] = [
       "בית כנסת בסגנון מורי שתכנן אוטו וגנר, שופץ ונפתח מחדש ב־2021. לפי מדריך עדכני, עד סוף 2026 פתוח רק בימי ראשון, 10:00–16:00, כך שמתאים לבוקר של יום ראשון.",
     hours: "ראשון 10:00–16:00 (לבדוק)",
     duration: "30–45 דק'",
-    photo: { wiki: "Rumbach Street Synagogue" },
+    photo: { file: "rumbach.webp" },
   },
   {
     id: "terror-house",
@@ -194,7 +194,7 @@ export const IDEAS: Place[] = [
       "מוזיאון בבניין שבו ישבו המשטרות החשאיות של הנאצים ושל הקומוניסטים, כולל פרק על שואת יהודי הונגריה. חוויה כבדה ומרשימה, לא לכל אחד.",
     hours: "ג׳–א׳ 10:00–18:00 · שני סגור",
     duration: "שעה וחצי",
-    photo: { commons: "House of Terror Budapest" },
+    photo: { file: "terror-house.webp" },
   },
 
   /* ---------- Cafés & sweets ---------- */
@@ -211,7 +211,7 @@ export const IDEAS: Place[] = [
     tags: ["dairyOptions"],
     duration: "שעה",
     price: "קפה ועוגה לזוג: מעל 15,000 פורינט",
-    photo: { wiki: "Anantara New York Palace Budapest Hotel" },
+    photo: { file: "new-york-cafe.webp" },
     why: "מכונה \"בית הקפה היפה בעולם\". מופיע בלי סוף ברשתות.",
   },
   {
@@ -227,7 +227,7 @@ export const IDEAS: Place[] = [
     tags: ["dairyOptions"],
     duration: "45 דק'",
     price: "פרוסת עוגה כ־4,500 פורינט",
-    photo: { wiki: "Café Gerbeaud" },
+    photo: { file: "gerbeaud.webp" },
   },
   {
     id: "central-cafe",
@@ -241,7 +241,7 @@ export const IDEAS: Place[] = [
       "בית קפה ספרותי משנת 1887, דקות ספורות מהמלון. אווירה וינאית, רגוע יותר מקפה ניו יורק ובלי התור. טוב לארוחת בוקר או לקפה אחר הצהריים.",
     tags: ["dairyOptions"],
     duration: "45 דק'",
-    photo: { wiki: "Central Café" },
+    photo: { file: "central-cafe.webp" },
   },
   {
     id: "ruszwurm",
@@ -255,7 +255,7 @@ export const IDEAS: Place[] = [
       "קונדיטוריה זעירה משנת 1827 ליד כנסיית מתיאש, עם הריהוט המקורי. עצירה לעוגה אחרי מבצר הדייגים. קטנה מאוד, אז לפעמים מחכים.",
     tags: ["dairyOptions"],
     duration: "30 דק'",
-    photo: { wiki: "Ruszwurm cukrászda", lang: "hu" },
+    photo: { file: "ruszwurm.webp" },
   },
   {
     id: "chimney-cake",
@@ -269,7 +269,7 @@ export const IDEAS: Place[] = [
       "מאפה ספירלה שנאפה על גחלים, חם ופריך, עם קינמון, אגוזים או פיסטוק. הכי טעים ישר מהתנור בשוק. הכתובת היא של Molnár's בוואצי; Kató Néni ליד הבזיליקה מדורגת גבוה יותר.",
     duration: "10 דק'",
     price: "כ־1,500–3,500 פורינט",
-    photo: { wiki: "Kürtőskalács" },
+    photo: { file: "chimney-cake.webp" },
     why: "הגרסה עם פיסטוק מופיעה בהמון סרטוני טיקטוק מבודפשט.",
   },
 
@@ -286,7 +286,7 @@ export const IDEAS: Place[] = [
       "שוק כריסמס קטן עם משטח החלקה, ממש בין המלון לכיכר דאק. נעים לקפוץ בערב לשוקו חם, או להחליק קצת.",
     tags: ["christmas", "free"],
     duration: "45 דק'",
-    photo: { commons: "Városháza Park Budapest" },
+    photo: { file: "varoshaza-park.webp" },
   },
   {
     id: "city-park-rink",
@@ -300,7 +300,7 @@ export const IDEAS: Place[] = [
       "אחד ממגרשי הקרח הגדולים והוותיקים באירופה, מול טירת ויידהוניאד המוארת. גם בלי להחליק, המראה בערב שווה את הנסיעה. תאריך הפתיחה ל־2026 עוד לא פורסם.",
     tags: ["christmas"],
     duration: "שעה",
-    photo: { wiki: "Városligeti Műjégpálya", lang: "hu" },
+    photo: { file: "city-park-rink.webp" },
   },
   {
     id: "obuda-advent",
@@ -314,7 +314,7 @@ export const IDEAS: Place[] = [
       "שוק מקומי ופחות תיירותי בכיכר העתיקה של אובודה, עם אוכל הונגרי ומחירים נוחים. כחצי שעה מהמרכז. בשנה שעברה נפתח רק ב־28 בנובמבר, אז לבדוק לפני.",
     tags: ["christmas", "free"],
     duration: "שעה",
-    photo: { wiki: "Óbuda" },
+    photo: { file: "obuda-advent.webp" },
   },
 
   /* ---------- Baths ---------- */
@@ -331,7 +331,7 @@ export const IDEAS: Place[] = [
     tags: ["booking"],
     duration: "2–3 שעות",
     price: "כ־12,000–15,000 פורינט",
-    photo: { wiki: "Széchenyi thermal bath" },
+    photo: { file: "szechenyi.webp" },
     why: "הכי מומלץ ב־2026. כדאי לקנות כרטיס באתר מראש.",
   },
   {
@@ -346,7 +346,7 @@ export const IDEAS: Place[] = [
       "מרחץ טורקי מהמאה ה־16 עם בריכה מתחת לכיפה עתיקה, ובריכת גג עם נוף לדנובה. פחות עמוס מסצ'ני.",
     duration: "2–3 שעות",
     price: "כ־12,000 פורינט באמצע שבוע, כ־15,000 בסופ\"ש",
-    photo: { wiki: "Rudas Baths" },
+    photo: { file: "rudas.webp" },
   },
 
   /* ---------- Experiences ---------- */
@@ -378,7 +378,7 @@ export const IDEAS: Place[] = [
     tags: ["christmas"],
     duration: "30–60 דק'",
     price: "כרטיס נסיעה רגיל",
-    photo: { commons: "Fényvillamos Budapest" },
+    photo: { file: "light-tram.webp" },
   },
   {
     id: "hospital-rock",
@@ -392,7 +392,7 @@ export const IDEAS: Place[] = [
       "בית חולים ובונקר סודי ממלחמת העולם השנייה, חצוב בתוך גבעת הטירה. סיור מודרך מעניין ליום קר או גשום. קריר בפנים, להביא שכבה.",
     tags: ["booking"],
     duration: "שעה",
-    photo: { wiki: "Hospital in the Rock" },
+    photo: { file: "hospital-rock.webp" },
   },
   {
     id: "szimpla",
@@ -406,7 +406,7 @@ export const IDEAS: Place[] = [
       "בר ההריסות המפורסם, בתוך בניין ישן מלא חפצים משונים. שווה הצצה ביום, כשרגוע. ביום ראשון בבוקר (09:00–14:00) יש בחצר שוק איכרים.",
     tags: ["free"],
     duration: "30 דק'",
-    photo: { wiki: "Szimpla Kert" },
+    photo: { file: "szimpla.webp" },
     why: "הכי מצולם בטיקטוק מבין המקומות ברובע היהודי.",
   },
   {
@@ -421,7 +421,7 @@ export const IDEAS: Place[] = [
       "שבע חצרות מחוברות בין רחוב קיראי לרחוב דוב, עם בתי קפה ומסעדות. קיצור דרך נחמד בתוך הרובע היהודי, בדרך מ־Twentysix או לכרמל.",
     tags: ["free"],
     duration: "20 דק'",
-    photo: { wiki: "Gozsdu-udvar" },
+    photo: { file: "gozsdu.webp" },
   },
   {
     id: "szentendre",
@@ -448,6 +448,6 @@ export const IDEAS: Place[] = [
       "מסעדה ים־תיכונית בחצר ירוקה ברובע היהודי. פופולרית מאוד אצל ישראלים, אבל לא כשרה ופתוחה בשבת. כדאי להזמין לערב.",
     tags: ["nonKosher", "booking"],
     phone: "+36 70 626 4280",
-    photo: { commons: "Mazel Tov Budapest Akácfa" },
+    photo: { file: "mazel-tov.webp" },
   },
 ];
