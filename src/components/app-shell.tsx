@@ -28,7 +28,7 @@ const navIndex = (pathname: string) =>
 /** Where a swipe can't change tabs: the map, sideways scrollers, sheets and fields. */
 function blocksSwipe(target: EventTarget | null): boolean {
   if (!(target instanceof Element)) return true;
-  if (target.closest(".leaflet-container, .sheet-backdrop, input, textarea, select, [data-no-swipe]")) return true;
+  if (target.closest(".sheet-backdrop, input, textarea, select, [data-no-swipe]")) return true;
   for (let el: Element | null = target; el && el !== document.body; el = el.parentElement) {
     const { overflowX } = getComputedStyle(el);
     if ((overflowX === "auto" || overflowX === "scroll") && el.scrollWidth > el.clientWidth) return true;
