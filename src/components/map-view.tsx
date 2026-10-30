@@ -35,6 +35,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
   const [me, setMe] = useState<Me | null>(null);
   const [follow, setFollow] = useState(false);
   const watch = useRef<number | null>(null);
+  const filters = useRef<HTMLDivElement>(null);
 
   // Stop the GPS when leaving the map, so it doesn't drain the battery.
   useEffect(() => () => {
@@ -42,7 +43,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
   }, []);
 
   const hotel = places.get(HOTEL_ID)!;
-  const hotelPin: Pin = { id: HOTEL_ID, lat: hotel.lat, lng: hotel.lng, color: "#111111", icon: "hotel" };
+  const hotelPin: Pin = { id: HOTEL_ID, lat: hotel.lat, lng: hotel.lng, color: "#111111", icon: "hotel", name: hotel.name };
 
   const { pins, route, routeColor, legend } = useMemo(() => {
     const day = trip.days.find((d) => d.id === filter);
@@ -59,7 +60,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
         if (place.id === HOTEL_ID || seen.has(place.id)) continue;
         seen.add(place.id);
         n += 1;
-        dayPins.push({ id: place.id, lat: place.lat, lng: place.lng, color: day.color, label: String(n) });
+        dayPins.push({ id: place.id, lat: place.lat, lng: place.lng, color: day.color, label: String(n), name: place.name });
       }
       return {
         pins: [...dayPins, hotelPin],
@@ -76,7 +77,15 @@ export function MapView({ initialDay }: { initialDay?: string }) {
           const place = stop.placeId ? places.get(stop.placeId) : undefined;
           if (!place || seen.has(place.id) || place.category === "transport") continue;
           seen.add(place.id);
-          all.push({ id: place.id, lat: place.lat, lng: place.lng, color: d.color, label: String(i + 1), small: true });
+          all.push({
+            id: place.id,
+            lat: place.lat,
+            lng: place.lng,
+            color: d.color,
+            label: String(i + 1),
+            small: true,
+            name: place.name,
+          });
         }
       });
       return { pins: [...all, hotelPin], route: [], routeColor: "", legend: "המספר על הנקודה הוא היום" };
@@ -84,11 +93,11 @@ export function MapView({ initialDay }: { initialDay?: string }) {
     if (filter === "kosher") {
       const kosher = allPlaces(trip)
         .filter(isKosher)
-        .map((p): Pin => ({ id: p.id, lat: p.lat, lng: p.lng, color: KOSHER_GREEN, icon: "kosher" }));
+        .map((p): Pin => ({ id: p.id, lat: p.lat, lng: p.lng, color: KOSHER_GREEN, icon: "kosher", name: p.name }));
       return { pins: [...kosher, hotelPin], route: [], routeColor: "", legend: "רוב הכשרים ברובע היהודי, 10 דק' מהמלון" };
     }
     const ideas = IDEAS.filter((p) => p.lat > 47.4 && p.lat < 47.6).map(
-      (p): Pin => ({ id: p.id, lat: p.lat, lng: p.lng, color: IDEA_INK, icon: "idea", small: true }),
+      (p): Pin => ({ id: p.id, lat: p.lat, lng: p.lng, color: IDEA_INK, icon: "idea", small: true, name: p.name }),
     );
     return { pins: [...ideas, hotelPin], route: [], routeColor: "", legend: "לוחצים על נקודה כדי להוסיף לתוכנית" };
     // hotelPin is derived from places, already a dependency.
@@ -135,7 +144,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
 
   return (
     <div className="map-page">
-      <div className="map-filters">
+      <div className="map-filters" ref={filters}>
         <div className="chip-row" role="group" aria-label="מה להציג">
           {chips.map((c) => (
             <button
@@ -158,12 +167,14 @@ export function MapView({ initialDay }: { initialDay?: string }) {
           <Info size={14} aria-hidden /> {legend}
         </p>
       </div>
-      <div className="map-canvas">
+      {/* data-no-swipe: dragging the map must not switch tabs. */}
+      <div className="map-canvas" data-no-swipe>
         <MapCanvas
           pins={pins}
           route={route}
           routeColor={routeColor}
           fitKey={filter}
+          topInset={filters}
           me={me}
           follow={follow}
           onUnfollow={() => setFollow(false)}

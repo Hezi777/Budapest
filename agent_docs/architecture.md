@@ -52,10 +52,15 @@ When a Wikipedia lead image is a logo or wrong, use a `commons` query instead
 
 ## Map
 
-Leaflet with OpenStreetMap tiles (`src/components/map-canvas.tsx`). CARTO
-tiles now need an API key; don't switch back without one. The tiles are
-desaturated in CSS so the day's pins and line stand out. Pins are round
-badges (numbers, or a Lucide glyph rendered to HTML for hotel, kosher, idea).
+MapLibre GL JS with OpenFreeMap's "liberty" vector style
+(`src/components/map-canvas.tsx`; free, no key; the credit comes from the
+tile source and shows as MapLibre's compact control). If the style can't load
+(offline, blocked) the map falls back to a plain background and pins, route
+and GPS keep working. Flat and north-up: rotation and pitch are off. Pins are
+HTML markers, round badges (numbers, or a Lucide glyph rendered to HTML for
+hotel, kosher, idea); the day's route and the GPS accuracy circle are GeoJSON
+layers, re-added after every style load. The map element carries
+`data-no-swipe` so dragging it doesn't switch tabs.
 "איפה אני?" starts `watchPosition`: a live blue dot that the map follows until
 the user drags; the GPS stops when leaving the page.
 
