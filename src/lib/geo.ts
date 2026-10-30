@@ -1,7 +1,7 @@
 import type { Leg, Place } from "./types";
 
 /** Great-circle distance in kilometres. */
-export function distanceKm(a: Place, b: Place): number {
+export function distanceKm(a: Pick<Place, "lat" | "lng">, b: Pick<Place, "lat" | "lng">): number {
   const rad = (d: number) => (d * Math.PI) / 180;
   const dLat = rad(b.lat - a.lat);
   const dLng = rad(b.lng - a.lng);

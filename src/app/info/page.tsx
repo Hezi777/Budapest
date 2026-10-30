@@ -17,6 +17,7 @@ import {
   Wifi,
   Wine,
 } from "lucide-react";
+import { InstallCard } from "@/components/install-card";
 import { SettingsPanel } from "@/components/settings-panel";
 import { StoreLinks, type StoreIds } from "@/components/ui";
 import { EMERGENCY_GROUPS, telHref } from "@/lib/emergency";
@@ -284,6 +285,7 @@ export default function InfoPage() {
       <Title id="settings" icon={<Settings size={20} aria-hidden />}>
         הגדרות
       </Title>
+      <InstallCard />
       <SettingsPanel />
 
       <div className="footer-note">

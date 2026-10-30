@@ -1,13 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
-import { Info, LocateFixed, Navigation, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Footprints, Info, LocateFixed, Navigation, X } from "lucide-react";
 import { PlaceSheet } from "./place-sheet";
 import { Photo, Tags, useToast } from "./ui";
-import type { Pin } from "./map-canvas";
+import type { Me, Pin } from "./map-canvas";
 import { allPlaces, isKosher, placeIndex } from "@/lib/catalog";
-import { directionsUrl } from "@/lib/geo";
+import { directionsUrl, distanceKm } from "@/lib/geo";
 import { IDEAS } from "@/lib/ideas";
 import { HOTEL_ID } from "@/lib/places";
 import { useTrip } from "@/lib/store";
@@ -32,10 +32,17 @@ export function MapView({ initialDay }: { initialDay?: string }) {
   );
   const [selected, setSelected] = useState<Place | null>(null);
   const [details, setDetails] = useState<Place | null>(null);
-  const [me, setMe] = useState<[number, number] | null>(null);
+  const [me, setMe] = useState<Me | null>(null);
+  const [follow, setFollow] = useState(false);
+  const watch = useRef<number | null>(null);
+
+  // Stop the GPS when leaving the map, so it doesn't drain the battery.
+  useEffect(() => () => {
+    if (watch.current !== null) navigator.geolocation.clearWatch(watch.current);
+  }, []);
 
   const hotel = places.get(HOTEL_ID)!;
-  const hotelPin: Pin = { id: HOTEL_ID, lat: hotel.lat, lng: hotel.lng, color: "#111111", label: "🛏", hotel: true };
+  const hotelPin: Pin = { id: HOTEL_ID, lat: hotel.lat, lng: hotel.lng, color: "#111111", icon: "hotel" };
 
   const { pins, route, routeColor, legend } = useMemo(() => {
     const day = trip.days.find((d) => d.id === filter);
@@ -77,32 +84,46 @@ export function MapView({ initialDay }: { initialDay?: string }) {
     if (filter === "kosher") {
       const kosher = allPlaces(trip)
         .filter(isKosher)
-        .map((p) => ({ id: p.id, lat: p.lat, lng: p.lng, color: KOSHER_GREEN, label: "✓" }));
+        .map((p): Pin => ({ id: p.id, lat: p.lat, lng: p.lng, color: KOSHER_GREEN, icon: "kosher" }));
       return { pins: [...kosher, hotelPin], route: [], routeColor: "", legend: "רוב הכשרים ברובע היהודי, 10 דק' מהמלון" };
     }
-    const ideas = IDEAS.filter((p) => p.lat > 47.4 && p.lat < 47.6).map((p) => ({
-      id: p.id,
-      lat: p.lat,
-      lng: p.lng,
-      color: IDEA_INK,
-      label: "★",
-      small: true,
-    }));
+    const ideas = IDEAS.filter((p) => p.lat > 47.4 && p.lat < 47.6).map(
+      (p): Pin => ({ id: p.id, lat: p.lat, lng: p.lng, color: IDEA_INK, icon: "idea", small: true }),
+    );
     return { pins: [...ideas, hotelPin], route: [], routeColor: "", legend: "לוחצים על נקודה כדי להוסיף לתוכנית" };
     // hotelPin is derived from places, already a dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, trip, places]);
 
+  /** First tap starts live tracking; later taps bring the map back to you. */
   function locate() {
+    if (watch.current !== null) {
+      setFollow(true);
+      return;
+    }
     if (!navigator.geolocation) {
       toast("הטלפון לא מאפשר מיקום");
       return;
     }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setMe([pos.coords.latitude, pos.coords.longitude]),
-      () => toast("צריך לאשר גישה למיקום בטלפון"),
-      { enableHighAccuracy: true, timeout: 10000 },
+    setFollow(true);
+    watch.current = navigator.geolocation.watchPosition(
+      (pos) => setMe({ lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy }),
+      () => {
+        if (watch.current !== null) navigator.geolocation.clearWatch(watch.current);
+        watch.current = null;
+        setFollow(false);
+        toast("צריך לאשר גישה למיקום בטלפון");
+      },
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 },
     );
+  }
+
+  /** "כ־8 דק' הליכה ממך", while we know where you are. */
+  function fromMe(place: Place): string | null {
+    if (!me) return null;
+    const km = distanceKm(me, place) * 1.3;
+    if (km > 3) return `${km.toFixed(1)} ק״מ ממך`;
+    return `כ־${Math.max(1, Math.round((km / 4.2) * 60))} דק' הליכה ממך`;
   }
 
   const chips: { id: Filter; label: string; color?: string }[] = [
@@ -144,11 +165,18 @@ export function MapView({ initialDay }: { initialDay?: string }) {
           routeColor={routeColor}
           fitKey={filter}
           me={me}
+          follow={follow}
+          onUnfollow={() => setFollow(false)}
           onSelect={(id) => setSelected(places.get(id) ?? null)}
         />
         {!selected && (
-          <button type="button" className="btn btn-outline map-locate" onClick={locate}>
-            <LocateFixed size={20} /> איפה אני?
+          <button
+            type="button"
+            className="btn btn-outline map-locate"
+            aria-pressed={follow}
+            onClick={locate}
+          >
+            <LocateFixed size={20} /> {!me ? "איפה אני?" : follow ? "עוקב אחריכם" : "חזרה אליי"}
           </button>
         )}
         {selected && (
@@ -158,7 +186,12 @@ export function MapView({ initialDay }: { initialDay?: string }) {
               <div className="stop-info" style={{ flex: 1 }}>
                 <span className="stop-title">{selected.name}</span>
                 {selected.local !== selected.name && <span className="stop-local latin">{selected.local}</span>}
-                <Tags tags={selected.tags?.filter((t) => t !== "free")} />
+                {fromMe(selected) && (
+                  <span className="map-from-me">
+                    <Footprints size={14} aria-hidden /> {fromMe(selected)}
+                  </span>
+                )}
+                <Tags tags={selected.tags?.filter((t) => t === "kosher" || t === "nonKosher" || t === "booking")} />
               </div>
               <button type="button" className="icon-btn" aria-label="סגירה" onClick={() => setSelected(null)}>
                 <X size={20} />

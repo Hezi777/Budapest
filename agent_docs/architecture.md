@@ -53,7 +53,34 @@ When a Wikipedia lead image is a logo or wrong, use a `commons` query instead
 ## Map
 
 Leaflet with OpenStreetMap tiles (`src/components/map-canvas.tsx`). CARTO
-tiles now need an API key; don't switch back without one.
+tiles now need an API key; don't switch back without one. The tiles are
+desaturated in CSS so the day's pins and line stand out. Pins are round
+badges (numbers, or a Lucide glyph rendered to HTML for hotel, kosher, idea).
+"איפה אני?" starts `watchPosition`: a live blue dot that the map follows until
+the user drags; the GPS stops when leaving the page.
+
+## Reordering
+
+In edit mode each stop has a grip handle (`useStopDrag` in
+`src/components/plan-view.tsx`). Dropping calls `moveStopTo` in the store:
+stops change slots, every slot keeps its time, so the day stays sorted.
+
+## Home-screen app
+
+`src/app/manifest.ts` (standalone, shortcuts, a maskable icon),
+`public/sw.js` (offline: pages network-first, build assets and photos
+cache-first; registered in production only) and `InstallCard`
+(`src/components/install-card.tsx`), which explains "add to home screen" per
+platform and hides itself once opened from the home screen. Icons come from
+`public/icon.svg` via `node scripts/generate-icons.mjs`; iOS and the maskable
+icon get a square, full-bleed tile. Push notifications need a server and VAPID
+keys; not built.
+
+## Merged places
+
+Ideas that duplicated another entry were merged (`MERGED` in
+`src/lib/catalog.ts`); old ids still resolve, since phones may have them in a
+saved plan.
 
 ## Fonts and icons
 

@@ -7,7 +7,7 @@ import { Photo, Tags } from "./ui";
 import { allPlaces, CATEGORY_LABELS, isKosher, plannedIds } from "@/lib/catalog";
 import { IDEAS } from "@/lib/ideas";
 import { useTrip } from "@/lib/store";
-import type { Place } from "@/lib/types";
+import type { Category, Place } from "@/lib/types";
 
 const IDEA_IDS = new Set(IDEAS.map((p) => p.id));
 
@@ -17,6 +17,9 @@ type Filter = {
   match: (p: Place) => boolean;
   color?: string;
 };
+
+/** Ideas are grouped by kind, in this order. */
+const SECTION_ORDER: Category[] = ["sight", "jewish", "food", "cafe", "market", "bath", "experience", "shopping"];
 
 const FILTERS: Filter[] = [
   { id: "all", label: "הכול", match: () => true },
@@ -51,12 +54,12 @@ export function ExploreView() {
 
   const planned = useMemo(() => plannedIds(trip), [trip]);
 
-  const list = useMemo(() => {
+  const sections = useMemo(() => {
     const f = FILTERS.find((x) => x.id === filter) ?? FILTERS[0];
     const q = query.trim().toLowerCase();
     // Fresh ideas first, then the rest, and what's already planned last.
     const rank = (p: Place) => (planned.has(p.id) ? 2 : IDEA_IDS.has(p.id) ? 0 : 1);
-    return allPlaces(trip)
+    const list = allPlaces(trip)
       .filter((p) => p.category !== "transport" && p.category !== "hotel")
       .filter(f.match)
       .filter(
@@ -67,6 +70,10 @@ export function ExploreView() {
           p.description.includes(q),
       )
       .sort((a, b) => rank(a) - rank(b));
+    return SECTION_ORDER.map((category) => ({
+      category,
+      places: list.filter((p) => p.category === category),
+    })).filter((section) => section.places.length > 0);
   }, [trip, planned, filter, query]);
 
   return (
@@ -105,29 +112,33 @@ export function ExploreView() {
 
       {filter === "kosher" && <KosherNote />}
 
-      <div className="card idea-list">
-        {list.map((place) => (
-          <button key={place.id} type="button" className="idea-row" onClick={() => setOpen(place)}>
-            <Photo place={place} className="idea-thumb" iconSize={26} />
-            <span className="grow">
-              <span className="idea-meta">
-                {CATEGORY_LABELS[place.category]}
-                {place.duration && ` · ${place.duration}`}
-              </span>
-              <span className="idea-title">{place.name}</span>
-              {planned.has(place.id) ? (
-                <span className="idea-planned">
-                  <CalendarCheck size={14} aria-hidden /> כבר בתוכנית
+      {sections.map(({ category, places }) => (
+        <section key={category} className="idea-section" aria-label={CATEGORY_LABELS[category]}>
+          <h2 className="idea-section-title">
+            {CATEGORY_LABELS[category]} <span className="count">{places.length}</span>
+          </h2>
+          <div className="card idea-list">
+            {places.map((place) => (
+              <button key={place.id} type="button" className="idea-row" onClick={() => setOpen(place)}>
+                <Photo place={place} className="idea-thumb" iconSize={26} />
+                <span className="grow">
+                  {place.duration && <span className="idea-meta">{place.duration}</span>}
+                  <span className="idea-title">{place.name}</span>
+                  {planned.has(place.id) ? (
+                    <span className="idea-planned">
+                      <CalendarCheck size={14} aria-hidden /> כבר בתוכנית
+                    </span>
+                  ) : (
+                    <Tags tags={place.tags?.filter((t) => t === "kosher" || t === "free")} />
+                  )}
                 </span>
-              ) : (
-                <Tags tags={place.tags?.filter((t) => t === "kosher" || t === "free")} />
-              )}
-            </span>
-            <ChevronLeft size={20} aria-hidden className="idea-chevron" />
-          </button>
-        ))}
-        {list.length === 0 && <p className="empty">לא נמצאו מקומות.</p>}
-      </div>
+                <ChevronLeft size={20} aria-hidden className="idea-chevron" />
+              </button>
+            ))}
+          </div>
+        </section>
+      ))}
+      {sections.length === 0 && <p className="empty">לא נמצאו מקומות.</p>}
 
       {open && <PlaceSheet place={open} onClose={() => setOpen(null)} />}
     </>

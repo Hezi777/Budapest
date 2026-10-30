@@ -42,7 +42,6 @@ One line per file: `<file>` — source URL.
 - `tt-nour.webp` — https://www.tiktok.com/@barkrauss5/video/7543672039454854422 (TikTok, @barkrauss5, frame 14-03)
 - `tt-comme-chez-soi.webp` — https://www.tiktok.com/@meytarmiran/video/7559902290014997776 (TikTok, @meytarmiran, slide 26-14)
 - `tt-horizont.webp` — https://www.tiktok.com/@yotammichael24/video/7552852638358867218 (TikTok, @yotammichael24, slide 23-07)
-- `tt-pichler.webp` — https://www.tiktok.com/@or_lev25/video/7562954354752277778 (TikTok, @or_lev25, slide 12-13)
 - `tt-ashis.webp` — https://www.tiktok.com/@shilat__azulay/video/7545838051524709639 (TikTok, @shilat__azulay, slide 21-14)
 - `tt-slow-moes.webp` — https://www.tiktok.com/@shilat__azulay/video/7545838051524709639 (TikTok, @shilat__azulay, slide 21-16)
 - `tt-meshuga.webp` — https://www.tiktok.com/@shilat__azulay/video/7545838051524709639 (TikTok, @shilat__azulay, slide 21-07)

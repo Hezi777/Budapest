@@ -1,13 +1,35 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpDown, CreditCard } from "lucide-react";
+import {
+  ArrowUpDown,
+  CarTaxiFront,
+  Coffee,
+  CreditCard,
+  Croissant,
+  Pizza,
+  Plane,
+  Soup,
+  UtensilsCrossed,
+  type LucideIcon,
+} from "lucide-react";
 import { updateSettings, useSettings } from "@/lib/store";
 
 /** Shekels per forint, July 2026 — used until a live rate arrives. */
 const FALLBACK = { value: 0.0096, date: "2026-07-24" };
 
 type Currency = "HUF" | "ILS";
+
+/** Typical prices, in forints. Goulash: Mama Goulash's menu price (Hungary Unlocked, 2026). */
+const PRICES: { label: string; huf: number; Icon: LucideIcon }[] = [
+  { label: "קפה", huf: 1200, Icon: Coffee },
+  { label: "קירטוש בשוק", huf: 2500, Icon: Croissant },
+  { label: "גולאש במסעדה עממית", huf: 2900, Icon: Soup },
+  { label: "לאנגוש", huf: 3000, Icon: Pizza },
+  { label: "ארוחה במסעדה לאדם", huf: 9000, Icon: UtensilsCrossed },
+  { label: "מונית קצרה בעיר", huf: 3000, Icon: CarTaxiFront },
+  { label: "מונית לשדה", huf: 13000, Icon: Plane },
+];
 
 const QUICK: Record<Currency, number[]> = {
   HUF: [1000, 2000, 5000, 10000, 20000, 50000],
@@ -16,7 +38,7 @@ const QUICK: Record<Currency, number[]> = {
 
 const LABEL: Record<Currency, string> = { HUF: "פורינט", ILS: "שקל" };
 const SYMBOL: Record<Currency, string> = { HUF: "Ft", ILS: "₪" };
-const FLAG: Record<Currency, string> = { HUF: "🇭🇺 HUF", ILS: "🇮🇱 ILS" };
+const CODE: Record<Currency, string> = { HUF: "HUF", ILS: "ILS" };
 
 function format(n: number, currency: Currency): string {
   const digits = currency === "ILS" ? (n < 100 ? 1 : 0) : 0;
@@ -65,7 +87,7 @@ export function Converter() {
       <label className="money-box">
         <span className="money-label">
           <span>מחיר ב{LABEL[from]}</span>
-          <span className="currency-flag">{FLAG[from]}</span>
+          <span className="currency-flag">{CODE[from]}</span>
         </span>
         <input
           className="money-input"
@@ -84,7 +106,7 @@ export function Converter() {
       <div className="money-box is-result" aria-live="polite">
         <span className="money-label">
           <span>שווה ב{LABEL[to]}</span>
-          <span className="currency-flag">{FLAG[to]}</span>
+          <span className="currency-flag">{CODE[to]}</span>
         </span>
         <div className="money-result">
           {SYMBOL[to] === "₪" ? "₪" : ""}
@@ -131,21 +153,17 @@ export function Converter() {
       <h2 className="section-title">מחירים נפוצים בשקלים</h2>
       <div className="card">
         <div className="list">
-          {[
-            ["קפה", 1200],
-            ["קירטוש בשוק", 2500],
-            ["לאנגוש", 3000],
-            ["מונית קצרה בעיר", 3000],
-            ["ארוחה במסעדה לאדם", 9000],
-            ["מונית לשדה", 13000],
-          ].map(([label, huf]) => (
+          {PRICES.map(({ label, huf, Icon }) => (
             <div key={label} className="price-row">
-              <span>
+              <span className="price-icon">
+                <Icon size={20} aria-hidden />
+              </span>
+              <span className="grow">
                 {label}
                 <br />
-                <span className="muted small">כ־{Number(huf).toLocaleString("en-US")} פורינט</span>
+                <span className="muted small">כ־{huf.toLocaleString("en-US")} פורינט</span>
               </span>
-              <strong>₪{Math.round(Number(huf) * rate.value)}</strong>
+              <strong>₪{Math.round(huf * rate.value)}</strong>
             </div>
           ))}
         </div>

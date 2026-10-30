@@ -133,6 +133,22 @@ export function moveStop(dayId: string, stopId: string, direction: -1 | 1) {
   );
 }
 
+/** Drag-and-drop: the stop moves to another slot; every slot keeps its time. */
+export function moveStopTo(dayId: string, stopId: string, toIndex: number) {
+  update((trip) =>
+    mapDay(trip, dayId, (day) => {
+      const from = day.stops.findIndex((s) => s.id === stopId);
+      const to = Math.max(0, Math.min(day.stops.length - 1, toIndex));
+      if (from < 0 || from === to) return day;
+      const times = day.stops.map((s) => s.time);
+      const order = [...day.stops];
+      const [moved] = order.splice(from, 1);
+      order.splice(to, 0, moved);
+      return { ...day, stops: order.map((s, i) => ({ ...s, time: times[i] })) };
+    }),
+  );
+}
+
 export function moveStopToDay(fromDayId: string, stopId: string, toDayId: string) {
   update((trip) => {
     const stop = trip.days

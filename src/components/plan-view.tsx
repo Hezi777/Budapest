@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
   BedDouble,
   CarTaxiFront,
@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronUp,
   Footprints,
+  GripVertical,
   Map as MapIcon,
   Moon,
   Navigation,
@@ -20,12 +21,13 @@ import {
   Snowflake,
   UtensilsCrossed,
 } from "lucide-react";
+import { InstallCard } from "./install-card";
 import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
 import { BudapestScene, CopyAddress, Photo, Tags } from "./ui";
 import { CATEGORY_LABELS, placeIndex } from "@/lib/catalog";
 import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
 import { HERO, HOTEL_ID } from "@/lib/places";
-import { moveStop, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
+import { moveStop, moveStopTo, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
 import { TRIP_INFO } from "@/lib/trip";
 import type { Day, Leg, Place, Stop, Tag } from "@/lib/types";
 
@@ -157,15 +159,20 @@ function EditBar({
   isFirst,
   isLast,
   onEdit,
+  onGrab,
 }: {
   day: Day;
   stop: Stop;
   isFirst: boolean;
   isLast: boolean;
   onEdit: () => void;
+  onGrab: (e: React.PointerEvent<HTMLElement>) => void;
 }) {
   return (
     <div className="edit-bar">
+      <span className="icon-btn drag-handle" role="img" aria-label="גרירה לשינוי הסדר" onPointerDown={onGrab}>
+        <GripVertical size={22} />
+      </span>
       <button
         type="button"
         className="icon-btn"
@@ -365,6 +372,105 @@ function dayAsText(day: Day, number: number, places: Map<string, Place>): string
   return lines.join("\n");
 }
 
+/* ---------- Drag to reorder ---------- */
+
+type Drag = {
+  stopId: string;
+  from: number;
+  to: number;
+  items: HTMLElement[];
+  mids: number[];
+  shift: number;
+  y0: number;
+  scroll0: number;
+  y: number;
+  frame: number;
+};
+
+/**
+ * Edit mode: grab a stop by its handle and drop it in another slot. The page
+ * scrolls when the finger nears the top or bottom; other stops slide aside.
+ */
+function useStopDrag(dayId: string) {
+  const timeline = useRef<HTMLDivElement>(null);
+  const drag = useRef<Drag | null>(null);
+
+  function layout(d: Drag) {
+    const dy = d.y - d.y0 + (window.scrollY - d.scroll0);
+    const center = d.mids[d.from] + dy;
+    d.to = d.mids.filter((mid, i) => i !== d.from && mid < center).length;
+    d.items.forEach((el, i) => {
+      if (i === d.from) {
+        el.style.transform = `translateY(${dy}px)`;
+        return;
+      }
+      const shift =
+        d.from < d.to && i > d.from && i <= d.to ? -d.shift : d.from > d.to && i >= d.to && i < d.from ? d.shift : 0;
+      el.style.transform = shift ? `translateY(${shift}px)` : "";
+    });
+  }
+
+  function tick() {
+    const d = drag.current;
+    if (!d) return;
+    const edge = 90;
+    const bottom = window.innerHeight - 150; // keep clear of the bottom nav
+    if (d.y < edge) window.scrollBy(0, -Math.ceil((edge - d.y) / 6));
+    else if (d.y > bottom) window.scrollBy(0, Math.ceil((d.y - bottom) / 6));
+    layout(d);
+    d.frame = requestAnimationFrame(tick);
+  }
+
+  function onGrab(e: React.PointerEvent<HTMLElement>, stopId: string, index: number) {
+    const list = timeline.current;
+    if (!list || drag.current) return;
+    e.preventDefault();
+    const items = Array.from(list.querySelectorAll<HTMLElement>(":scope > .tl-item"));
+    const rects = items.map((el) => el.getBoundingClientRect());
+    const gap = rects.length > 1 ? rects[1].top - rects[0].bottom : 0;
+    drag.current = {
+      stopId,
+      from: index,
+      to: index,
+      items,
+      mids: rects.map((r) => r.top + window.scrollY + r.height / 2),
+      shift: rects[index].height + gap,
+      y0: e.clientY,
+      scroll0: window.scrollY,
+      y: e.clientY,
+      frame: 0,
+    };
+    const handle = e.currentTarget;
+    handle.setPointerCapture(e.pointerId);
+    items[index].classList.add("is-dragging");
+    list.classList.add("is-sorting");
+    const move = (ev: PointerEvent) => {
+      if (drag.current) drag.current.y = ev.clientY;
+    };
+    const end = () => {
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", end);
+      handle.removeEventListener("pointercancel", end);
+      const d = drag.current;
+      drag.current = null;
+      if (!d) return;
+      cancelAnimationFrame(d.frame);
+      list.classList.remove("is-sorting");
+      d.items.forEach((el) => {
+        el.classList.remove("is-dragging");
+        el.style.transform = "";
+      });
+      if (d.to !== d.from) moveStopTo(dayId, d.stopId, d.to);
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", end);
+    handle.addEventListener("pointercancel", end);
+    drag.current.frame = requestAnimationFrame(tick);
+  }
+
+  return { timeline, onGrab };
+}
+
 /* ---------- Page ---------- */
 
 export function PlanView() {
@@ -386,6 +492,7 @@ export function PlanView() {
   const hotel = places.get(HOTEL_ID)!;
   const { rows, endLeg } = layoutDay(day, places, hotel);
   const todayIndex = trip.days.findIndex((d) => d.date === today);
+  const { timeline, onGrab } = useStopDrag(day.id);
 
   function pickDay(id: string) {
     updateSettings({ dayPick: { id, on: todayIso() } });
@@ -498,12 +605,12 @@ export function PlanView() {
 
       {editing && (
         <div className="edit-banner" role="status">
-          החיצים מזיזים, „עריכה” משנה שעה, שם או יום.
+          גוררים את הידית <GripVertical size={16} aria-hidden /> כדי לשנות סדר. „עריכה” משנה שעה, שם או יום.
         </div>
       )}
 
       {/* Keyed by day so switching days replays the stops' entrance. */}
-      <div className="timeline" key={day.id}>
+      <div className={`timeline${editing ? " is-editing" : ""}`} key={day.id} ref={timeline}>
         {rows.map(({ stop, place, leg, i, isRest, number }) => (
           <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
             {leg && <LegRow {...leg} />}
@@ -535,6 +642,7 @@ export function PlanView() {
                       isFirst={i === 0}
                       isLast={i === rows.length - 1}
                       onEdit={() => setEditStop(stop)}
+                      onGrab={(e) => onGrab(e, stop.id, i)}
                     />
                   )}
                 </div>
@@ -556,6 +664,7 @@ export function PlanView() {
                       isFirst={i === 0}
                       isLast={i === rows.length - 1}
                       onEdit={() => setEditStop(stop)}
+                      onGrab={(e) => onGrab(e, stop.id, i)}
                     />
                   )}
                 </article>
@@ -574,6 +683,10 @@ export function PlanView() {
       >
         <Plus size={20} /> הוספת עצירה ליום {dayIndex + 1}
       </button>
+
+      <div style={{ marginBlockStart: 28 }}>
+        <InstallCard />
+      </div>
 
       {openPlace && (
         <PlaceSheet place={openPlace} defaultDayId={day.id} onClose={() => setOpenPlace(null)} />

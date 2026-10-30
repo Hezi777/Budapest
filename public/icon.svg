@@ -1,19 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#1d2a44"/>
-  <g fill="#f5c86a">
-    <path d="M256 92l10 44h-20z"/>
-    <rect x="248" y="132" width="16" height="22"/>
-    <path d="M176 262c0-52 36-96 80-108 44 12 80 56 80 108z"/>
-    <rect x="96" y="262" width="320" height="34" rx="6"/>
-    <rect x="112" y="296" width="288" height="70"/>
-    <path d="M128 262v-40l20-22 20 22v40zM344 262v-40l20-22 20 22v40z"/>
+  <!-- After the Budapest city flag: white field, red and green triangles top and bottom. -->
+  <defs>
+    <clipPath id="tile"><rect width="512" height="512" rx="112"/></clipPath>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="512" height="512" fill="#ffffff"/>
+    <polygon points="0,0 64,0 32,64" fill="#d12631"/>
+    <polygon points="64,0 128,0 96,64" fill="#436f4d"/>
+    <polygon points="128,0 192,0 160,64" fill="#d12631"/>
+    <polygon points="192,0 256,0 224,64" fill="#436f4d"/>
+    <polygon points="256,0 320,0 288,64" fill="#d12631"/>
+    <polygon points="320,0 384,0 352,64" fill="#436f4d"/>
+    <polygon points="384,0 448,0 416,64" fill="#d12631"/>
+    <polygon points="448,0 512,0 480,64" fill="#436f4d"/>
+    <polygon points="0,512 64,512 32,448" fill="#d12631"/>
+    <polygon points="64,512 128,512 96,448" fill="#436f4d"/>
+    <polygon points="128,512 192,512 160,448" fill="#d12631"/>
+    <polygon points="192,512 256,512 224,448" fill="#436f4d"/>
+    <polygon points="256,512 320,512 288,448" fill="#d12631"/>
+    <polygon points="320,512 384,512 352,448" fill="#436f4d"/>
+    <polygon points="384,512 448,512 416,448" fill="#d12631"/>
+    <polygon points="448,512 512,512 480,448" fill="#436f4d"/>
   </g>
-  <g fill="#1d2a44">
-    <rect x="140" y="312" width="22" height="40" rx="11"/>
-    <rect x="196" y="312" width="22" height="40" rx="11"/>
-    <rect x="245" y="312" width="22" height="40" rx="11"/>
-    <rect x="294" y="312" width="22" height="40" rx="11"/>
-    <rect x="350" y="312" width="22" height="40" rx="11"/>
+  <g transform="translate(256 252) scale(0.8) translate(-256 -252)">
+    <g fill="#111111">
+      <path d="M256 92l10 44h-20z"/>
+      <rect x="248" y="132" width="16" height="22"/>
+      <path d="M176 262c0-52 36-96 80-108 44 12 80 56 80 108z"/>
+      <rect x="96" y="262" width="320" height="34" rx="6"/>
+      <rect x="112" y="296" width="288" height="70"/>
+      <path d="M128 262v-40l20-22 20 22v40zM344 262v-40l20-22 20 22v40z"/>
+    </g>
+    <g fill="#ffffff">
+      <rect x="140" y="312" width="22" height="40" rx="11"/>
+      <rect x="196" y="312" width="22" height="40" rx="11"/>
+      <rect x="245" y="312" width="22" height="40" rx="11"/>
+      <rect x="294" y="312" width="22" height="40" rx="11"/>
+      <rect x="350" y="312" width="22" height="40" rx="11"/>
+    </g>
+    <path d="M80 404c30-18 60-18 88 0s58 18 88 0 58-18 88 0 58 18 88 0" fill="none" stroke="#0e4594" stroke-width="16" stroke-linecap="round"/>
   </g>
-  <path d="M80 404c30-18 60-18 88 0s58 18 88 0 58-18 88 0 58 18 88 0" fill="none" stroke="#7fa6d9" stroke-width="16" stroke-linecap="round"/>
 </svg>

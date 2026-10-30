@@ -82,6 +82,13 @@ export function AppShell({ children }: { children: ReactNode }) {
     document.documentElement.dataset.text = textSize;
   }, [textSize]);
 
+  // Offline support once the app is on the home screen (production only).
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
+    }
+  }, []);
+
   return (
     <ToastProvider>
       <header className="app-header">

@@ -1,6 +1,6 @@
 # Handoff: Budapest trip app
 
-State as of 2026-10-28. `AGENTS.md` and `agent_docs/` cover conventions and
+State as of 2026-10-30. `AGENTS.md` and `agent_docs/` cover conventions and
 architecture; this file is only "where we are and what's next".
 
 ## How Hen works
@@ -42,7 +42,14 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
    - Sunday: no flight time in the app; left-luggage fallback if the hotel
      can't hold bags.
 4. **Ideas from research, not built**: packing checklist, documents wallet
-   (tickets, insurance), phrase card, offline support (no service worker yet).
+   (tickets, insurance), phrase card. Offline support is in (service worker,
+   2026-10-30). Push notifications (e.g. "next stop in 15 minutes") need a
+   push server and VAPID keys in Vercel; not built.
 5. **Sharing an edited plan** between both phones needs a backend (or a
    share-link encoding of the trip). `Trip.customPlaces` has no UI yet.
-6. Geolocation and the Bolt-address copy still need a check on a real phone.
+6. Geolocation (now live tracking on the map), drag-to-reorder and the Bolt-address
+   copy still need a check on a real phone.
+7. **Logo**: the icon is after the Budapest flag (white field, red and green
+   triangles) with our Parliament mark. The real coat of arms couldn't be
+   downloaded from the cloud session (Wikimedia blocked); its use is also
+   legally restricted in Hungary.

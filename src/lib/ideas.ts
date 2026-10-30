@@ -24,20 +24,6 @@ export const IDEAS: Place[] = [
     why: "המקום מספר 1 בכל מדריך. להזמין שבוע־שבועיים מראש.",
   },
   {
-    id: "basilica-dome",
-    name: "תצפית מכיפת הבזיליקה",
-    local: "St. Stephen's Basilica · Panorama",
-    address: "Szent István tér 1, Budapest",
-    lat: 47.5009,
-    lng: 19.0542,
-    category: "sight",
-    description:
-      "עולים במעלית (וקצת מדרגות) לכיפה ומקבלים נוף של 360 מעלות על כל העיר. אפשר לשלב עם שוק הכריסמס שלמטה ומופע האורות על החזית, שמתחיל ב־17:30 וחוזר כל חצי שעה.",
-    duration: "45–60 דק'",
-    price: "כרטיס נפרד לתצפית",
-    photo: { wiki: "St. Stephen's Basilica" },
-  },
-  {
     id: "heroes-square",
     name: "כיכר הגיבורים וטירת ויידהוניאד",
     local: "Hősök tere · Vajdahunyad Castle",
@@ -46,10 +32,10 @@ export const IDEAS: Place[] = [
     lng: 19.0773,
     category: "sight",
     description:
-      "כיכר ענקית עם פסלי מייסדי הונגריה, ובפארק שלידה טירה מהאגדות שמשתקפת באגם. בחורף האגם הופך למגרש החלקה. מתאים לשלב עם מרחצאות סצ'ני.",
-    tags: ["free"],
-    duration: "30–45 דק'",
-    photo: { wiki: "Heroes' Square (Budapest)" },
+      "כיכר ענקית עם פסלי מייסדי הונגריה, ובפארק שלידה טירה מהאגדות שמשתקפת באגם. בחורף האגם הופך לאחד ממגרשי הקרח הגדולים והוותיקים באירופה (Városligeti Műjégpálya), ובערב הטירה מוארת. גם בלי להחליק, המראה שווה. תאריך הפתיחה של מגרש הקרח ל־2026 עוד לא פורסם. מתאים לשלב עם מרחצאות סצ'ני.",
+    tags: ["free", "christmas"],
+    duration: "30–60 דק'",
+    photo: { file: "city-park-rink.webp" },
   },
   {
     id: "gresham",
@@ -266,11 +252,12 @@ export const IDEAS: Place[] = [
     lng: 19.052,
     category: "cafe",
     description:
-      "מאפה ספירלה שנאפה על גחלים, חם ופריך, עם קינמון, אגוזים או פיסטוק. הכי טעים ישר מהתנור בשוק. הכתובת היא של Molnár's בוואצי; Kató Néni ליד הבזיליקה מדורגת גבוה יותר.",
+      "מאפה ספירלה שנאפה על גחלים, חם ופריך, עם קינמון, אגוזים או פיסטוק. הכתובת היא של Molnár's בוואצי. עוד שתי חנויות טובות: Pichler (Kossuth Lajos utca 4, כמה דקות מהמלון, ועוד סניף ב־Váci utca 46), עם קרם פיסטוק או גלידה בפנים, ו־Kató Néni ליד הבזיליקה. לא כשר.",
+    tags: ["nonKosher"],
     duration: "10 דק'",
     price: "כ־1,500–3,500 פורינט",
     photo: { file: "chimney-cake.webp" },
-    why: "הגרסה עם פיסטוק מופיעה בהמון סרטוני טיקטוק מבודפשט.",
+    why: "הגרסה עם פיסטוק מופיעה בהמון סרטוני טיקטוק. מהטיקטוקים ששמרת: „הקירטוש הכי הכי טעים בבודפשט הוא של פישלר, בפער”.",
   },
 
   /* ---------- Christmas & markets ---------- */
@@ -287,20 +274,6 @@ export const IDEAS: Place[] = [
     tags: ["christmas", "free"],
     duration: "45 דק'",
     photo: { file: "varoshaza-park.webp" },
-  },
-  {
-    id: "city-park-rink",
-    name: "מגרש הקרח בפארק העירוני",
-    local: "Városligeti Műjégpálya",
-    address: "Olof Palme sétány 5, Budapest",
-    lat: 47.5147,
-    lng: 19.0821,
-    category: "market",
-    description:
-      "אחד ממגרשי הקרח הגדולים והוותיקים באירופה, מול טירת ויידהוניאד המוארת. גם בלי להחליק, המראה בערב שווה את הנסיעה. תאריך הפתיחה ל־2026 עוד לא פורסם.",
-    tags: ["christmas"],
-    duration: "שעה",
-    photo: { file: "city-park-rink.webp" },
   },
   {
     id: "obuda-advent",
@@ -533,23 +506,6 @@ export const IDEAS: Place[] = [
     website: "https://nour.hu",
     photo: { file: "tt-nour.webp" },
     why: "מהטיקטוקים ששמרת: „המקום שהופך קינוחים לאמנות”. הכי אהבו את הדובדבן והמנגו.",
-  },
-  {
-    id: "tt-pichler",
-    name: "Pichler – קירטוש",
-    local: "Pichler Chimney Cake & Gelato",
-    address: "Kossuth Lajos utca 4, Budapest",
-    lat: 47.493,
-    lng: 19.0565,
-    category: "cafe",
-    description:
-      "קירטוש שנאפה מולכם, עם קרם פיסטוק או גלידה בפנים. הסניף הזה כמה דקות הליכה מהמלון; יש סניף נוסף ב־Váci utca 46. לא כשר.",
-    tags: ["nonKosher"],
-    hours: "כל יום 9:30–22:00 · כדאי לבדוק לפני",
-    price: "קירטוש פיסטוק כ־2,500 פורינט (מחיר ישן)",
-    duration: "10 דק'",
-    photo: { file: "tt-pichler.webp" },
-    why: "מהטיקטוקים ששמרת: „הקירטוש הכי הכי טעים בבודפשט הוא של פישלר, בפער”.",
   },
   {
     id: "tt-horizont",

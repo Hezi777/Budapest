@@ -192,7 +192,8 @@ img {
   position: fixed;
   z-index: 50;
   inset-inline: 10px;
-  bottom: calc(10px + env(safe-area-inset-bottom));
+  /* On the home screen the nav sits just above the home indicator. */
+  bottom: max(10px, env(safe-area-inset-bottom));
   max-width: calc(var(--max) - 20px);
   margin-inline: auto;
   height: var(--nav-height);
@@ -208,6 +209,8 @@ img {
 }
 
 .bottom-nav a {
+  -webkit-touch-callout: none;
+  user-select: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -872,6 +875,10 @@ textarea.input {
   text-decoration-color: var(--ink);
 }
 
+.edit-banner svg {
+  vertical-align: -3px;
+}
+
 .edit-banner {
   padding: 12px 16px;
   margin-block-end: 12px;
@@ -1140,6 +1147,31 @@ textarea.input {
   padding: 10px 14px;
   border-block-start: 1px solid var(--line);
   background: var(--surface-soft);
+}
+
+/* Drag to reorder (edit mode). */
+.drag-handle {
+  touch-action: none;
+  cursor: grab;
+  color: var(--text-muted);
+}
+
+.timeline.is-editing > .tl-item {
+  transition: transform 200ms var(--ease-out);
+}
+
+.timeline.is-sorting {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.timeline > .tl-item.is-dragging {
+  z-index: 20;
+  transition: none;
+}
+
+.tl-item.is-dragging .card {
+  box-shadow: var(--shadow-float);
 }
 
 .edit-bar .spacer {
@@ -1484,6 +1516,26 @@ textarea.input {
   overflow: hidden;
 }
 
+/* Ideas are grouped by kind, each group under a small heading. */
+.idea-section + .idea-section {
+  margin-block-start: 22px;
+}
+
+.idea-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-block: 0 8px;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.idea-section-title .count {
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
 .idea-row {
   display: flex;
   align-items: center;
@@ -1586,24 +1638,24 @@ textarea.input {
   background: #e9e5dc;
 }
 
+/* Pins: a round badge in the day's colour, white ring, number or icon. */
 .map-pin {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg);
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
   background: var(--pin, var(--ink));
+  color: var(--white);
   border: 3px solid var(--white);
-  box-shadow: 0 3px 8px rgb(0 0 0 / 35%);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
 }
 
 .map-pin span {
-  transform: rotate(45deg);
-  color: var(--white);
   font-weight: 800;
   font-size: 15px;
   font-family: var(--font-assistant), system-ui, sans-serif;
+  line-height: 1;
 }
 
 .map-pin.is-small {
@@ -1614,6 +1666,75 @@ textarea.input {
 
 .map-pin.is-small span {
   font-size: 12px;
+}
+
+.map-pin.is-hotel {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+}
+
+.map-pin.is-idea {
+  background: var(--white);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+}
+
+/* The phone's own position: a blue dot that breathes. */
+.map-me {
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+.map-me::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #1a73e8;
+  opacity: 0.35;
+  animation: me-pulse 2s var(--ease-out) infinite;
+}
+
+.map-me span {
+  position: absolute;
+  inset: 3px;
+  border-radius: 999px;
+  background: #1a73e8;
+  border: 3px solid var(--white);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 35%);
+}
+
+@keyframes me-pulse {
+  from { transform: scale(1); opacity: 0.45; }
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-me::before {
+    animation: none;
+  }
+}
+
+/* A calmer, almost monochrome base map so the day's pins and line stand out. */
+.map-canvas .leaflet-tile-pane {
+  filter: saturate(0.3) brightness(1.04) contrast(0.95);
+}
+
+.map-from-me {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.map-locate[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
 }
 
 .map-legend {
@@ -1780,6 +1901,21 @@ textarea.input {
   padding: 13px 16px;
   border-block-end: 1px solid var(--line);
   font-variant-numeric: tabular-nums;
+}
+
+.price-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  flex: none;
+  background: var(--surface-sunk);
+  color: var(--ink);
+}
+
+.price-row .grow {
+  flex: 1;
 }
 
 .price-row:last-child {
@@ -2451,4 +2587,36 @@ textarea.input {
 
 .esim-text p > .path.latin {
   margin-block: 4px;
+}
+
+/* ================= Home screen ================= */
+
+.install-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.05rem;
+}
+
+.install-head .badge-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--white);
+  flex: none;
+}
+
+.install-card svg {
+  vertical-align: -3px;
+}
+
+/* Opened from the home screen there is no browser chrome: no pull-to-refresh bounce. */
+@media (display-mode: standalone) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
 }

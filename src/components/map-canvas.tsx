@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import L from "leaflet";
-import { MapContainer, Marker, Polyline, TileLayer, CircleMarker, useMap } from "react-leaflet";
+import { BedDouble, Check, Star } from "lucide-react";
+import { Circle, MapContainer, Marker, Polyline, TileLayer, useMap, useMapEvents } from "react-leaflet";
 
 export type Pin = {
   id: string;
@@ -10,23 +12,40 @@ export type Pin = {
   lng: number;
   color: string;
   label?: string;
+  /** A Lucide glyph instead of a label. */
+  icon?: "hotel" | "kosher" | "idea";
   small?: boolean;
-  hotel?: boolean;
 };
+
+/** Where the phone is, from the GPS. */
+export type Me = { lat: number; lng: number; accuracy: number };
 
 const BUDAPEST: [number, number] = [47.4979, 19.0502];
 
+const GLYPHS = {
+  hotel: renderToStaticMarkup(<BedDouble size={17} strokeWidth={2.4} />),
+  kosher: renderToStaticMarkup(<Check size={16} strokeWidth={3} />),
+  idea: renderToStaticMarkup(<Star size={13} strokeWidth={2.6} />),
+};
+
 function pinIcon(pin: Pin) {
-  const size = pin.small ? 26 : 36;
-  const classes = ["map-pin", pin.small && "is-small", pin.hotel && "is-hotel"].filter(Boolean).join(" ");
+  const size = pin.small ? 28 : 34;
+  const classes = ["map-pin", pin.small && "is-small", pin.icon && `is-${pin.icon}`].filter(Boolean).join(" ");
+  const inner = pin.icon ? GLYPHS[pin.icon] : `<span>${pin.label ?? ""}</span>`;
   return L.divIcon({
     className: "",
-    html: `<div class="${classes}" style="--pin:${pin.color}"><span>${pin.label ?? ""}</span></div>`,
+    html: `<div class="${classes}" style="--pin:${pin.color}">${inner}</div>`,
     iconSize: [size, size],
-    // The pin's point sits at its bottom-left corner before the 45° turn.
-    iconAnchor: [size / 2, size * 1.2],
+    iconAnchor: [size / 2, size / 2],
   });
 }
+
+const meIcon = L.divIcon({
+  className: "",
+  html: '<div class="map-me"><span></span></div>',
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+});
 
 function FitBounds({ pins, fitKey }: { pins: Pin[]; fitKey: string }) {
   const map = useMap();
@@ -40,11 +59,16 @@ function FitBounds({ pins, fitKey }: { pins: Pin[]; fitKey: string }) {
   return null;
 }
 
-function FlyTo({ to }: { to: [number, number] | null }) {
+/** Keeps the map on the phone while following; a drag hands control back. */
+function Follow({ me, follow, onUnfollow }: { me: Me | null; follow: boolean; onUnfollow: () => void }) {
   const map = useMap();
+  useMapEvents({ dragstart: onUnfollow });
+  const lat = me?.lat;
+  const lng = me?.lng;
   useEffect(() => {
-    if (to) map.flyTo(to, 16);
-  }, [to, map]);
+    if (!follow || lat === undefined || lng === undefined) return;
+    map.flyTo([lat, lng], Math.max(map.getZoom(), 16), { duration: 0.6 });
+  }, [follow, lat, lng, map]);
   return null;
 }
 
@@ -54,13 +78,17 @@ export default function MapCanvas({
   routeColor,
   fitKey,
   me,
+  follow,
+  onUnfollow,
   onSelect,
 }: {
   pins: Pin[];
   route: [number, number][];
   routeColor: string;
   fitKey: string;
-  me: [number, number] | null;
+  me: Me | null;
+  follow: boolean;
+  onUnfollow: () => void;
   onSelect: (id: string) => void;
 }) {
   return (
@@ -71,22 +99,34 @@ export default function MapCanvas({
         maxZoom={19}
       />
       {route.length > 1 && (
-        <Polyline positions={route} pathOptions={{ color: routeColor, weight: 4, opacity: 0.7, dashArray: "2 10", lineCap: "round" }} />
+        <>
+          {/* A white casing keeps the day's line readable over busy streets. */}
+          <Polyline positions={route} pathOptions={{ color: "#ffffff", weight: 8, opacity: 0.9, lineCap: "round", lineJoin: "round" }} />
+          <Polyline positions={route} pathOptions={{ color: routeColor, weight: 4, opacity: 0.9, lineCap: "round", lineJoin: "round" }} />
+        </>
       )}
       {pins.map((pin) => (
         <Marker
           key={pin.id}
           position={[pin.lat, pin.lng]}
           icon={pinIcon(pin)}
-          zIndexOffset={pin.hotel ? 1000 : pin.small ? 0 : 500}
+          zIndexOffset={pin.icon === "hotel" ? 1000 : pin.small ? 0 : 500}
           eventHandlers={{ click: () => onSelect(pin.id) }}
         />
       ))}
       {me && (
-        <CircleMarker center={me} radius={9} pathOptions={{ color: "#fff", weight: 3, fillColor: "#1a73e8", fillOpacity: 1 }} />
+        <>
+          <Circle
+            center={[me.lat, me.lng]}
+            radius={me.accuracy}
+            pathOptions={{ color: "#1a73e8", weight: 1, opacity: 0.3, fillColor: "#1a73e8", fillOpacity: 0.1 }}
+            interactive={false}
+          />
+          <Marker position={[me.lat, me.lng]} icon={meIcon} zIndexOffset={2000} interactive={false} />
+        </>
       )}
       <FitBounds pins={pins} fitKey={fitKey} />
-      <FlyTo to={me} />
+      <Follow me={me} follow={follow} onUnfollow={onUnfollow} />
     </MapContainer>
   );
 }
