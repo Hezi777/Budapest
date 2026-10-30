@@ -661,7 +661,7 @@ textarea.input {
   margin-block-start: 6px;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  min-height: 132px;
+  min-height: 120px;
   color: var(--white);
   background: var(--ink);
   display: flex;
@@ -752,9 +752,10 @@ textarea.input {
   background: var(--surface);
   text-decoration: none;
   font-weight: 800;
-  font-size: 0.98rem;
+  font-size: 1.02rem;
   text-align: center;
   line-height: 1.2;
+  cursor: pointer;
 }
 
 .quick .q-icon {
@@ -776,6 +777,7 @@ textarea.input {
   margin-block-start: 14px;
   padding: 14px;
   background: var(--canvas);
+  border-color: var(--ink);
   box-shadow: var(--shadow-card);
 }
 
@@ -806,17 +808,24 @@ textarea.input {
 }
 
 .next-kicker {
-  color: var(--text-soft);
-  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
 
 .next-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 800;
   line-height: 1.2;
 }
+
+.next-chevron {
+  flex: none;
+  color: var(--text-muted);
+}
+
+
 
 /* ================= Plan: days & timeline ================= */
 
@@ -838,6 +847,7 @@ textarea.input {
   display: grid;
   justify-items: center;
   gap: 1px;
+  min-height: 72px;
   padding-block: 8px 9px;
   border-radius: 18px;
   border: 1px solid var(--line);
@@ -846,19 +856,8 @@ textarea.input {
   line-height: 1.15;
 }
 
-/* The day's colour, as on the map. */
-.day-chip .d-num::after {
-  content: "";
-  display: block;
-  width: 6px;
-  height: 6px;
-  margin: 3px auto 0;
-  border-radius: 999px;
-  background: var(--chip);
-}
-
 .day-chip .d-week {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: var(--text-muted);
 }
@@ -869,10 +868,10 @@ textarea.input {
   line-height: 1;
 }
 
-.day-chip .d-month {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-soft);
+.day-chip .d-sub {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-muted);
 }
 
 .day-chip[aria-pressed="true"] {
@@ -884,17 +883,31 @@ textarea.input {
   color: var(--white);
 }
 
-.day-chip[aria-pressed="true"] .d-num::after {
-  background: var(--white);
+/* Today: a word under the date, and an underline on the day's colour. */
+.day-chip[aria-current="date"] .d-sub {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--chip);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 3px;
+}
+
+.day-chip[aria-pressed="true"][aria-current="date"] .d-sub {
+  color: var(--white);
 }
 
 .day-strip .day-chip {
-  padding-block: 7px 8px;
+  padding-block: 6px 7px;
   border-radius: 16px;
 }
 
 .day-card {
   margin-block: 8px 10px;
+}
+
+.day-card .page-kicker {
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .day-title {
@@ -916,10 +929,15 @@ textarea.input {
 }
 
 .day-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 18px;
-  margin-block-start: 2px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 10px;
+  margin-block-start: 12px;
+}
+
+.day-links .btn {
+  min-height: 52px;
+  padding-inline: 12px;
 }
 
 /* Secondary actions read as links, so ניווט stays the one obvious button. */
@@ -948,6 +966,7 @@ textarea.input {
 }
 
 .edit-banner {
+  margin-block-start: 14px;
   padding: 12px 16px;
   margin-block-end: 12px;
   border-radius: var(--radius-md);
@@ -1080,13 +1099,19 @@ textarea.input {
 }
 
 .stop-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  display: grid;
+  gap: 10px;
 }
 
-.stop-actions .btn {
-  flex: 1 1 auto;
+/* Two quieter buttons side by side under the one big action. */
+.stop-actions-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: 10px;
+}
+
+.stop-actions-row .btn {
+  padding-inline: 10px;
 }
 
 /* ---- Timeline: one folded row per stop ---- */
@@ -1162,7 +1187,30 @@ textarea.input {
 }
 
 .stop-card.is-open {
+  border-color: var(--ink);
   box-shadow: var(--shadow-card);
+}
+
+/* The stop to head for next, during the trip. */
+.stop-card.is-next:not(.is-open) {
+  border-color: var(--ink);
+  border-width: 2px;
+}
+
+.tag-next {
+  margin-inline-end: 8px;
+  background: var(--ink);
+  color: var(--white);
+  min-height: 24px;
+  padding-inline: 9px;
+  font-size: 0.82rem;
+  vertical-align: 2px;
+}
+
+.tl-marker.is-next {
+  box-shadow:
+    0 0 0 4px var(--canvas),
+    0 0 0 6px var(--ink);
 }
 
 .stop-row {
@@ -1187,7 +1235,7 @@ div.stop-row {
 .row-time {
   flex: none;
   min-width: 2.9rem;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
 }
@@ -1195,7 +1243,7 @@ div.stop-row {
 .row-title {
   flex: 1;
   min-width: 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 700;
   line-height: 1.25;
 }
@@ -1216,14 +1264,22 @@ div.stop-row {
 }
 
 .row-chevron {
+  display: grid;
+  place-items: center;
   flex: none;
-  color: var(--text-soft);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--surface-sunk);
+  color: var(--text);
   transition: transform 260ms var(--ease-out);
 }
 
 .stop-row[aria-expanded="true"] .row-chevron,
 .leg-toggle[aria-expanded="true"] .row-chevron {
   transform: rotate(180deg);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .stop-card.is-done .row-time,
@@ -1286,8 +1342,8 @@ div.stop-row {
 }
 
 .howto-label {
-  color: var(--text-soft);
-  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
   font-weight: 800;
 }
 
@@ -1304,7 +1360,8 @@ div.stop-row {
   margin-block-start: 2px;
 }
 
-.howto .copy-address .small {
+.howto .copy-address .small,
+.stop-actions .copy-address .small {
   display: block;
 }
 
@@ -1315,23 +1372,24 @@ div.stop-row {
   font-size: 0.9rem;
 }
 
-.stop-detail .stop-actions .btn {
+.go-btn {
+  min-height: 56px;
+  font-size: 1.1rem;
+}
+
+.stop-actions .btn {
   min-height: 52px;
-  flex: 1 1 130px;
 }
 
-.stop-detail .stop-actions .btn-primary {
-  flex-grow: 1.4;
+.stop-actions .go-btn {
+  min-height: 56px;
 }
 
+/* Ticked: solid green with a check, so it reads without the colour. */
 .done-btn[aria-pressed="true"] {
   background: var(--walk);
   color: var(--white);
-}
-
-.more-link {
-  justify-self: center;
-  color: var(--text-muted);
+  box-shadow: none;
 }
 
 .rest {
@@ -1340,9 +1398,9 @@ div.stop-row {
   gap: 12px;
   min-height: 40px;
   padding: 6px 4px;
-  color: var(--text-soft);
-  font-size: 0.92rem;
-  line-height: 1.35;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .rest strong {
@@ -1359,7 +1417,8 @@ div.stop-row {
 }
 
 .rest.is-done {
-  opacity: 0.6;
+  text-decoration: line-through;
+  text-decoration-color: var(--line-strong);
 }
 
 .tl-stop:has(> .tl-marker.is-rest) {
@@ -1376,10 +1435,10 @@ div.stop-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  min-height: 30px;
+  min-height: 34px;
   padding-inline: 14px;
-  color: var(--text-soft);
-  font-size: 0.86rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
@@ -1401,13 +1460,24 @@ button.leg-line {
   padding-inline: 0;
 }
 
+/* The closing leg is its own row: keep it clear of the stop above. */
+.tl-end {
+  margin-block-start: 8px;
+}
+
+.tl-end button.leg-line {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
 /* Directions from the previous stop to this one, opened in Google Maps. */
 .route-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 44px;
-  padding-inline: 16px;
+  min-height: 48px;
+  padding-inline: 18px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: var(--canvas);
@@ -1436,19 +1506,96 @@ button.leg-line {
 }
 
 .edit-bar {
-  display: flex;
-  align-items: center;
+  display: grid;
   gap: 8px;
-  padding: 10px 14px;
+  padding: 10px 14px 12px;
   border-block-start: 1px solid var(--line);
   background: var(--surface-soft);
+}
+
+/* Up / down / drag: each with a word, 48px tall; wraps at big text sizes. */
+.move-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.move-btn {
+  display: inline-flex;
+  flex: 1 1 5.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  padding-inline: 8px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--canvas);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.move-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.edit-details {
+  min-height: 48px;
+  font-size: 0.95rem;
+}
+
+/* Room under the last stop for the floating exit button. */
+.timeline.is-editing {
+  padding-block-end: 84px;
+}
+
+/* Always-visible exit while editing, clear of the bottom nav. */
+.edit-done {
+  position: fixed;
+  z-index: 40;
+  inset-inline: 24px;
+  bottom: calc(max(10px, env(safe-area-inset-bottom)) + var(--nav-height) + 12px);
+  max-width: 360px;
+  margin-inline: auto;
+  min-height: 56px;
+  box-shadow: var(--shadow-float);
 }
 
 /* Drag to reorder (edit mode). */
 .drag-handle {
   touch-action: none;
   cursor: grab;
+}
+
+/* Hotel sheet: the address big enough to hold up to a taxi driver. */
+.show-driver {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.show-driver-label {
   color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.show-driver-name {
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.show-driver-address {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .timeline.is-editing > .tl-item {
@@ -1467,10 +1614,6 @@ button.leg-line {
 
 .tl-item.is-dragging .card {
   box-shadow: var(--shadow-float);
-}
-
-.edit-bar .spacer {
-  flex: 1;
 }
 
 .copy-address {
