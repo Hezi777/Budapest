@@ -7,12 +7,16 @@ import {
   CarTaxiFront,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronUp,
+  Circle,
   Footprints,
   GripVertical,
+  Info,
   Map as MapIcon,
   Navigation,
   Pencil,
+  Phone,
   Plus,
   Route,
   Share2,
@@ -21,7 +25,7 @@ import {
 } from "lucide-react";
 import { InstallCard } from "./install-card";
 import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
-import { BudapestScene, CopyAddress, Photo } from "./ui";
+import { BudapestScene, CopyAddress, Photo, Sheet } from "./ui";
 import { placeIndex, TAG_LABELS } from "@/lib/catalog";
 import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
 import { HERO, HOTEL_ID } from "@/lib/places";
@@ -42,9 +46,21 @@ function useToday(): string | null {
 
 const nowHhmm = () => new Date().toTimeString().slice(0, 5);
 
+/** Re-checks the clock every 30 seconds, so "next up" follows the day on its own. */
+const everyMinute = (onChange: () => void) => {
+  const id = window.setInterval(onChange, 30_000);
+  return () => window.clearInterval(id);
+};
+
 /** The local time ("14:05") at render, null during server render. */
 function useNow(): string | null {
-  return useSyncExternalStore(noop, nowHhmm, () => null);
+  return useSyncExternalStore(everyMinute, nowHhmm, () => null);
+}
+
+/** The stop to go to next: the first one not ticked that hasn't started; else the last one still open. */
+function pickNext(day: Day, places: Map<string, Place>, now: string): Stop | undefined {
+  const open = day.stops.filter((s) => !s.done && !s.compact && s.placeId && places.has(s.placeId));
+  return open.find((s) => s.time >= now) ?? open[open.length - 1];
 }
 
 function daysBetween(fromIso: string, toIso: string): number {
@@ -223,30 +239,31 @@ function EditBar({
 }) {
   return (
     <div className="edit-bar">
-      <span className="icon-btn drag-handle" role="img" aria-label="גרירה לשינוי הסדר" onPointerDown={onGrab}>
-        <GripVertical size={22} />
-      </span>
-      <button
-        type="button"
-        className="icon-btn"
-        aria-label="להקדים"
-        disabled={isFirst}
-        onClick={() => moveStop(day.id, stop.id, -1)}
-      >
-        <ChevronUp size={22} />
-      </button>
-      <button
-        type="button"
-        className="icon-btn"
-        aria-label="לאחר"
-        disabled={isLast}
-        onClick={() => moveStop(day.id, stop.id, 1)}
-      >
-        <ChevronDown size={22} />
-      </button>
-      <span className="spacer" />
-      <button type="button" className="btn btn-primary btn-sm" onClick={onEdit}>
-        <Pencil size={16} /> עריכה
+      <div className="move-row">
+        <button
+          type="button"
+          className="move-btn"
+          aria-label="להקדים את העצירה"
+          disabled={isFirst}
+          onClick={() => moveStop(day.id, stop.id, -1)}
+        >
+          <ChevronUp size={22} aria-hidden /> למעלה
+        </button>
+        <button
+          type="button"
+          className="move-btn"
+          aria-label="לאחר את העצירה"
+          disabled={isLast}
+          onClick={() => moveStop(day.id, stop.id, 1)}
+        >
+          <ChevronDown size={22} aria-hidden /> למטה
+        </button>
+        <span className="move-btn drag-handle" role="img" aria-label="גרירה לשינוי הסדר" onPointerDown={onGrab}>
+          <GripVertical size={22} aria-hidden /> גרירה
+        </span>
+      </div>
+      <button type="button" className="btn btn-outline btn-block edit-details" onClick={onEdit}>
+        <Pencil size={18} aria-hidden /> שינוי שעה, שם או מחיקה
       </button>
     </div>
   );
@@ -297,6 +314,7 @@ function StopCard({
   leg,
   editing,
   open,
+  isNext,
   onToggle,
   onOpenPlace,
 }: {
@@ -307,6 +325,7 @@ function StopCard({
   leg?: ReturnType<typeof resolveLeg>;
   editing: boolean;
   open: boolean;
+  isNext?: boolean;
   onToggle: (row: HTMLElement) => void;
   onOpenPlace: (place: Place) => void;
 }) {
@@ -317,11 +336,16 @@ function StopCard({
     <>
       <span className="row-time">{stop.time}</span>
       <span className="row-title">
+        {isNext && <span className="tag tag-next">הבא</span>}
         {title}
         {place.tags?.includes("kosher") && <span className="tag tag-kosher">{TAG_LABELS.kosher}</span>}
       </span>
       <Photo place={place} className="row-thumb" iconSize={20} />
-      {!editing && <ChevronDown className="row-chevron" size={20} aria-hidden />}
+      {!editing && (
+        <span className="row-chevron" aria-hidden>
+          <ChevronDown size={22} />
+        </span>
+      )}
     </>
   );
 
@@ -364,25 +388,27 @@ function StopCard({
           ))}
           <div className="stop-actions">
             <a
-              className="btn btn-primary"
+              className="btn btn-primary btn-block go-btn"
               href={leg?.leg.mode === "walk" ? directionsUrl(place) : mapsUrl(place)}
               target="_blank"
               rel="noreferrer"
             >
-              <Navigation size={18} /> ניווט
+              <Navigation size={20} aria-hidden /> ניווט
             </a>
-            <button
-              type="button"
-              className="btn btn-soft done-btn"
-              aria-pressed={!!stop.done}
-              onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
-            >
-              <Check size={18} /> היינו כאן
-            </button>
+            <div className="stop-actions-row">
+              <button
+                type="button"
+                className="btn btn-outline done-btn"
+                aria-pressed={!!stop.done}
+                onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
+              >
+                {stop.done ? <Check size={20} aria-hidden /> : <Circle size={20} aria-hidden />} היינו כאן
+              </button>
+              <button type="button" className="btn btn-outline" onClick={() => onOpenPlace(place)}>
+                <Info size={20} aria-hidden /> עוד על המקום
+              </button>
+            </div>
           </div>
-          <button type="button" className="text-link more-link" onClick={() => onOpenPlace(place)}>
-            עוד על המקום
-          </button>
         </div>
       </Collapse>
     </>
@@ -406,16 +432,14 @@ function NextUp({
   hotel: Place;
   onOpenPlace: (place: Place) => void;
 }) {
-  const open = day.stops.filter((s) => !s.done && !s.compact && s.placeId && places.has(s.placeId));
-  // The first stop not yet ticked that hasn't started; else the last one still open.
-  const stop = open.find((s) => s.time >= now) ?? open[open.length - 1];
+  const stop = pickNext(day, places, now);
   if (!stop) {
     return (
       <section className="card next-up" aria-label="הבא בתוכנית">
         <div className="next-kicker">יום {dayNumber}</div>
         <div className="next-title">סיימתם את כל התחנות להיום</div>
-        <a className="btn btn-primary btn-block" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
-          <BedDouble size={18} /> ניווט למלון
+        <a className="btn btn-primary btn-block go-btn" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
+          <BedDouble size={20} aria-hidden /> ניווט למלון
         </a>
       </section>
     );
@@ -431,20 +455,45 @@ function NextUp({
           </span>
           <span className="next-title">{stop.title ?? place.name}</span>
         </span>
+        <ChevronLeft className="next-chevron" size={24} aria-hidden />
       </button>
       <div className="stop-actions">
-        <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
-          <Navigation size={18} /> ניווט
+        <a className="btn btn-primary btn-block go-btn" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+          <Navigation size={20} aria-hidden /> ניווט
         </a>
         <button
           type="button"
-          className="btn btn-soft"
+          className="btn btn-outline btn-block"
           onClick={() => updateStop(day.id, stop.id, { done: true })}
         >
-          <Check size={18} /> היינו
+          <Check size={20} aria-hidden /> היינו כאן
         </button>
       </div>
     </section>
+  );
+}
+
+/** "Back to the hotel", ready to hand to a taxi driver. Three actions at most. */
+function HotelSheet({ hotel, onClose }: { hotel: Place; onClose: () => void }) {
+  return (
+    <Sheet title="חזרה למלון" onClose={onClose}>
+      <div className="show-driver">
+        <div className="show-driver-label">להראות לנהג המונית</div>
+        <div className="show-driver-name latin">{hotel.local}</div>
+        <div className="show-driver-address latin">{hotel.address}</div>
+      </div>
+      <div className="stop-actions">
+        <a className="btn btn-primary btn-block go-btn" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
+          <Navigation size={20} aria-hidden /> ניווט למלון
+        </a>
+        <CopyAddress address={hotel.address.split(",")[0]} />
+        {hotel.phone && (
+          <a className="btn btn-outline btn-block" href={`tel:${hotel.phone.replace(/[^\d+]/g, "")}`}>
+            <Phone size={20} aria-hidden /> התקשרות למלון
+          </a>
+        )}
+      </div>
+    </Sheet>
   );
 }
 
@@ -572,6 +621,7 @@ export function PlanView() {
   const [openPlace, setOpenPlace] = useState<Place | null>(null);
   const [editStop, setEditStop] = useState<Stop | null>(null);
   const [adding, setAdding] = useState(false);
+  const [hotelOpen, setHotelOpen] = useState(false);
   // The one stop (or the closing leg, "end") unfolded; null = all folded.
   const [openId, setOpenId] = useState<string | null>(null);
 
@@ -584,6 +634,8 @@ export function PlanView() {
   const { rows, endLeg } = layoutDay(day, places, hotel);
   const todayIndex = trip.days.findIndex((d) => d.date === today);
   const { timeline, onGrab } = useStopDrag(day.id);
+  // During the trip, the stop to head for next on today's plan (highlighted in the list).
+  const nextId = now && day.id === trip.days[todayIndex]?.id ? pickNext(day, places, now)?.id : undefined;
 
   function pickDay(id: string) {
     updateSettings({ dayPick: { id, on: todayIso() } });
@@ -643,12 +695,12 @@ export function PlanView() {
       )}
 
       <nav className="quick-grid" aria-label="קיצורים">
-        <a className="quick" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
+        <button type="button" className="quick" onClick={() => setHotelOpen(true)}>
           <span className="q-icon">
             <BedDouble size={22} aria-hidden />
           </span>
           חזרה למלון
-        </a>
+        </button>
         <Link className="quick" href={`/map?day=${day.id}`}>
           <span className="q-icon">
             <MapIcon size={22} aria-hidden />
@@ -660,6 +712,7 @@ export function PlanView() {
       <div className="day-strip" role="group" aria-label="בחירת יום">
         {trip.days.map((d) => {
           const date = Number(d.date.split("-")[2]);
+          const isToday = d.date === today;
           return (
             <button
               key={d.id}
@@ -667,10 +720,13 @@ export function PlanView() {
               className="day-chip"
               style={{ "--chip": d.color } as React.CSSProperties}
               aria-pressed={d.id === day.id}
+              aria-current={isToday ? "date" : undefined}
+              aria-label={`${d.label}${isToday ? " (היום)" : ""}`}
               onClick={() => pickDay(d.id)}
             >
               <span className="d-week">{d.label.split(" · ")[0]}</span>
               <span className="d-num">{date}</span>
+              <span className="d-sub">{isToday ? "היום" : "נוב׳"}</span>
             </button>
           );
         })}
@@ -683,23 +739,24 @@ export function PlanView() {
         <h2 className="day-title">{day.title}</h2>
         <p className="day-summary">{day.summary}</p>
         <div className="day-links">
-          <button
-            type="button"
-            className="text-link"
-            aria-pressed={editing}
-            onClick={() => setEditing((v) => !v)}
-          >
-            <Pencil size={16} /> {editing ? "סיום עריכה" : "שינוי היום"}
-          </button>
-          <button type="button" className="text-link" onClick={shareDay}>
-            <Share2 size={16} /> שליחה בוואטסאפ
+          {editing ? (
+            <button type="button" className="btn btn-primary" onClick={() => setEditing(false)}>
+              <Check size={20} aria-hidden /> סיום עריכה
+            </button>
+          ) : (
+            <button type="button" className="btn btn-outline" onClick={() => setEditing(true)}>
+              <Pencil size={18} aria-hidden /> שינוי סדר / עריכה
+            </button>
+          )}
+          <button type="button" className="btn btn-outline" onClick={shareDay}>
+            <Share2 size={18} aria-hidden /> שליחה בוואטסאפ
           </button>
         </div>
       </header>
 
       {editing && (
         <div className="edit-banner" role="status">
-          גוררים את הידית <GripVertical size={16} aria-hidden /> כדי לשנות סדר. „עריכה” משנה שעה, שם או יום.
+          בכל עצירה אפשר ללחוץ על למעלה או למטה, או לגרור. כשמסיימים, לוחצים על סיום עריכה.
         </div>
       )}
 
@@ -721,7 +778,7 @@ export function PlanView() {
               {leg && <LegLine leg={leg.leg} />}
               <div className="tl-stop">
                 <span
-                  className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}`}
+                  className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}${stop.id === nextId ? " is-next" : ""}`}
                   aria-hidden
                 >
                   {stop.done && <Check size={14} strokeWidth={3} />}
@@ -737,7 +794,7 @@ export function PlanView() {
                     {bar}
                   </div>
                 ) : (
-                  <article className={`card stop-card${stop.done ? " is-done" : ""}${openId === stop.id && !editing ? " is-open" : ""}`}>
+                  <article className={`card stop-card${stop.done ? " is-done" : ""}${openId === stop.id && !editing ? " is-open" : ""}${stop.id === nextId ? " is-next" : ""}`}>
                     <StopCard
                       day={day}
                       stop={stop}
@@ -746,6 +803,7 @@ export function PlanView() {
                       leg={leg}
                       editing={editing}
                       open={openId === stop.id}
+                      isNext={stop.id === nextId}
                       onToggle={(el) => toggle(stop.id, el)}
                       onOpenPlace={setOpenPlace}
                     />
@@ -786,6 +844,12 @@ export function PlanView() {
         />
       )}
       {adding && <AddStopSheet day={day} onClose={() => setAdding(false)} />}
+      {hotelOpen && <HotelSheet hotel={hotel} onClose={() => setHotelOpen(false)} />}
+      {editing && (
+        <button type="button" className="btn btn-primary edit-done" onClick={() => setEditing(false)}>
+          <Check size={20} aria-hidden /> סיום עריכה
+        </button>
+      )}
     </div>
   );
 }
