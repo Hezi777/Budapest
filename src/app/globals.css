@@ -937,8 +937,8 @@ textarea.input {
 
 .stop-head {
   display: flex;
-  gap: 14px;
-  padding: 14px;
+  gap: 12px;
+  padding: 12px 14px;
   width: 100%;
   text-align: start;
   background: none;
@@ -947,9 +947,9 @@ textarea.input {
 }
 
 .stop-thumb {
-  width: 84px;
-  height: 84px;
-  border-radius: 16px;
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
   flex: none;
 }
 
@@ -995,10 +995,14 @@ textarea.input {
   white-space: nowrap;
 }
 
+.stop-info .tags {
+  margin-block-start: 4px;
+}
+
 .stop-body {
-  padding: 0 14px 14px;
+  padding: 0 14px 12px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .stop-desc {
@@ -1015,26 +1019,17 @@ textarea.input {
 
 
 .stop-note {
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-sunk);
-  color: var(--text);
-  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
 }
 
+/* Alternatives stay folded to one line ("חלופה כשרה") until tapped. */
 .stop-alt {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  border: 0;
+  border-radius: var(--radius-sm);
   background: var(--surface-soft);
-  box-shadow: inset 0 0 0 1.5px var(--line);
+  box-shadow: inset 0 0 0 1px var(--line);
   font-size: 0.93rem;
-  text-align: start;
-  width: 100%;
-  cursor: pointer;
 }
 
 .stop-alt.is-kosher {
@@ -1043,9 +1038,49 @@ textarea.input {
   color: #174d2e;
 }
 
-.stop-alt svg {
-  flex: none;
-  margin-block-start: 3px;
+.stop-alt > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding-inline: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.stop-alt > summary::-webkit-details-marker {
+  display: none;
+}
+
+.stop-alt > summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-inline-start: auto;
+  border-inline-end: 2px solid currentColor;
+  border-block-end: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 200ms var(--ease-out);
+  opacity: 0.7;
+}
+
+.stop-alt[open] > summary::after {
+  transform: rotate(225deg);
+}
+
+.stop-alt > p,
+.stop-alt > .text-link {
+  margin-inline: 12px;
+}
+
+.stop-alt > p {
+  margin-block-end: 4px;
+  line-height: 1.5;
+}
+
+.stop-alt > .text-link {
+  color: inherit;
 }
 
 .stop-actions {
@@ -1058,9 +1093,19 @@ textarea.input {
   flex: 1 1 auto;
 }
 
+/* In the plan, ניווט is a calm button sized to its word, not a black bar per stop. */
+.stop .stop-actions {
+  align-items: center;
+}
+
+.stop .stop-actions .btn {
+  flex: none;
+  padding-inline: 18px;
+}
+
 .done-btn {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   color: var(--text-soft);
 }
 
@@ -1110,10 +1155,6 @@ textarea.input {
   gap: 10px;
 }
 
-.leg-taxi-top .grow {
-  flex: 1;
-}
-
 /* Directions from the previous stop to this one, opened in Google Maps. */
 .route-link {
   flex: none;
@@ -1152,20 +1193,15 @@ textarea.input {
 
 .leg-taxi {
   display: grid;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  font-weight: 800;
-  font-size: 0.9rem;
+  gap: 6px;
 }
 
-.leg-taxi-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+/* The Bolt address hangs under the leg text, sized to its content. */
+.leg-taxi .copy-address {
+  justify-self: start;
+  margin-inline-start: 36px;
+  min-height: 48px;
+  font-size: 0.88rem;
 }
 
 .leg-icon {
@@ -1313,6 +1349,23 @@ textarea.input {
   color: var(--text-muted);
 }
 
+/* A tab reached by swiping follows the finger in. */
+.app-main.slide-from-left {
+  animation: tab-from-left 260ms var(--ease-out);
+}
+
+.app-main.slide-from-right {
+  animation: tab-from-right 260ms var(--ease-out);
+}
+
+@keyframes tab-from-left {
+  from { opacity: 0; transform: translateX(-28px); }
+}
+
+@keyframes tab-from-right {
+  from { opacity: 0; transform: translateX(28px); }
+}
+
 @keyframes slide-up {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }
@@ -1398,6 +1451,8 @@ textarea.input {
   .sheet,
   .toast,
   .map-card,
+  .app-main.slide-from-left,
+  .app-main.slide-from-right,
   .tl-item {
     animation: fade-in 0.2s ease-out;
   }

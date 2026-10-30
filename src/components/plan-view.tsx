@@ -27,7 +27,7 @@ import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
 import { HERO, HOTEL_ID } from "@/lib/places";
 import { moveStop, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
 import { TRIP_INFO } from "@/lib/trip";
-import type { Day, Leg, Place, Stop } from "@/lib/types";
+import type { Day, Leg, Place, Stop, Tag } from "@/lib/types";
 
 const MONTHS = ["ינו׳", "פבר׳", "מרץ", "אפר׳", "מאי", "יוני", "יולי", "אוג׳", "ספט׳", "אוק׳", "נוב׳", "דצמ׳"];
 
@@ -101,20 +101,20 @@ function LegRow({
     );
   }
   return (
-    <div className="leg">
-      <div className="leg-taxi">
-        <div className="leg-taxi-top">
+    <div className="leg leg-taxi">
+      <div className="leg-row">
+        <span className="leg-walk">
           <span className="leg-icon">
             <CarTaxiFront size={16} aria-hidden />
           </span>
-          <span className="grow">
+          <span>
             {leg.text}
             {estimated && <span className="estimate"> (הערכה)</span>}
           </span>
-          <RouteLink from={from} to={to} mode="driving" />
-        </div>
-        {leg.boltTo && <CopyAddress address={leg.boltTo} />}
+        </span>
+        <RouteLink from={from} to={to} mode="driving" />
       </div>
+      {leg.boltTo && <CopyAddress address={leg.boltTo} />}
     </div>
   );
 }
@@ -192,6 +192,38 @@ function EditBar({
   );
 }
 
+/** Only what decides whether to go; the rest is in the place sheet. */
+const CARD_TAGS = new Set<Tag>(["kosher", "nonKosher", "booking"]);
+
+/** An alternative, folded to its label ("חלופה כשרה") until tapped. */
+function StopAlt({
+  alt,
+  place,
+  onOpenPlace,
+}: {
+  alt: NonNullable<Stop["alts"]>[number];
+  place?: Place;
+  onOpenPlace: (place: Place) => void;
+}) {
+  const split = alt.text.indexOf(": ");
+  const label = split > 0 ? alt.text.slice(0, split) : "חלופה";
+  const body = split > 0 ? alt.text.slice(split + 2) : alt.text;
+  return (
+    <details className={`stop-alt${alt.kosher ? " is-kosher" : ""}`}>
+      <summary>
+        <UtensilsCrossed size={16} aria-hidden />
+        {label}
+      </summary>
+      <p>{body}</p>
+      {place && (
+        <button type="button" className="text-link" onClick={() => onOpenPlace(place)}>
+          פרטים על {place.name}
+        </button>
+      )}
+    </details>
+  );
+}
+
 function StopCard({
   day,
   stop,
@@ -221,36 +253,29 @@ function StopCard({
             <span className="cat">{CATEGORY_LABELS[place.category]}</span>
           </span>
           <span className="stop-title">{title}</span>
-          {place.local !== title && <span className="stop-local latin">{place.local}</span>}
+          <Tags tags={place.tags?.filter((t) => CARD_TAGS.has(t))} />
         </span>
-        <Photo place={place} className="stop-thumb" iconSize={30} />
+        <Photo place={place} className="stop-thumb" iconSize={28} />
       </button>
       <div className="stop-body">
         {stop.note && <p className="stop-note">{stop.note}</p>}
-        <Tags tags={place.tags?.filter((t) => t !== "free")} />
-        {stop.alts?.map((alt) => {
-          const altPlace = alt.placeId ? places.get(alt.placeId) : undefined;
-          return (
-            <button
-              key={alt.text}
-              type="button"
-              className={`stop-alt${alt.kosher ? " is-kosher" : ""}`}
-              onClick={() => altPlace && onOpenPlace(altPlace)}
-            >
-              <UtensilsCrossed size={18} aria-hidden />
-              <span>{alt.text}</span>
-            </button>
-          );
-        })}
+        {stop.alts?.map((alt) => (
+          <StopAlt
+            key={alt.text}
+            alt={alt}
+            place={alt.placeId ? places.get(alt.placeId) : undefined}
+            onOpenPlace={onOpenPlace}
+          />
+        ))}
         {!editing && (
           <div className="stop-actions">
             <a
-              className="btn btn-primary"
+              className="btn btn-soft btn-sm"
               href={arrivesOnFoot ? directionsUrl(place) : mapsUrl(place)}
               target="_blank"
               rel="noreferrer"
             >
-              <Navigation size={18} /> ניווט
+              <Navigation size={17} /> ניווט
             </a>
             <button
               type="button"

@@ -8,6 +8,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import {
@@ -16,6 +17,7 @@ import {
   Check,
   Coffee,
   Copy,
+  Download,
   Landmark,
   Plane,
   ShoppingBag,
@@ -291,6 +293,55 @@ export function CopyAddress({ address, label = "יעד ל־Bolt" }: { address: s
       </span>
       {copied ? <Check size={20} aria-label="הועתק" /> : <Copy size={20} aria-label="העתקה" />}
     </button>
+  );
+}
+
+/* ---------- App store links ---------- */
+
+type Platform = "ios" | "android" | "other";
+
+function detectPlatform(): Platform {
+  const ua = navigator.userAgent;
+  if (/android/i.test(ua)) return "android";
+  // iPadOS asks for the desktop site, so it says "Macintosh" but has touch.
+  if (/iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) return "ios";
+  return "other";
+}
+
+const noSubscribe = () => () => {};
+
+/** The phone's platform on the client, "other" during server render. */
+export function usePlatform(): Platform {
+  return useSyncExternalStore(noSubscribe, detectPlatform, () => "other");
+}
+
+export type StoreIds = { app: string; ios: string; android: string };
+
+export const STORE_URL = {
+  ios: (id: string) => `https://apps.apple.com/app/id${id}`,
+  android: (id: string) => `https://play.google.com/store/apps/details?id=${id}`,
+};
+
+/** Straight to this phone's app store; both stores when we can't tell. */
+export function StoreLinks({ app, ios, android }: StoreIds) {
+  const platform = usePlatform();
+  if (platform === "other") {
+    return (
+      <div className="btn-row">
+        <a className="btn btn-primary" href={STORE_URL.ios(ios)} target="_blank" rel="noreferrer">
+          {app} לאייפון
+        </a>
+        <a className="btn btn-primary" href={STORE_URL.android(android)} target="_blank" rel="noreferrer">
+          {app} לאנדרואיד
+        </a>
+      </div>
+    );
+  }
+  const href = platform === "ios" ? STORE_URL.ios(ios) : STORE_URL.android(android);
+  return (
+    <a className="btn btn-primary" href={href} target="_blank" rel="noreferrer">
+      <Download size={18} aria-hidden /> להורדת {app} מה־{platform === "ios" ? "App Store" : "Google Play"}
+    </a>
   );
 }
 

@@ -25,6 +25,17 @@ Saved plans are discarded when `TRIP_VERSION` (`src/lib/trip.ts`) changes.
   to this one (`directionsUrl(to, mode, from)`).
 - During the trip, `NextUp` shows the first unticked stop of today.
 
+## Tabs and swiping
+
+A sideways swipe on `<main>` moves between the bottom-nav tabs (`useTabSwipe`
+in `src/components/app-shell.tsx`). RTL: a swipe to the right goes to the next
+tab. Swipes that start on the map, a sheet, a field or anything that scrolls
+sideways are ignored; add `data-no-swipe` to opt out anything else.
+
+App store buttons go through `StoreLinks` / `STORE_URL` in
+`src/components/ui.tsx`, which picks the App Store or Google Play from the
+phone's user agent (both buttons when it can't tell).
+
 ## Photos
 
 `/api/photo?wiki=…&lang=…&commons=…&google=…&w=500|960|1280` returns a 302 to

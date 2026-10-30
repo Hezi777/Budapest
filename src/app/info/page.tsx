@@ -18,11 +18,16 @@ import {
   Wine,
 } from "lucide-react";
 import { SettingsPanel } from "@/components/settings-panel";
+import { StoreLinks, type StoreIds } from "@/components/ui";
 import { EMERGENCY_GROUPS, telHref } from "@/lib/emergency";
 import { PLAN_PLACES, HOTEL_ID } from "@/lib/places";
 import { directionsUrl } from "@/lib/geo";
 
 const HOTEL = PLAN_PLACES.find((p) => p.id === HOTEL_ID)!;
+
+// Bolt: Request a Ride — https://apps.apple.com/app/id675033630,
+// https://play.google.com/store/apps/details?id=ee.mtakso.client
+const BOLT_APP: StoreIds = { app: "Bolt", ios: "675033630", android: "ee.mtakso.client" };
 
 const JUMPS = [
   { id: "sos", label: "חירום" },
@@ -174,9 +179,7 @@ export default function InfoPage() {
           <li>המחיר מופיע מראש ומחויב אוטומטית. לא צריך מזומן.</li>
           <li>לא עוצרים מוניות ברחוב. בשדה התעופה: עמדת Főtaxi הרשמית או Bolt.</li>
         </ol>
-        <a className="btn btn-primary" href="https://bolt.eu/he-il/" target="_blank" rel="noreferrer">
-          להורדת Bolt
-        </a>
+        <StoreLinks {...BOLT_APP} />
       </div>
       <div className="card" style={{ marginBlockStart: 12 }}>
         <ul className="bullets">

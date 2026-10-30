@@ -2,8 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ArrowLeft, ArrowRight, Check, CircleCheck, CircleX, Copy, RotateCcw, Smartphone } from "lucide-react";
-import { useToast } from "./ui";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  CircleCheck,
+  CircleX,
+  Copy,
+  Download,
+  RotateCcw,
+  Smartphone,
+} from "lucide-react";
+import { STORE_URL, useToast, type StoreIds } from "./ui";
 
 export function CouponCode({ code, title, note }: { code: string; title: string; note: string }) {
   const toast = useToast();
@@ -102,6 +112,8 @@ type Step = {
   kind?: "compat" | "coupon" | "done";
   body: React.ReactNode;
   shot?: Shot;
+  /** A button for this step, such as the app store link. */
+  action?: React.ReactNode;
   /** Extra help, collapsed by default. */
   more?: { summary: string; body: React.ReactNode; shots?: Shot[] };
 };
@@ -110,6 +122,10 @@ type Step = {
 const P = ({ children, en }: { children: React.ReactNode; en?: boolean }) => (
   <span className={en ? "path latin" : "path"}>{children}</span>
 );
+
+// Airalo: eSIM Travel & Internet — https://apps.apple.com/app/id1475911720,
+// https://play.google.com/store/apps/details?id=com.mobillium.airalo
+const AIRALO_APP: StoreIds = { app: "Airalo", ios: "1475911720", android: "com.mobillium.airalo" };
 
 const IN_ENGLISH = "המסך באנגלית. אצלכם הוא יופיע בעברית.";
 
@@ -281,6 +297,16 @@ function stepsFor(phone: Phone): Step[] {
           בבית, על Wi‑Fi, יום־יומיים לפני הטיסה: מורידים את האפליקציה <strong>Airalo</strong> מה־{store} ונרשמים
           עם אימייל.
         </p>
+      ),
+      action: (
+        <a
+          className="btn btn-outline btn-block"
+          href={iphone ? STORE_URL.ios(AIRALO_APP.ios) : STORE_URL.android(AIRALO_APP.android)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Download size={18} aria-hidden /> פתיחת Airalo ב־{store}
+        </a>
       ),
     },
     {
@@ -615,6 +641,7 @@ export function EsimWalkthrough() {
         </span>
         <h2 className="esim-title">{step.title}</h2>
         <div className="esim-text">{step.body}</div>
+        {step.action}
 
         {step.kind === "compat" ? (
           <>
