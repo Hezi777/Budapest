@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import {
   createContext,
   useCallback,
@@ -207,7 +208,9 @@ export function Sheet({
     el.style.transform = "";
   }
 
-  return (
+  // Portaled to <body> so no page's stacking context (the map, its card) can
+  // paint over it. Sheets only open after a tap, so document always exists.
+  return createPortal(
     <div className={`sheet-backdrop${closing ? " is-closing" : ""}`} onClick={close}>
       <div
         ref={panel}
@@ -234,7 +237,8 @@ export function Sheet({
         </div>
         <div className="sheet-body">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
