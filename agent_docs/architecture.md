@@ -62,11 +62,24 @@ hotel, kosher, idea); the day's route and the GPS accuracy circle are GeoJSON
 layers, re-added after every style load. The map element carries
 `data-no-swipe` so dragging it doesn't switch tabs.
 "איפה אני?" starts `watchPosition`: a live blue dot that the map follows until
-the user drags; the GPS stops when leaving the page.
+the user drags; the GPS stops when leaving the page. If location is denied, a
+sheet explains how to allow it. While a place card is open the locate and zoom
+controls hide (`data-card-open`); tapping the bare map closes the card.
+
+## Sheets and toasts
+
+`Sheet` (`src/components/ui.tsx`) portals to `<body>` (z-index 1100) so no
+page's stacking context, the map's above all, can paint over it. Toasts sit at
+1200, stay at least 4s (longer for long text) and take an optional action:
+`toast("נמחק", { label: "ביטול", onClick })`. Info and money use the shared
+`Topic` row (`src/components/topic.tsx`), a `<details>` that `HashOpen` opens
+from the URL hash (`/info#packing`). The packing list is saved in settings
+(`packed`).
 
 ## Reordering
 
-In edit mode each stop has a grip handle (`useStopDrag` in
+In edit mode each stop has one row of buttons (למעלה, למטה, עריכה) and a grip
+handle for dragging (`useStopDrag` in
 `src/components/plan-view.tsx`). Dropping calls `moveStopTo` in the store:
 stops change slots, every slot keeps its time, so the day stays sorted.
 

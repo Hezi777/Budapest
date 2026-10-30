@@ -41,8 +41,9 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
      suit them better.
    - Sunday: no flight time in the app; left-luggage fallback if the hotel
      can't hold bags.
-4. **Ideas from research, not built**: packing checklist, documents wallet
-   (tickets, insurance), phrase card. Offline support is in (service worker,
+4. **Ideas from research**: packing checklist, Hungarian phrases, and plug /
+   pickpocket / pharmacy tips are built (Info). Not built: documents wallet
+   (tickets, insurance), flight details (waiting for the real flight times). Offline support is in (service worker,
    2026-10-30). Push notifications (e.g. "next stop in 15 minutes") need a
    push server and VAPID keys in Vercel; not built.
 5. **Sharing an edited plan** between both phones needs a backend (or a

@@ -19,6 +19,11 @@ Reuse classes before adding new ones: `.card`, `.btn .btn-primary|soft|outline`,
 The audience is 50–60 and not technical: 48px+ tap targets, large text
 (three sizes via `html[data-text]`), one obvious action per card, secondary
 actions as `.text-link`, long details behind a tap (sheet or `<details>`).
+Readable for this age: body at 18px at the normal size; nothing under 15px
+except the map credit; muted text ≥ 4.5:1 (`--text-soft` is the lightest
+allowed); selected states use ink or a check, never colour alone; buttons say
+what they do in words; deleting needs a confirm or an undo. Check new screens
+at the "xlarge" text size too.
 
 ## Motion
 
