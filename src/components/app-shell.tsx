@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CalendarDays, Coins, Compass, Info, Map, Siren } from "lucide-react";
-import { ToastProvider } from "./ui";
+import { ToastProvider, useToast } from "./ui";
 import { Welcome } from "./welcome";
 import { updateSettings, useSettings, type TextSize } from "@/lib/store";
 
@@ -20,6 +20,12 @@ const NEXT_SIZE: Record<TextSize, TextSize> = {
   normal: "large",
   large: "xlarge",
   xlarge: "normal",
+};
+
+const SIZE_NAME: Record<TextSize, string> = {
+  normal: "רגיל",
+  large: "גדול",
+  xlarge: "גדול מאוד",
 };
 
 const navIndex = (pathname: string) =>
@@ -73,6 +79,29 @@ function useTabSwipe(pathname: string) {
   return { onTouchStart, onTouchEnd, onAnimationEnd: () => setSlide(null), className };
 }
 
+/** Header button: steps the text size up (and back to normal), and says what it did. */
+function TextSizeButton({ textSize }: { textSize: TextSize }) {
+  const toast = useToast();
+  const next = NEXT_SIZE[textSize];
+  return (
+    <button
+      type="button"
+      className="header-pill"
+      onClick={() => {
+        updateSettings({ textSize: next });
+        toast(`גודל הטקסט: ${SIZE_NAME[next]}`);
+      }}
+      aria-label={`גודל הטקסט: ${SIZE_NAME[textSize]}. לחיצה משנה ל${SIZE_NAME[next]}`}
+    >
+      <span className="size-glyph" aria-hidden>
+        <span style={{ fontSize: "0.9em" }}>א</span>
+        <span style={{ fontSize: "1.3em" }}>א</span>
+      </span>
+      <span aria-hidden>טקסט</span>
+    </button>
+  );
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { textSize } = useSettings();
@@ -92,22 +121,14 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <ToastProvider>
       <header className="app-header">
-        <Link href="/" className="app-brand">
+        <Link href="/" className="app-brand" aria-label="בודפשט, לדף הבית">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/icon.svg" alt="" width={34} height={34} />
           בודפשט
         </Link>
-        <button
-          type="button"
-          className="header-pill"
-          onClick={() => updateSettings({ textSize: NEXT_SIZE[textSize] })}
-          aria-label="הגדלת הטקסט"
-        >
-          <span aria-hidden style={{ fontSize: "0.8em" }}>א</span>
-          <span aria-hidden style={{ fontSize: "1.25em", marginInlineStart: -2 }}>א</span>
-        </button>
-        <Link href="/info#sos" className="header-pill is-sos">
-          <Siren size={17} aria-hidden /> חירום
+        <TextSizeButton textSize={textSize} />
+        <Link href="/info#sos" className="header-pill is-sos" aria-label="חירום: מספרי טלפון לשעת חירום">
+          <Siren size={20} aria-hidden /> חירום
         </Link>
       </header>
       <main
@@ -123,7 +144,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           const active = i === navIndex(pathname);
           return (
             <Link key={href} href={href} aria-current={active ? "page" : undefined}>
-              <Icon size={22} aria-hidden />
+              <Icon size={24} aria-hidden />
               {label}
             </Link>
           );
