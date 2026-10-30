@@ -601,9 +601,9 @@ textarea.input {
 .hero {
   position: relative;
   margin-block-start: 6px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  min-height: 180px;
+  min-height: 132px;
   color: var(--white);
   background: var(--ink);
   display: flex;
@@ -625,15 +625,14 @@ textarea.input {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgb(0 0 0 / 85%) 0%, rgb(0 0 0 / 35%) 45%, rgb(0 0 0 / 0%) 75%);
+  background: linear-gradient(to top, rgb(0 0 0 / 85%) 0%, rgb(0 0 0 / 35%) 55%, rgb(0 0 0 / 0%) 85%);
 }
-
 
 .glass-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  min-height: 34px;
+  min-height: 30px;
   padding-inline: 12px;
   border-radius: 999px;
   background: rgb(255 255 255 / 18%);
@@ -646,12 +645,14 @@ textarea.input {
 .hero-text {
   position: relative;
   z-index: 1;
-  padding: 16px 20px 18px;
+  padding: 12px 18px;
 }
 
 .hero-dates {
   color: rgb(255 255 255 / 85%);
   font-weight: 800;
+  font-size: 0.9rem;
+  line-height: 1.3;
 }
 
 .hero-meta {
@@ -661,37 +662,39 @@ textarea.input {
   gap: 8px;
   color: rgb(255 255 255 / 85%);
   font-weight: 700;
+  font-size: 0.92rem;
 }
 
 .hero-title {
-  font-size: 2.6rem;
+  font-size: 1.85rem;
   font-weight: 800;
-  line-height: 0.95;
+  line-height: 1;
   letter-spacing: -0.02em;
-  margin-block: 4px 8px;
+  margin-block: 2px 6px;
 }
 
-
-/* Quick actions */
+/* Quick actions: two wide buttons, one row. */
 
 .quick-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-block-start: 14px;
+  margin-block-start: 12px;
 }
 
 .quick {
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-  padding: 14px 4px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding-inline: 10px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--surface);
   text-decoration: none;
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 0.98rem;
   text-align: center;
   line-height: 1.2;
 }
@@ -699,17 +702,13 @@ textarea.input {
 .quick .q-icon {
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   background: var(--ink);
   color: var(--white);
+  flex: none;
 }
-
-/* Hotel */
-
-
-
 
 /* Next up: during the trip, the one stop that matters now. */
 
@@ -771,7 +770,7 @@ textarea.input {
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin-inline: calc(var(--gutter) * -1);
-  padding: 8px var(--gutter) 10px;
+  padding: 8px var(--gutter);
   background: rgb(255 255 255 / 92%);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -831,27 +830,38 @@ textarea.input {
   background: var(--white);
 }
 
+.day-strip .day-chip {
+  padding-block: 7px 8px;
+  border-radius: 16px;
+}
+
 .day-card {
-  margin-block: 14px 18px;
+  margin-block: 8px 10px;
 }
 
 .day-title {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.01em;
-  margin-block: 2px 6px;
+  margin-block: 0 4px;
 }
 
 .day-summary {
   color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .day-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 18px;
-  margin-block-start: 6px;
+  gap: 0 18px;
+  margin-block-start: 2px;
 }
 
 /* Secondary actions read as links, so ניווט stays the one obvious button. */
@@ -888,60 +898,6 @@ textarea.input {
   font-weight: 700;
 }
 
-.timeline {
-  position: relative;
-  padding-inline-start: 40px;
-}
-
-.timeline::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: 15px;
-  top: 18px;
-  bottom: 18px;
-  width: 2px;
-  border-radius: 2px;
-  background: repeating-linear-gradient(to bottom, var(--line-strong) 0 6px, transparent 6px 12px);
-}
-
-.tl-item {
-  position: relative;
-}
-
-.tl-marker {
-  position: absolute;
-  inset-inline-start: -40px;
-  top: 14px;
-  display: grid;
-  place-items: center;
-  width: 33px;
-  height: 33px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--white);
-  font-weight: 800;
-  font-size: 0.9rem;
-  box-shadow: 0 0 0 4px var(--canvas);
-}
-
-.tl-marker.is-rest {
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: 0 0 0 4px var(--canvas), inset 0 0 0 2px var(--ink);
-}
-
-.tl-marker.is-done {
-  background: var(--walk);
-}
-
-.stop {
-  overflow: hidden;
-}
-
-.stop.is-done .stop-head {
-  opacity: 0.55;
-}
-
 .stop-head {
   display: flex;
   gap: 12px;
@@ -968,26 +924,6 @@ textarea.input {
   flex: 1;
 }
 
-.stop-meta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.84rem;
-  font-weight: 800;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-
-.stop-meta .sep {
-  color: var(--text-soft);
-  font-weight: 600;
-}
-
-.stop-meta .cat {
-  color: var(--text-soft);
-  font-weight: 700;
-}
-
 .stop-title {
   font-size: 1.12rem;
   font-weight: 800;
@@ -1006,11 +942,6 @@ textarea.input {
   margin-block-start: 4px;
 }
 
-.stop-body {
-  padding: 0 14px 12px;
-  display: grid;
-  gap: 8px;
-}
 
 .stop-desc {
   line-height: 1.55;
@@ -1100,20 +1031,239 @@ textarea.input {
   flex: 1 1 auto;
 }
 
-/* In the plan, ניווט is a calm button sized to its word, not a black bar per stop. */
-.stop .stop-actions {
+/* ---- Timeline: one folded row per stop ---- */
+
+.timeline {
+  position: relative;
+  padding-inline-start: 30px;
+}
+
+/* The thread the markers hang on. */
+.timeline::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 10px;
+  top: 24px;
+  bottom: 24px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.tl-item,
+.tl-end {
+  position: relative;
+  scroll-margin-block: calc(var(--header-height) + 96px) calc(var(--nav-height) + 16px);
+}
+
+.tl-stop {
+  position: relative;
+  --mark-top: 19px;
+}
+
+.tl-marker {
+  position: absolute;
+  inset-inline-start: -30px;
+  top: var(--mark-top);
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  color: var(--white);
+  box-shadow: 0 0 0 4px var(--canvas);
+  background: var(--canvas);
+}
+
+.tl-marker::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+.tl-marker.is-rest::before {
+  background: var(--canvas);
+  box-shadow: inset 0 0 0 2px var(--text-soft);
+}
+
+.tl-marker.is-done {
+  background: var(--walk);
+}
+
+.tl-marker.is-done::before {
+  display: none;
+}
+
+.stop-card {
+  box-shadow: none;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow 200ms ease;
+}
+
+.stop-card.is-open {
+  box-shadow: var(--shadow-card);
+}
+
+.stop-row {
+  display: flex;
   align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 62px;
+  padding: 9px 14px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
 }
 
-.stop .stop-actions .btn {
+div.stop-row {
+  cursor: default;
+}
+
+.row-time {
   flex: none;
-  padding-inline: 18px;
+  min-width: 2.9rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
-.done-btn {
-  width: 48px;
-  height: 48px;
+.row-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.row-title .tag {
+  min-height: 22px;
+  margin-inline-start: 8px;
+  padding-inline: 8px;
+  font-size: 0.74rem;
+  vertical-align: 2px;
+}
+
+.row-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  flex: none;
+}
+
+.row-chevron {
+  flex: none;
   color: var(--text-soft);
+  transition: transform 260ms var(--ease-out);
+}
+
+.stop-row[aria-expanded="true"] .row-chevron,
+.leg-toggle[aria-expanded="true"] .row-chevron {
+  transform: rotate(180deg);
+}
+
+.stop-card.is-done .row-time,
+.stop-card.is-done .row-title {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.stop-card.is-done .row-thumb {
+  opacity: 0.55;
+}
+
+/* Smooth height without measuring: 0fr -> 1fr. */
+.collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms var(--ease-out);
+}
+
+.collapse[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s linear 280ms;
+}
+
+.collapse[data-open="true"] > .collapse-inner {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.stop-detail {
+  display: grid;
+  gap: 12px;
+  padding: 2px 14px 14px;
+}
+
+.stop-photo {
+  width: 100%;
+  height: 160px;
+  border-radius: var(--radius-sm);
+}
+
+.stop-note {
+  color: var(--text);
+}
+
+/* How to get there: the full leg, directions and the Bolt address. */
+.howto {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-sunk);
+}
+
+.howto-label {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.howto-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.howto-text svg {
+  flex: none;
+  margin-block-start: 2px;
+}
+
+.howto .copy-address .small {
+  display: block;
+}
+
+.howto .copy-address {
+  justify-self: stretch;
+  background: var(--canvas);
+  min-height: 48px;
+  font-size: 0.9rem;
+}
+
+.stop-detail .stop-actions .btn {
+  min-height: 52px;
+  flex: 1 1 130px;
+}
+
+.stop-detail .stop-actions .btn-primary {
+  flex-grow: 1.4;
 }
 
 .done-btn[aria-pressed="true"] {
@@ -1121,23 +1271,110 @@ textarea.input {
   color: var(--white);
 }
 
+.more-link {
+  justify-self: center;
+  color: var(--text-muted);
+}
+
 .rest {
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-height: 60px;
-  padding: 10px 4px;
+  gap: 12px;
+  min-height: 40px;
+  padding: 6px 4px;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.rest strong {
+  font-weight: 700;
   color: var(--text-muted);
 }
 
 .rest .time {
+  flex: none;
+  min-width: 2.9rem;
   font-weight: 800;
-  color: var(--ink);
+  color: var(--text-muted);
   font-variant-numeric: tabular-nums;
+}
+
+.rest.is-done {
+  opacity: 0.6;
+}
+
+.tl-stop:has(> .tl-marker.is-rest) {
+  --mark-top: 9px;
 }
 
 .rest.in-card {
   padding-inline: 16px;
+  color: var(--text-muted);
+}
+
+/* Legs between stops: a thin, muted connector with just the duration. */
+.leg-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding-inline: 14px;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+button.leg-line {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.leg-toggle .row-chevron {
+  margin-inline-start: auto;
+}
+
+.tl-end .stop-detail {
+  padding-inline: 0;
+}
+
+/* Directions from the previous stop to this one, opened in Google Maps. */
+.route-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--canvas);
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 160ms var(--ease-out);
+}
+
+.route-link:active {
+  transform: scale(0.97);
+}
+
+.estimate {
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapse,
+  .collapse-inner,
+  .row-chevron {
+    transition: none;
+  }
 }
 
 .edit-bar {
@@ -1176,84 +1413,6 @@ textarea.input {
 
 .edit-bar .spacer {
   flex: 1;
-}
-
-/* Legs between stops */
-
-.leg-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-/* Directions from the previous stop to this one, opened in Google Maps. */
-.route-link {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  min-height: 36px;
-  padding-inline: 12px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.84rem;
-  font-weight: 800;
-  text-decoration: none;
-  transition: transform 160ms var(--ease-out);
-}
-
-.route-link:active {
-  transform: scale(0.97);
-}
-
-.leg {
-  position: relative;
-  padding-block: 10px;
-}
-
-.leg-walk {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-muted);
-  font-weight: 800;
-  font-size: 0.88rem;
-}
-
-.leg-taxi {
-  display: grid;
-  gap: 6px;
-}
-
-/* The Bolt address hangs under the leg text, sized to its content. */
-.leg-taxi .copy-address {
-  justify-self: start;
-  margin-inline-start: 36px;
-  min-height: 48px;
-  font-size: 0.88rem;
-}
-
-.leg-icon {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 9px;
-  flex: none;
-  background: var(--surface-sunk);
-}
-
-.leg-taxi .leg-icon {
-  background: var(--ink);
-  color: var(--white);
-}
-
-.estimate {
-  font-weight: 600;
-  opacity: 0.7;
 }
 
 .copy-address {
