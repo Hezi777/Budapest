@@ -1,8 +1,8 @@
 # Budapest trip
 
-A mobile web app for Hen's parents, Edna and Benny (50s–60s, not technical), on
+A mobile web app for Edna and Benny (50s–60s, not technical), on
 a Budapest trip, Thu 26 – Sun 29 Nov 2026: the day-by-day plan, a map, ideas
-(with kosher places; they keep kosher and Shabbat falls in the trip), a
+(with kosher places; they keep kosher; Shabbat falls in the trip but they don't keep it strictly, so taxis and shops are fine), a
 forint ⇄ shekel converter, emergency numbers and an eSIM guide. Hebrew, RTL.
 Live at https://budapest-opal.vercel.app.
 

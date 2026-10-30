@@ -34,7 +34,7 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
    (geocoders were blocked in the cloud session); a few facts are marked
    „כדאי לבדוק לפני” (Tokio identity, Slow Moe's location and kashrut,
    Karaván in winter, Museum of Illusions reopening).
-3. **Plan content to confirm with the parents** (client-facing):
+3. **Plan content to confirm with Edna and Benny** (client-facing):
    - Day 1 has the hotel at 11:15 after a 10:00 landing; EES passport queues
      may make that tight.
    - Shabbat days lean on taxis and malls; a walking-distance alternative may

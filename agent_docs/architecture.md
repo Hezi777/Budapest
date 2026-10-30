@@ -8,7 +8,7 @@ the seed, so there are no hydration mismatches. Anything that must differ per
 phone (the welcome screen, today's date, the current time) renders only after
 hydration (see `useToday` / `useNow` in `src/components/plan-view.tsx` and
 `src/components/welcome.tsx`). Each phone keeps its own copy; nothing syncs
-between the two parents' phones.
+between Edna's and Benny's phones.
 
 Saved plans are discarded when `TRIP_VERSION` (`src/lib/trip.ts`) changes.
 

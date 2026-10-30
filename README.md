@@ -1,6 +1,6 @@
 # Budapest · 26–29 Nov 2026
 
-A mobile web app for the parents' Budapest trip: the day-by-day plan from the
+A mobile web app for Edna and Benny's Budapest trip: the day-by-day plan from the
 PDF guide, a map, more ideas (with a kosher filter), a forint ⇄ shekel
 converter and practical tips. Hebrew, right-to-left, large text by default.
 The design follows Hen Helper.

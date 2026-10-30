@@ -2,7 +2,7 @@
 
 Researched by web search in October 2026. Re-check a week before the trip.
 
-- **Places in the plan**: transcribed from the parents' printed PDF guide (not
+- **Places in the plan**: transcribed from Edna and Benny's printed PDF guide (not
   in the repo), cross-checked. Coordinates are estimates; restaurants may be
   50–200 m off. Navigation searches by address, so this mostly affects pins.
 - **Kosher** (`KOSHER_PLACES`): Carmel, Hanna and Tel Aviv Café confirmed

@@ -5,7 +5,7 @@ import { seedTrip, TRIP_VERSION } from "./trip";
 import type { Day, Place, Stop, Trip } from "./types";
 
 /**
- * The trip lives in localStorage so every change the parents make stays on
+ * The trip lives in localStorage so every change Edna and Benny make stays on
  * their phone. A tiny external store keeps every screen in sync.
  */
 function createStore<T>(key: string, fallback: T, isValid: (v: unknown) => v is T) {
