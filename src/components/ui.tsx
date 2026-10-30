@@ -7,6 +7,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useId,
   useRef,
   useState,
   useSyncExternalStore,
@@ -145,6 +146,8 @@ export function Tags({ tags }: { tags?: Tag[] }) {
 
 /* ---------- Bottom sheet ---------- */
 
+const FOCUSABLE = 'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), summary, [tabindex]:not([tabindex="-1"])';
+
 export function Sheet({
   title,
   onClose,
@@ -169,8 +172,28 @@ export function Sheet({
     setTimeout(onClose, 220);
   }, [closing, onClose]);
 
+  const titleId = useId();
+
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
+    // Remember what had focus (the button that opened the sheet) to give it back on close.
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") return close();
+      // Keep Tab inside the sheet while it is open.
+      if (e.key !== "Tab" || !panel.current) return;
+      const items = [...panel.current.querySelectorAll<HTMLElement>(FOCUSABLE)].filter((el) => el.offsetParent !== null);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || active === panel.current)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -178,6 +201,7 @@ export function Sheet({
     return () => {
       document.body.style.overflow = overflow;
       window.removeEventListener("keydown", onKey);
+      if (opener?.isConnected) opener.focus({ preventScroll: true });
     };
   }, [close]);
 
@@ -217,6 +241,7 @@ export function Sheet({
         className="sheet"
         role="dialog"
         aria-modal="true"
+        aria-labelledby={titleId}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
       >
@@ -229,9 +254,11 @@ export function Sheet({
         >
           <div className="sheet-handle" />
           <div className="sheet-head">
-            <h2 className="sheet-title">{title}</h2>
-            <button type="button" className="icon-btn" onClick={close} aria-label="סגירה">
-              <X size={22} />
+            <h2 id={titleId} className="sheet-title">
+              {title}
+            </h2>
+            <button type="button" className="sheet-close" onClick={close}>
+              <X size={22} aria-hidden /> סגירה
             </button>
           </div>
         </div>
@@ -244,24 +271,63 @@ export function Sheet({
 
 /* ---------- Toast ---------- */
 
-const ToastContext = createContext<(message: string) => void>(() => {});
+/** An optional button on a toast, e.g. { label: "ביטול", onClick: undo }. */
+export type ToastAction = {
+  label: string;
+  onClick: () => void;
+  /** Override how long the toast stays, in ms. */
+  duration?: number;
+};
+
+type ShowToast = (message: string, action?: ToastAction) => void;
+
+const ToastContext = createContext<ShowToast>(() => {});
+
+/**
+ * How long a toast stays: at least 4s, plus about 60ms per character so longer
+ * sentences can be read, and at least 7s when there is a button to press.
+ */
+export function toastDuration(message: string, hasAction: boolean): number {
+  const reading = Math.min(4000 + message.length * 60, 9000);
+  return hasAction ? Math.max(reading, 7000) : reading;
+}
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [message, setMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ id: number; message: string; action?: ToastAction } | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const counter = useRef(0);
 
-  const show = useCallback((text: string) => {
-    setMessage(text);
+  const dismiss = useCallback(() => {
     clearTimeout(timer.current);
-    timer.current = setTimeout(() => setMessage(null), 2400);
+    setToast(null);
+  }, []);
+
+  const show = useCallback<ShowToast>((message, action) => {
+    counter.current += 1;
+    setToast({ id: counter.current, message, action });
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => setToast(null), action?.duration ?? toastDuration(message, !!action));
   }, []);
 
   return (
     <ToastContext.Provider value={show}>
       {children}
-      {message && (
-        <div className="toast" role="status">
-          {message}
+      {toast && (
+        // key: a new message restarts the entrance, even when the text repeats.
+        <div key={toast.id} className={`toast${toast.action ? " has-action" : ""}`} role="status" aria-live="polite">
+          <span>{toast.message}</span>
+          {toast.action && (
+            <button
+              type="button"
+              className="toast-action"
+              onClick={() => {
+                toast.action?.onClick();
+                dismiss();
+              }}
+            >
+              {toast.action.label}
+            </button>
+          )}
         </div>
       )}
     </ToastContext.Provider>

@@ -14,11 +14,16 @@
   --surface-sunk: #f0f0f0;
   --line: #ebebeb;
   --line-strong: #d7d7d7;
-  --text: #181818;
-  --text-muted: #6b6b6b;
-  --text-soft: #8a8a8a;
+  /* Contrast on white / #fafafa / #f0f0f0: text 18.4 / 17.5 / 16.2, muted 7.8 / 7.5 / 6.9,
+     soft 6.5 / 6.2 / 5.7 (all AA, muted AAA). Nothing a reader needs is lighter than soft. */
+  --text: #141414;
+  --text-muted: #525252;
+  --text-soft: #5e5e5e;
+  /* Borders of things you press or type into: 3:1 against the canvas, so they read as controls. */
+  --line-control: #8c8c8c;
+  --focus: #1d5fd0;
   --ink: #111111;
-  --danger: #c8372d;
+  --danger: #a82a21;
   --danger-soft: #fdecea;
   --white: #ffffff;
 
@@ -31,7 +36,7 @@
   --shadow-float: 0 12px 32px -12px rgb(0 0 0 / 24%), 0 2px 6px -2px rgb(0 0 0 / 8%);
 
   --day: var(--ink);
-  --walk: #2c7a4f;
+  --walk: #256b43;
   --walk-soft: #e5f3ea;
 
   --tag-kosher-bg: #e2f2e7;
@@ -44,22 +49,23 @@
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --nav-height: 68px;
-  --header-height: 58px;
+  --nav-height: 74px;
+  --header-height: 64px;
   --gutter: 16px;
   --max: 640px;
 }
 
+/* The text-size scale: every rem in the app follows these three roots. */
 html {
-  font-size: 17px;
+  font-size: 18px;
   -webkit-text-size-adjust: 100%;
   background: var(--canvas);
 }
 html[data-text="large"] {
-  font-size: 19px;
+  font-size: 20px;
 }
 html[data-text="xlarge"] {
-  font-size: 22px;
+  font-size: 23px;
 }
 
 *,
@@ -73,7 +79,9 @@ body {
   background: var(--canvas);
   color: var(--text);
   font-family: var(--font-assistant), system-ui, sans-serif;
-  line-height: 1.5;
+  /* A touch heavier than the font's 400: thin strokes wash out in cold, bright light. */
+  font-weight: 500;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
@@ -94,13 +102,30 @@ button {
   color: inherit;
 }
 
+/* No double-tap-to-zoom delay on anything pressable. */
+a,
+button,
+summary,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
 img {
   display: block;
   max-width: 100%;
 }
 
 :focus-visible {
-  outline: 3px solid #3f6fd8;
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* On the black toast and the welcome screen the ring turns white. */
+.toast :focus-visible,
+.welcome :focus-visible {
+  outline-color: var(--white);
   outline-offset: 2px;
 }
 
@@ -114,7 +139,7 @@ img {
 }
 
 .small {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .visually-hidden {
@@ -135,10 +160,10 @@ img {
   height: var(--header-height);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding-inline: var(--gutter);
-  background: rgb(255 255 255 / 85%);
-  border-block-end: 1px solid rgb(235 235 235 / 70%);
+  background: rgb(255 255 255 / 92%);
+  border-block-end: 1px solid var(--line);
   backdrop-filter: saturate(1.4) blur(14px);
   -webkit-backdrop-filter: saturate(1.4) blur(14px);
 }
@@ -146,17 +171,22 @@ img {
 .app-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  min-width: 0;
+  min-height: 48px;
   font-weight: 800;
-  font-size: 1.15rem;
+  /* Header text is chrome: it grows with the text size, but stops before it crowds the buttons. */
+  font-size: min(1.1rem, 20px);
   text-decoration: none;
   margin-inline-end: auto;
+  white-space: nowrap;
 }
 
 .app-brand img {
   width: 34px;
   height: 34px;
   border-radius: 11px;
+  flex: none;
 }
 
 .header-pill {
@@ -166,17 +196,26 @@ img {
   min-height: 48px;
   padding-inline: 14px;
   border-radius: 999px;
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line-control);
   background: var(--surface);
   font-weight: 800;
-  font-size: 0.88rem;
+  font-size: min(0.95rem, 17px);
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
+  flex: none;
+}
+
+/* "א א": a small and a big letter, so the button says "text size" without words. */
+.size-glyph {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  line-height: 1;
 }
 
 .header-pill.is-sos {
-  border-color: transparent;
+  border-color: var(--danger);
   background: var(--danger-soft);
   color: var(--danger);
 }
@@ -198,11 +237,12 @@ img {
   margin-inline: auto;
   height: var(--nav-height);
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
   padding: 6px;
-  border-radius: 26px;
-  border: 1px solid var(--line);
-  background: rgb(255 255 255 / 92%);
+  border-radius: 28px;
+  border: 1px solid var(--line-strong);
+  background: rgb(255 255 255 / 96%);
   backdrop-filter: saturate(1.6) blur(18px);
   -webkit-backdrop-filter: saturate(1.6) blur(18px);
   box-shadow: var(--shadow-float);
@@ -215,17 +255,25 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  border-radius: 20px;
+  gap: 3px;
+  min-width: 0;
+  border-radius: 22px;
   text-decoration: none;
-  color: var(--text-soft);
-  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-size: min(0.85rem, 16px);
   font-weight: 800;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
+/* The page you are on: a black pill, a white label and a bolder icon, not just a colour. */
 .bottom-nav a[aria-current="page"] {
   background: var(--ink);
   color: var(--white);
+}
+
+.bottom-nav a[aria-current="page"] svg {
+  stroke-width: 2.6;
 }
 
 /* ================= Building blocks ================= */
@@ -235,20 +283,22 @@ img {
 }
 
 .page-kicker {
-  color: var(--text-soft);
+  color: var(--text-muted);
   font-weight: 800;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .page-title {
   font-size: 2rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.2;
   letter-spacing: -0.015em;
+  text-wrap: balance;
 }
 
 .page-lead {
   color: var(--text-muted);
+  line-height: 1.55;
   margin-block: 6px 18px;
 }
 
@@ -297,15 +347,18 @@ img {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 50px;
-  padding-inline: 20px;
+  min-height: 52px;
+  padding: 10px 22px;
   border-radius: 999px;
   border: 0;
   font-weight: 800;
-  font-size: 0.98rem;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
-  white-space: nowrap;
+  /* Long Hebrew labels wrap onto a second line instead of running off the screen. */
+  white-space: normal;
 }
 
 .btn:disabled {
@@ -326,7 +379,7 @@ img {
 .btn-outline {
   background: var(--surface);
   color: var(--text);
-  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  box-shadow: inset 0 0 0 1.5px var(--line-control);
 }
 
 .btn-danger {
@@ -336,8 +389,8 @@ img {
 
 .btn-sm {
   min-height: 48px;
-  padding-inline: 14px;
-  font-size: 0.88rem;
+  padding: 8px 16px;
+  font-size: 0.95rem;
 }
 
 .btn-block {
@@ -360,7 +413,7 @@ img {
   width: 48px;
   height: 48px;
   border-radius: 999px;
-  border: 0;
+  border: 1.5px solid var(--line-strong);
   background: var(--surface-sunk);
   cursor: pointer;
   flex: none;
@@ -380,10 +433,10 @@ img {
 .tag {
   display: inline-flex;
   align-items: center;
-  min-height: 26px;
-  padding-inline: 10px;
+  min-height: 30px;
+  padding-inline: 12px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 800;
   background: var(--tag-plain-bg);
   color: var(--tag-plain);
@@ -409,14 +462,14 @@ img {
   flex: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  padding-inline: 16px;
+  gap: 8px;
+  min-height: 48px;
+  padding-inline: 18px;
   border-radius: 999px;
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line-control);
   background: var(--surface);
   font-weight: 800;
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--text);
   text-decoration: none;
   cursor: pointer;
@@ -447,23 +500,24 @@ img {
 
 .field-label {
   font-weight: 800;
-  font-size: 0.92rem;
-  color: var(--text-muted);
+  font-size: 1rem;
+  color: var(--text);
 }
 
 .input {
   width: 100%;
-  min-height: 54px;
+  min-height: 56px;
   padding-inline: 16px;
   border-radius: var(--radius-md);
-  border: 0;
+  border: 1.5px solid var(--line-control);
   background: var(--surface-sunk);
   font: inherit;
-  font-size: 1.02rem;
+  font-size: 1.1rem;
 }
 
 .input:focus {
-  outline: 2.5px solid var(--ink);
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
   background: var(--surface);
 }
 
@@ -482,7 +536,7 @@ textarea.input {
   inset-inline-start: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-soft);
+  color: var(--text-muted);
   pointer-events: none;
 }
 
@@ -503,25 +557,29 @@ textarea.input {
 }
 
 .segmented button {
-  min-height: 46px;
+  min-height: 52px;
+  padding-inline: 6px;
   border-radius: 12px;
   border: 0;
   background: transparent;
   font-weight: 800;
+  font-size: 1rem;
+  line-height: 1.2;
   cursor: pointer;
   color: var(--text-muted);
 }
 
+/* The chosen option is a black ink pill, like a chosen chip: obvious without relying on colour. */
 .segmented button[aria-pressed="true"] {
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: var(--shadow-card);
+  background: var(--ink);
+  color: var(--white);
 }
 
 .empty {
   padding: 32px 16px;
   text-align: center;
   color: var(--text-muted);
+  line-height: 1.55;
 }
 
 .note-box {
@@ -1471,7 +1529,7 @@ button.leg-line {
   overflow-y: auto;
   background: var(--canvas);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  padding: 10px var(--gutter) calc(24px + env(safe-area-inset-bottom));
+  padding: 12px 20px calc(28px + env(safe-area-inset-bottom));
   animation: slide-up 0.32s var(--ease-drawer);
   overscroll-behavior: contain;
 }
@@ -1488,11 +1546,11 @@ button.leg-line {
 }
 
 .sheet-handle {
-  width: 44px;
-  height: 5px;
+  width: 48px;
+  height: 6px;
   border-radius: 999px;
-  background: var(--line-strong);
-  margin: 0 auto 10px;
+  background: var(--line-control);
+  margin: 0 auto 12px;
 }
 
 .sheet-head {
@@ -1500,13 +1558,31 @@ button.leg-line {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-block-end: 12px;
+  margin-block-end: 14px;
 }
 
 .sheet-title {
-  font-size: 1.45rem;
+  min-width: 0;
+  font-size: 1.5rem;
   font-weight: 800;
-  line-height: 1.15;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* A labelled close button: an X alone is easy to miss, so it says „סגירה” too. */
+.sheet-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  min-height: 48px;
+  padding-inline: 16px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line-control);
+  background: var(--surface);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 .sheet-body {
@@ -2516,8 +2592,8 @@ summary.topic-head::after {
 
 .footer-note {
   text-align: center;
-  color: var(--text-soft);
-  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
   margin-block-start: 28px;
   display: grid;
   gap: 4px;
@@ -2530,14 +2606,39 @@ summary.topic-head::after {
   bottom: calc(var(--nav-height) + 24px + env(safe-area-inset-bottom));
   margin-inline: auto;
   width: max-content;
-  max-width: calc(100% - 32px);
-  padding: 13px 22px;
-  border-radius: 999px;
+  max-width: calc(100% - 24px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 10px 22px;
+  border-radius: 28px;
   background: var(--ink);
   color: var(--white);
-  font-weight: 800;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
   box-shadow: var(--shadow-float);
   animation: rise 260ms var(--ease-out);
+}
+
+.toast.has-action {
+  padding-inline-end: 10px;
+}
+
+/* The action (e.g. „ביטול”) is a real 48px button: white on the black toast. */
+.toast-action {
+  flex: none;
+  min-height: 48px;
+  min-width: 72px;
+  padding-inline: 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2548,8 +2649,62 @@ summary.topic-head::after {
 
 .settings-row {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   border-block-end: 1px solid var(--line);
+}
+
+.settings-row > strong {
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+/* Text-size choices: each shows a letter at its own size, plus its name. */
+.size-choice {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.size-choice button {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 2px;
+  min-height: 76px;
+  font-size: 0.9rem;
+}
+
+.size-choice .size-sample {
+  font-size: var(--sample, 18px);
+  line-height: 1.1;
+}
+
+/* A line of real text that follows the chosen size, so the choice can be judged by eye. */
+.size-preview {
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--canvas);
+  border: 1.5px solid var(--line-control);
+  line-height: 1.55;
+}
+
+.confirm-box {
+  display: grid;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--danger-soft);
+  border: 1.5px solid var(--danger);
+}
+
+/* Inside the pink box the destructive answer is solid red, so it reads as a button. */
+.confirm-box .btn-danger {
+  background: var(--danger);
+  color: var(--white);
+}
+
+.confirm-box p {
+  font-weight: 800;
+  color: var(--text);
 }
 
 .settings-row:last-child {
@@ -2668,35 +2823,64 @@ summary.topic-head::after {
 .welcome-text > :nth-child(3) { animation-delay: 0.16s; }
 .welcome-text > :nth-child(4) { animation-delay: 0.24s; }
 .welcome-text > :nth-child(5) { animation-delay: 0.32s; }
+.welcome-text > :nth-child(6) { animation-delay: 0.4s; }
 
 .welcome-dates {
-  color: rgb(255 255 255 / 75%);
+  color: rgb(255 255 255 / 88%);
   font-weight: 800;
+  font-size: 1.05rem;
 }
 
 .welcome-title {
-  font-size: 2.9rem;
+  /* Capped in px so „עדנה ובני!” still fits on one line at the largest text setting. */
+  font-size: min(2.9rem, 46px);
   font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .welcome-lead {
-  color: rgb(255 255 255 / 85%);
-  font-size: 1.08rem;
-  margin-block-end: 8px;
+  color: rgb(255 255 255 / 92%);
+  font-size: 1.15rem;
+  line-height: 1.55;
+  margin-block-end: 4px;
 }
 
 .welcome-btn {
-  min-height: 58px;
+  min-height: 60px;
   background: var(--white);
   color: var(--ink);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+}
+
+/* Text size can be set right here, before the first screen. White-on-ink version of .segmented. */
+.welcome-size {
+  display: grid;
+  gap: 8px;
+}
+
+.welcome-size-label {
+  color: rgb(255 255 255 / 92%);
+  font-weight: 800;
+}
+
+.welcome-size .segmented {
+  background: rgb(255 255 255 / 14%);
+  border: 1px solid rgb(255 255 255 / 40%);
+}
+
+.welcome-size .segmented button {
+  color: var(--white);
+}
+
+.welcome-size .segmented button[aria-pressed="true"] {
+  background: var(--white);
+  color: var(--ink);
 }
 
 .welcome-sign {
   text-align: center;
-  color: rgb(255 255 255 / 65%);
+  color: rgb(255 255 255 / 85%);
   font-weight: 700;
 }
 
