@@ -300,7 +300,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
         <p className="map-legend">{legend}</p>
       </div>
       {/* data-no-swipe: dragging the map must not switch tabs. */}
-      <div className="map-canvas" data-no-swipe ref={canvas}>
+      <div className="map-canvas" data-no-swipe data-card-open={cardOpen || undefined} ref={canvas}>
         <MapCanvas
           pins={pins}
           route={route}

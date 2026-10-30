@@ -2668,6 +2668,12 @@ textarea.ps-input {
   transition: transform 160ms var(--ease-out);
 }
 
+/* With a place card open, the map shows only the card: locate and zoom step away. */
+.map-canvas[data-card-open] .map-locate,
+.map-canvas[data-card-open] .maplibregl-ctrl-group {
+  display: none;
+}
+
 /* ================= Money ================= */
 
 .converter {
