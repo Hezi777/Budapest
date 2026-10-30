@@ -14,6 +14,7 @@ import {
   UtensilsCrossed,
   type LucideIcon,
 } from "lucide-react";
+import { Topic } from "./topic";
 import { updateSettings, useSettings } from "@/lib/store";
 
 /** Shekels per forint, July 2026 — used until a live rate arrives. */
@@ -69,19 +70,25 @@ const TIPS: { title: string; hint: string; Icon: LucideIcon; body: ReactNode }[]
   },
 ];
 
-const QUICK:Record<Currency, number[]> = {
+const QUICK: Record<Currency, number[]> = {
   HUF: [1000, 2000, 5000, 10000, 20000, 50000],
   ILS: [10, 20, 50, 100, 200, 500],
 };
 
-const LABEL: Record<Currency, string> = { HUF: "פורינט", ILS: "שקל" };
+const LABEL: Record<Currency, string> = { HUF: "פורינט", ILS: "שקלים" };
 const SYMBOL: Record<Currency, string> = { HUF: "Ft", ILS: "₪" };
-const CODE: Record<Currency, string> = { HUF: "HUF", ILS: "ILS" };
 
 function format(n: number, currency: Currency): string {
   const digits = currency === "ILS" ? (n < 100 ? 1 : 0) : 0;
   const rounded = currency === "HUF" && n >= 1000 ? Math.round(n / 10) * 10 : n;
   return rounded.toLocaleString("he-IL", { maximumFractionDigits: digits });
+}
+
+/** What the input shows: thousands commas, and a trailing "." the person just typed. */
+function display(raw: string): string {
+  const [int, ...rest] = raw.split(".");
+  const grouped = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return rest.length ? `${grouped}.${rest.join("").slice(0, 2)}` : grouped;
 }
 
 function formatDate(iso: string): string {
@@ -112,7 +119,7 @@ export function Converter() {
   }, []);
 
   const to: Currency = from === "HUF" ? "ILS" : "HUF";
-  const value = Number(amount.replace(/[^\d.]/g, "")) || 0;
+  const value = Number(amount) || 0;
   const result = from === "HUF" ? value * rate.value : value / rate.value;
 
   function swap() {
@@ -122,52 +129,69 @@ export function Converter() {
 
   return (
     <div className="converter">
-      <label className="money-box">
+      <label className="money-box" htmlFor="money-amount">
         <span className="money-label">
-          <span>מחיר ב{LABEL[from]}</span>
-          <span className="currency-flag">{CODE[from]}</span>
+          <span>כמה {LABEL[from]}?</span>
+          <span className="currency-flag">{SYMBOL[from]}</span>
         </span>
         <input
+          id="money-amount"
           className="money-input"
           inputMode="decimal"
-          value={value ? value.toLocaleString("en-US", { maximumFractionDigits: 2 }) : amount}
-          onChange={(e) => setAmount(e.target.value.replace(/,/g, ""))}
+          enterKeyHint="done"
+          autoComplete="off"
+          value={display(amount)}
+          onChange={(e) => {
+            // Digits and one decimal point only; commas are added for display.
+            const clean = e.target.value.replace(/[^\d.]/g, "");
+            const [int, ...rest] = clean.split(".");
+            setAmount(rest.length ? `${int}.${rest.join("")}` : int);
+          }}
           onFocus={(e) => e.target.select()}
-          aria-label={`סכום ב${LABEL[from]}`}
         />
       </label>
 
-      <button type="button" className={`icon-btn swap${from === "ILS" ? " is-flipped" : ""}`} onClick={swap} aria-label="החלפת כיוון">
-        <ArrowUpDown size={22} />
+      <button type="button" className="swap" onClick={swap}>
+        <ArrowUpDown size={20} aria-hidden />
+        {from === "HUF" ? "להפוך: מקלידים שקלים" : "להפוך: מקלידים פורינט"}
       </button>
 
       <div className="money-box is-result" aria-live="polite">
         <span className="money-label">
-          <span>שווה ב{LABEL[to]}</span>
-          <span className="currency-flag">{CODE[to]}</span>
+          <span>שווה בערך, ב{LABEL[to]}</span>
+          <span className="currency-flag">{SYMBOL[to]}</span>
         </span>
         <div className="money-result">
-          {SYMBOL[to] === "₪" ? "₪" : ""}
+          {to === "ILS" ? "₪" : ""}
           {format(result, to)}
-          {SYMBOL[to] === "Ft" ? " Ft" : ""}
+          {to === "HUF" ? " Ft" : ""}
         </div>
       </div>
 
-      <div className="quick-amounts" role="group" aria-label="סכומים מהירים">
+      <div className="quick-label" id="quick-label">
+        או לוחצים על סכום:
+      </div>
+      <div className="quick-amounts" role="group" aria-labelledby="quick-label">
         {QUICK[from].map((q) => (
-          <button key={q} type="button" onClick={() => setAmount(String(q))}>
+          <button key={q} type="button" aria-pressed={Number(amount) === q} onClick={() => setAmount(String(q))}>
             {q.toLocaleString("en-US")}
           </button>
         ))}
       </div>
 
-      <p className="rate-note">
-        1,000 פורינט ≈ ₪{(rate.value * 1000).toFixed(2)} · ₪1 ≈ {Math.round(1 / rate.value)} פורינט
-        <br />
-        {status === "loading" && "בודק שער עדכני…"}
-        {status === "live" && `שער עדכני מ־${formatDate(rate.date)}`}
-        {status === "offline" && `אין חיבור. שער אחרון שנשמר: ${formatDate(rate.date)}`}
-      </p>
+      <div className="rate-note">
+        <p>
+          <bdi>1,000</bdi> פורינט שווים בערך <bdi>₪{(rate.value * 1000).toFixed(2)}</bdi>
+        </p>
+        <p>
+          שקל אחד שווה בערך <bdi>{Math.round(1 / rate.value)}</bdi> פורינט
+        </p>
+        <p className="rate-status">
+          {status === "loading" && "בודק שער עדכני…"}
+          {status === "live" && <>שער עדכני מ־<bdi>{formatDate(rate.date)}</bdi></>}
+          {status === "offline" && <>אין חיבור לאינטרנט. משתמשים בשער האחרון שנשמר, מ־<bdi>{formatDate(rate.date)}</bdi></>}
+        </p>
+      </div>
 
       <h2 className="section-title">מחירים נפוצים בשקלים</h2>
       <div className="card">
@@ -180,9 +204,13 @@ export function Converter() {
               <span className="grow">
                 {label}
                 <br />
-                <span className="muted small">כ־{huf.toLocaleString("en-US")} פורינט</span>
+                <span className="price-huf">
+                  כ־<bdi>{huf.toLocaleString("en-US")}</bdi> פורינט
+                </span>
               </span>
-              <strong>₪{Math.round(huf * rate.value)}</strong>
+              <strong className="price-ils">
+                <bdi>₪{Math.round(huf * rate.value)}</bdi>
+              </strong>
             </div>
           ))}
         </div>
@@ -196,18 +224,9 @@ export function Converter() {
       </h2>
       <div className="card topic-list">
         {TIPS.map(({ title, hint, Icon, body }) => (
-          <details key={title} className="topic">
-            <summary className="topic-head">
-              <span className="topic-icon">
-                <Icon size={22} aria-hidden />
-              </span>
-              <span className="grow">
-                <span className="topic-title">{title}</span>
-                <span className="topic-hint">{hint}</span>
-              </span>
-            </summary>
-            <div className="topic-body">{body}</div>
-          </details>
+          <Topic key={title} icon={<Icon size={22} aria-hidden />} title={title} hint={hint}>
+            {body}
+          </Topic>
         ))}
       </div>
     </div>

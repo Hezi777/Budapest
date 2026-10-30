@@ -186,6 +186,8 @@ export type Settings = {
   rate?: { value: number; date: string };
   /** The first-visit welcome was dismissed. */
   welcomed?: boolean;
+  /** Ids of the items ticked on the pre-flight packing list (see packing-list.tsx). */
+  packed?: string[];
 };
 
 const settingsStore = createStore<Settings>(

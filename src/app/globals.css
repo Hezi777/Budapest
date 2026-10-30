@@ -1691,8 +1691,8 @@ button.leg-line {
 }
 
 .idea-section-title .count {
-  color: var(--text-soft);
-  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
@@ -1740,7 +1740,7 @@ button.leg-line {
   flex-wrap: wrap;
   gap: 4px 8px;
   color: var(--text-muted);
-  font-size: 0.86rem;
+  font-size: 0.92rem;
   font-weight: 700;
 }
 
@@ -1749,7 +1749,7 @@ button.leg-line {
   border-radius: 999px;
   background: var(--tag-kosher-bg);
   color: var(--tag-kosher);
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   font-weight: 800;
 }
 
@@ -1759,6 +1759,19 @@ button.leg-line {
   flex-wrap: wrap;
   gap: 8px;
   margin-block-end: 18px;
+}
+
+.idea-chips .chip {
+  min-height: 48px;
+  padding-inline: 18px;
+  font-size: 1rem;
+}
+
+/* Small visible label above a field or a row of choices. */
+.explore-label {
+  margin-block-end: 6px;
+  font-weight: 800;
+  font-size: 1rem;
 }
 
 /* "Already in the plan": one folded row at the end of a section. */
@@ -1776,10 +1789,21 @@ button.leg-line {
   gap: 12px;
   min-height: 60px;
   padding: 8px 16px;
-  color: var(--walk);
+  background: var(--walk-soft);
+  color: #1f6a3f;
   font-weight: 800;
   cursor: pointer;
   list-style: none;
+}
+
+/* "הצגה" / "הסתרה": says what a tap does, not just that something folds. */
+.idea-planned-toggle {
+  font-size: 0.95rem;
+}
+
+.idea-planned-group:not([open]) .when-open,
+.idea-planned-group[open] .when-closed {
+  display: none;
 }
 
 .idea-planned-head::-webkit-details-marker {
@@ -1798,8 +1822,8 @@ button.leg-line {
   height: 9px;
   margin-block-start: -4px;
   margin-inline: 4px;
-  border-right: 2px solid var(--text-soft);
-  border-bottom: 2px solid var(--text-soft);
+  border-right: 2.5px solid currentcolor;
+  border-bottom: 2.5px solid currentcolor;
   transform: rotate(45deg);
   transition: transform 200ms var(--ease-out);
 }
@@ -1814,7 +1838,7 @@ button.leg-line {
 }
 
 .idea-title {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 800;
   line-height: 1.2;
 }
@@ -1826,7 +1850,7 @@ button.leg-line {
 
 .idea-chevron {
   flex: none;
-  color: var(--text-soft);
+  color: var(--text-muted);
 }
 
 /* ================= Map ================= */
@@ -2089,26 +2113,36 @@ button.leg-line {
   align-items: center;
   justify-content: space-between;
   font-weight: 800;
-  font-size: 0.92rem;
-  color: var(--text-muted);
+  font-size: 1.05rem;
+  color: var(--text);
 }
 
 .money-box.is-result .money-label {
-  color: rgb(255 255 255 / 75%);
+  color: rgb(255 255 255 / 85%);
 }
 
 .currency-flag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--surface-sunk);
+  font-size: 1rem;
+}
+
+.money-box.is-result .currency-flag {
+  background: rgb(255 255 255 / 16%);
 }
 
 .money-input {
   width: 100%;
+  min-width: 0;
+  min-height: 64px;
   border: 0;
   background: none;
   font: inherit;
-  font-size: 2.6rem;
+  font-size: min(3.2rem, 14vw);
   font-weight: 800;
   padding: 0;
   direction: ltr;
@@ -2122,49 +2156,87 @@ button.leg-line {
 }
 
 .money-result {
-  font-size: 2.6rem;
+  font-size: min(3.4rem, 15vw);
   font-weight: 800;
   direction: ltr;
   text-align: end;
   font-variant-numeric: tabular-nums;
-  line-height: 1.2;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
+/* The swap button says in words what it does, so no icon-only guessing. */
 .swap {
   justify-self: center;
-  margin-block: -22px;
-  position: relative;
-  z-index: 1;
-  width: 52px;
-  height: 52px;
-  border: 4px solid var(--canvas);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  margin-block: 6px;
+  padding-inline: 22px;
+  border: 0;
+  border-radius: 999px;
   background: var(--ink);
   color: var(--white);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.quick-label {
+  margin-block-start: 8px;
+  font-weight: 800;
 }
 
 .quick-amounts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-block-start: 6px;
+  gap: 10px;
 }
 
 .quick-amounts button {
-  min-height: 50px;
+  min-height: 56px;
+  padding-inline: 4px;
   border-radius: var(--radius-md);
-  border: 0;
+  border: 1px solid var(--line);
   background: var(--surface);
   box-shadow: var(--shadow-card);
+  font: inherit;
+  font-size: 1.1rem;
   font-weight: 800;
+  color: var(--text);
   cursor: pointer;
   font-variant-numeric: tabular-nums;
 }
 
+.quick-amounts button[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--white);
+}
+
+/* Each fact on its own line, so the numbers never swap places in RTL. */
 .rate-note {
-  font-size: 0.86rem;
+  display: grid;
+  gap: 4px;
+  margin-block-start: 8px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-sunk);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.rate-note p {
+  margin: 0;
+}
+
+.rate-note .rate-status {
   color: var(--text-muted);
-  text-align: center;
-  margin-block-start: 4px;
+  font-size: 0.95rem;
 }
 
 .price-row {
@@ -2172,7 +2244,8 @@ button.leg-line {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 13px 16px;
+  min-height: 68px;
+  padding: 12px 16px;
   border-block-end: 1px solid var(--line);
   font-variant-numeric: tabular-nums;
 }
@@ -2197,32 +2270,17 @@ button.leg-line {
 }
 
 .price-row strong {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  flex: none;
+}
+
+.price-row .price-huf {
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 /* ================= Info ================= */
 
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.info-tile {
-  padding: 16px;
-  display: grid;
-  gap: 4px;
-  align-content: start;
-}
-
-.info-tile .big {
-  font-size: 1.35rem;
-  font-weight: 800;
-}
-
-.info-tile svg {
-  color: var(--text-muted);
-}
 
 /* The info hub: a list of big rows that fold open in place. */
 .info-heading {
@@ -2248,7 +2306,7 @@ button.leg-line {
   display: flex;
   align-items: center;
   gap: 14px;
-  min-height: 72px;
+  min-height: 76px;
   padding: 10px 16px;
   color: inherit;
   text-decoration: none;
@@ -2284,38 +2342,38 @@ button.leg-line {
 }
 
 .topic-title {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 800;
   line-height: 1.25;
 }
 
 .topic-hint {
   color: var(--text-muted);
-  font-size: 0.86rem;
-  line-height: 1.3;
+  font-size: 0.95rem;
+  line-height: 1.35;
 }
 
 .topic-go {
   flex: none;
-  color: var(--text-soft);
+  color: var(--text-muted);
 }
 
 /* A chevron (a glyph, so physical sides): down, and up when open. */
 summary.topic-head::after {
   content: "";
   flex: none;
-  width: 9px;
-  height: 9px;
-  margin-block-start: -4px;
+  width: 11px;
+  height: 11px;
+  margin-block-start: -5px;
   margin-inline: 4px;
-  border-right: 2px solid var(--text-soft);
-  border-bottom: 2px solid var(--text-soft);
+  border-right: 3px solid var(--text-muted);
+  border-bottom: 3px solid var(--text-muted);
   transform: rotate(45deg);
   transition: transform 200ms var(--ease-out);
 }
 
 .topic[open] > summary.topic-head::after {
-  margin-block-start: 4px;
+  margin-block-start: 5px;
   transform: rotate(-135deg);
 }
 
@@ -2353,17 +2411,6 @@ summary.topic-head::after {
 
 .topic-body > .install-card {
   border-block-start: 1px solid var(--line);
-}
-
-.topic-body .info-grid {
-  gap: 10px;
-}
-
-.topic-body .info-tile {
-  padding: 14px;
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  border: 1px solid var(--line);
 }
 
 .link-tile {
@@ -2464,7 +2511,8 @@ summary.topic-head::after {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 16px;
+  min-height: 92px;
+  padding: 16px 20px;
   border-radius: var(--radius-lg);
   background: var(--danger);
   color: var(--white);
@@ -2473,17 +2521,41 @@ summary.topic-head::after {
 }
 
 .sos-call .num {
-  font-size: 2rem;
+  flex: none;
+  font-size: 3rem;
   font-weight: 800;
   line-height: 1;
+  direction: ltr;
+}
+
+.sos-call-main {
+  display: grid;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.sos-call-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.sos-call-sub {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  opacity: 0.95;
 }
 
 .group-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
+  min-height: 60px;
   padding: 4px 16px;
+  font-size: 1.1rem;
   font-weight: 800;
   cursor: pointer;
   list-style: none;
@@ -2499,8 +2571,8 @@ summary.topic-head::after {
   width: 9px;
   height: 9px;
   margin-block-start: -4px;
-  border-right: 2px solid var(--text-soft);
-  border-bottom: 2px solid var(--text-soft);
+  border-right: 3px solid var(--text-muted);
+  border-bottom: 3px solid var(--text-muted);
   transform: rotate(45deg);
   transition: transform 200ms var(--ease-out);
 }
@@ -2559,7 +2631,9 @@ summary.topic-head::after {
 .plan-card {
   position: relative;
   overflow: hidden;
+  min-width: 0;
   padding: 20px;
+  overflow-wrap: anywhere;
   border-radius: var(--radius-xl);
   background: var(--ink);
   color: var(--white);
@@ -3035,4 +3109,314 @@ summary.topic-head::after {
   body {
     overscroll-behavior-y: none;
   }
+}
+
+/* ================= Info / places / money refinements ================= */
+
+/* The emergency numbers: name, then the number big, then a note; one big call pill. */
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 84px;
+  padding: 12px 16px;
+  color: inherit;
+  text-decoration: none;
+  border-block-end: 1px solid var(--line);
+}
+
+.contact-row:last-child {
+  border-block-end: 0;
+}
+
+.contact-row:active {
+  background: var(--surface-sunk);
+}
+
+.contact-row .grow {
+  display: grid;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.contact-num {
+  justify-self: start;
+  font-size: 1.2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact-note {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.contact-act {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex: none;
+  min-width: 96px;
+  min-height: 52px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+  font-weight: 800;
+}
+
+.info-fine {
+  margin-block: 12px 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.info-fine.is-inset {
+  margin: 0;
+  padding: 12px 16px 16px;
+}
+
+.topic-sub {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.topic-sub.is-spaced {
+  margin-block: 20px 0;
+}
+
+.topic-actions {
+  padding: 16px;
+  border-block-start: 1px solid var(--line);
+}
+
+/* "Good to know": one fact per row, icon beside it. */
+.info-tiles {
+  display: grid;
+}
+
+.info-tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-block-end: 1px solid var(--line);
+}
+
+.info-tile:last-child {
+  border-block-end: 0;
+}
+
+.info-tile .grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-tile-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 14px;
+  background: var(--surface-sunk);
+  color: var(--ink);
+}
+
+.info-tile .big {
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.info-tile p {
+  margin: 2px 0 0;
+  line-height: 1.5;
+}
+
+/* Hungarian words: what you want to say, the word big, how to read it. */
+.word-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.word-row {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border-block-end: 1px solid var(--line);
+}
+
+.word-row:last-child {
+  border-block-end: 0;
+}
+
+.word-he {
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+.word-hu {
+  justify-self: start;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.word-sound {
+  font-size: 1.05rem;
+}
+
+/* Packing list: the whole row is the tick box. */
+.pack-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pack-item {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding-inline-end: 16px;
+  border-block-end: 1px solid var(--line);
+}
+
+.pack-item:last-child {
+  border-block-end: 0;
+}
+
+.pack-toggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  min-height: 60px;
+  padding: 8px 16px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text);
+  text-align: start;
+  cursor: pointer;
+}
+
+.pack-toggle:active {
+  background: var(--surface-sunk);
+}
+
+.pack-toggle .grow {
+  display: grid;
+  gap: 2px;
+}
+
+.pack-box {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 10px;
+  border: 2.5px solid var(--ink);
+  background: var(--white);
+  color: var(--white);
+}
+
+.pack-item.is-done .pack-box {
+  background: var(--walk);
+  border-color: var(--walk);
+}
+
+.pack-label {
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.pack-item.is-done .pack-label {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.pack-hint {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.pack-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  flex: none;
+  min-height: 48px;
+  padding-inline: 16px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Bookings: when, what, how, each on its own line. */
+.book-row {
+  min-height: 84px;
+}
+
+.book-row .grow {
+  display: grid;
+  gap: 2px;
+}
+
+.book-when {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.book-what {
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.book-how {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* eSIM guide: small helper text stays readable, the phone switch is a real target. */
+.esim-walk .small,
+.esim-shot figcaption,
+.esim-choice .small {
+  font-size: 0.95rem;
+}
+
+.esim-top .text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+}
+
+.plan-card .tags {
+  flex-wrap: wrap;
+}
+
+.plan-card .tag {
+  font-size: 0.95rem;
 }

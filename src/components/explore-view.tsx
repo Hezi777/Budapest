@@ -58,7 +58,7 @@ function PlaceRow({ place, onOpen }: { place: Place; onOpen: (p: Place) => void 
   const kosher = isKosher(place);
   return (
     <button type="button" className="idea-row" onClick={() => onOpen(place)}>
-      <Photo place={place} className="idea-thumb" iconSize={26} />
+      <Photo place={place} className="idea-thumb" iconSize={26} decorative />
       <span className="grow">
         <span className="idea-title">{place.name}</span>
         {(kosher || place.duration) && (
@@ -68,7 +68,7 @@ function PlaceRow({ place, onOpen }: { place: Place; onOpen: (p: Place) => void 
           </span>
         )}
       </span>
-      <ChevronLeft size={20} aria-hidden className="idea-chevron" />
+      <ChevronLeft size={24} aria-hidden className="idea-chevron" />
     </button>
   );
 }
@@ -115,18 +115,25 @@ export function ExploreView() {
         <p className="page-lead">לוחצים על מקום ומוסיפים אותו לאחד הימים.</p>
       </div>
 
-      <div className="search" style={{ marginBlockEnd: 10 }}>
-        <Search size={20} />
+      <label className="explore-label" htmlFor="explore-search">
+        חיפוש מקום
+      </label>
+      <div className="search" style={{ marginBlockEnd: 16 }}>
+        <Search size={20} aria-hidden />
         <input
+          id="explore-search"
           className="input"
           type="search"
+          enterKeyHint="search"
           value={query}
-          placeholder="חיפוש: שוק, קפה, בית כנסת…"
+          placeholder="למשל: שוק, קפה, בית כנסת"
           onChange={(e) => setQuery(e.target.value)}
-          aria-label="חיפוש מקום"
         />
       </div>
-      <div className="idea-chips" role="group" aria-label="סינון">
+      <div className="explore-label" id="explore-filter-label">
+        מה מחפשים?
+      </div>
+      <div className="idea-chips" role="group" aria-labelledby="explore-filter-label">
         {FILTERS.map((f) => (
           <button
             key={f.id}
@@ -157,8 +164,12 @@ export function ExploreView() {
               // Folded, unless the person is searching for something by name.
               <details className="idea-planned-group" open={searching || undefined}>
                 <summary className="idea-planned-head">
-                  <CalendarCheck size={20} aria-hidden />
+                  <CalendarCheck size={22} aria-hidden />
                   <span className="grow">כבר בתוכנית ({inPlan.length})</span>
+                  <span className="idea-planned-toggle">
+                    <span className="when-closed">הצגה</span>
+                    <span className="when-open">הסתרה</span>
+                  </span>
                 </summary>
                 {inPlan.map((place) => (
                   <PlaceRow key={place.id} place={place} onOpen={setOpen} />
@@ -168,7 +179,23 @@ export function ExploreView() {
           </div>
         </section>
       ))}
-      {sections.length === 0 && <p className="empty">לא נמצאו מקומות.</p>}
+      {sections.length === 0 && (
+        <div className="empty stack">
+          <p>לא נמצאו מקומות.</p>
+          {(searching || filter !== "all") && (
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={() => {
+                setQuery("");
+                setFilter("all");
+              }}
+            >
+              להציג את כל המקומות
+            </button>
+          )}
+        </div>
+      )}
 
       {open && <PlaceSheet place={open} onClose={() => setOpen(null)} />}
     </>
