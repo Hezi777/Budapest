@@ -222,48 +222,51 @@ function layoutDay(day: Day, places: Map<string, Place>, hotel: Place) {
 
 /* ---------- Stops ---------- */
 
+/** The grip at the start of a stop's row in edit mode: press and drag to reorder. */
+function GripHandle({ onGrab }: { onGrab: (e: React.PointerEvent<HTMLElement>) => void }) {
+  return (
+    <span className="drag-handle" role="img" aria-label="גרירה לשינוי סדר" onPointerDown={onGrab}>
+      <GripVertical size={24} aria-hidden />
+    </span>
+  );
+}
+
+/** One row under a stop in edit mode: earlier, later, edit. Drag is the grip on the stop's row. */
 function EditBar({
   day,
   stop,
   isFirst,
   isLast,
   onEdit,
-  onGrab,
 }: {
   day: Day;
   stop: Stop;
   isFirst: boolean;
   isLast: boolean;
   onEdit: () => void;
-  onGrab: (e: React.PointerEvent<HTMLElement>) => void;
 }) {
   return (
     <div className="edit-bar">
-      <div className="move-row">
-        <button
-          type="button"
-          className="move-btn"
-          aria-label="להקדים את העצירה"
-          disabled={isFirst}
-          onClick={() => moveStop(day.id, stop.id, -1)}
-        >
-          <ChevronUp size={22} aria-hidden /> למעלה
-        </button>
-        <button
-          type="button"
-          className="move-btn"
-          aria-label="לאחר את העצירה"
-          disabled={isLast}
-          onClick={() => moveStop(day.id, stop.id, 1)}
-        >
-          <ChevronDown size={22} aria-hidden /> למטה
-        </button>
-        <span className="move-btn drag-handle" role="img" aria-label="גרירה לשינוי הסדר" onPointerDown={onGrab}>
-          <GripVertical size={22} aria-hidden /> גרירה
-        </span>
-      </div>
-      <button type="button" className="btn btn-outline btn-block edit-details" onClick={onEdit}>
-        <Pencil size={18} aria-hidden /> שינוי שעה, שם או מחיקה
+      <button
+        type="button"
+        className="move-btn"
+        aria-label="להקדים את העצירה"
+        disabled={isFirst}
+        onClick={() => moveStop(day.id, stop.id, -1)}
+      >
+        <ChevronUp size={20} aria-hidden /> למעלה
+      </button>
+      <button
+        type="button"
+        className="move-btn"
+        aria-label="לאחר את העצירה"
+        disabled={isLast}
+        onClick={() => moveStop(day.id, stop.id, 1)}
+      >
+        <ChevronDown size={20} aria-hidden /> למטה
+      </button>
+      <button type="button" className="move-btn" aria-label="עריכת העצירה: שעה, שם או מחיקה" onClick={onEdit}>
+        <Pencil size={18} aria-hidden /> עריכה
       </button>
     </div>
   );
@@ -315,6 +318,7 @@ function StopCard({
   editing,
   open,
   isNext,
+  onGrab,
   onToggle,
   onOpenPlace,
 }: {
@@ -326,6 +330,7 @@ function StopCard({
   editing: boolean;
   open: boolean;
   isNext?: boolean;
+  onGrab: (e: React.PointerEvent<HTMLElement>) => void;
   onToggle: (row: HTMLElement) => void;
   onOpenPlace: (place: Place) => void;
 }) {
@@ -334,6 +339,7 @@ function StopCard({
   const tags = place.tags?.filter((t) => CARD_TAGS.has(t));
   const row = (
     <>
+      {editing && <GripHandle onGrab={onGrab} />}
       <span className="row-time">{stop.time}</span>
       <span className="row-title">
         {isNext && <span className="tag tag-next">הבא</span>}
@@ -741,11 +747,11 @@ export function PlanView() {
         <div className="day-links">
           {editing ? (
             <button type="button" className="btn btn-primary" onClick={() => setEditing(false)}>
-              <Check size={20} aria-hidden /> סיום עריכה
+              <Check size={18} aria-hidden /> סיום עריכה
             </button>
           ) : (
             <button type="button" className="btn btn-outline" onClick={() => setEditing(true)}>
-              <Pencil size={18} aria-hidden /> שינוי סדר / עריכה
+              <Pencil size={18} aria-hidden /> עריכת היום
             </button>
           )}
           <button type="button" className="btn btn-outline" onClick={shareDay}>
@@ -756,7 +762,7 @@ export function PlanView() {
 
       {editing && (
         <div className="edit-banner" role="status">
-          בכל עצירה אפשר ללחוץ על למעלה או למטה, או לגרור. כשמסיימים, לוחצים על סיום עריכה.
+          להזזת עצירה: למעלה, למטה, או גרירה בידית שבצד. כשמסיימים לוחצים על סיום עריכה.
         </div>
       )}
 
@@ -770,7 +776,6 @@ export function PlanView() {
               isFirst={i === 0}
               isLast={i === rows.length - 1}
               onEdit={() => setEditStop(stop)}
-              onGrab={(e) => onGrab(e, stop.id, i)}
             />
           );
           return (
@@ -786,6 +791,7 @@ export function PlanView() {
                 {isRest || !place ? (
                   <div className={editing ? "card" : undefined}>
                     <div className={`rest${editing ? " in-card" : ""}${stop.done ? " is-done" : ""}`}>
+                      {editing && <GripHandle onGrab={(e) => onGrab(e, stop.id, i)} />}
                       <span className="time">{stop.time}</span>
                       <span>
                         <strong>{stop.title ?? place?.name}.</strong> {stop.note}
@@ -804,6 +810,7 @@ export function PlanView() {
                       editing={editing}
                       open={openId === stop.id}
                       isNext={stop.id === nextId}
+                      onGrab={(e) => onGrab(e, stop.id, i)}
                       onToggle={(el) => toggle(stop.id, el)}
                       onOpenPlace={setOpenPlace}
                     />
