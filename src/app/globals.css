@@ -871,15 +871,17 @@ textarea.input {
 }
 
 .day-links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-block-start: 12px;
 }
 
 .day-links .btn {
-  min-height: 52px;
+  flex: 1 1 auto;
+  min-height: 48px;
   padding-inline: 12px;
+  font-size: 0.92rem;
 }
 
 /* Secondary actions read as links, so ניווט stays the one obvious button. */
@@ -1449,27 +1451,22 @@ button.leg-line {
 
 .edit-bar {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   padding: 10px 14px 12px;
   border-block-start: 1px solid var(--line);
   background: var(--surface-soft);
 }
 
-/* Up / down / drag: each with a word, 48px tall; wraps at big text sizes. */
-.move-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
+/* Up / down / edit: three equal 48px buttons with a word each. */
 .move-btn {
   display: inline-flex;
-  flex: 1 1 5.5rem;
   align-items: center;
   justify-content: center;
   gap: 4px;
   min-height: 48px;
-  padding-inline: 8px;
+  min-width: 0;
+  padding-inline: 6px;
   border: 1.5px solid var(--line-strong);
   border-radius: 999px;
   background: var(--canvas);
@@ -1479,14 +1476,32 @@ button.leg-line {
   cursor: pointer;
 }
 
+/* Clearly off: flat, dashed, grey text. */
 .move-btn:disabled {
-  opacity: 0.4;
+  border-style: dashed;
+  border-color: var(--line);
+  background: transparent;
+  color: var(--text-muted);
+  opacity: 0.55;
   cursor: default;
 }
 
-.edit-details {
-  min-height: 48px;
-  font-size: 0.95rem;
+/* The grip at the start of the stop's row (edit mode). */
+.drag-handle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  margin-inline-start: -10px;
+  border-radius: 12px;
+  touch-action: none;
+  cursor: grab;
+  color: var(--text-muted);
+}
+
+.is-editing .row-thumb {
+  display: none;
 }
 
 /* Room under the last stop for the floating exit button. */
@@ -1504,12 +1519,6 @@ button.leg-line {
   margin-inline: auto;
   min-height: 56px;
   box-shadow: var(--shadow-float);
-}
-
-/* Drag to reorder (edit mode). */
-.drag-handle {
-  touch-action: none;
-  cursor: grab;
 }
 
 /* Hotel sheet: the address big enough to hold up to a taxi driver. */
