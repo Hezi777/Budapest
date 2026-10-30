@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 import { CalendarCheck, ChevronLeft, Search } from "lucide-react";
 import { PlaceSheet } from "./place-sheet";
-import { Photo, Tags } from "./ui";
-import { allPlaces, CATEGORY_LABELS, isKosher, plannedIds } from "@/lib/catalog";
+import { Photo } from "./ui";
+import { allPlaces, CATEGORY_LABELS, isKosher, plannedIds, TAG_LABELS } from "@/lib/catalog";
 import { IDEAS } from "@/lib/ideas";
 import { useTrip } from "@/lib/store";
 import type { Category, Place } from "@/lib/types";
@@ -18,15 +18,22 @@ type Filter = {
   color?: string;
 };
 
-/** Ideas are grouped by kind, in this order. */
+/** Places are grouped by kind, in this order. */
 const SECTION_ORDER: Category[] = ["sight", "jewish", "food", "cafe", "market", "bath", "experience", "shopping"];
 
+/** One choice at a time. */
 const FILTERS: Filter[] = [
   { id: "all", label: "הכול", match: () => true },
-  { id: "kosher", label: "אוכל כשר", match: isKosher, color: "#1f6a3f" },
   { id: "sight", label: "אתרים", match: (p) => p.category === "sight" || p.category === "jewish" },
-  { id: "food", label: "אוכל וקפה", match: (p) => p.category === "food" || p.category === "cafe" },
+  { id: "food", label: "אוכל", match: (p) => p.category === "food" },
+  { id: "cafe", label: "קפה ומתוקים", match: (p) => p.category === "cafe" },
+  { id: "kosher", label: "כשר", match: isKosher, color: "#1f6a3f" },
   { id: "christmas", label: "כריסמס", match: (p) => !!p.tags?.includes("christmas") },
+  {
+    id: "experience",
+    label: "חוויות",
+    match: (p) => ["experience", "bath", "market", "shopping"].includes(p.category),
+  },
 ];
 
 function KosherNote() {
@@ -46,6 +53,26 @@ function KosherNote() {
   );
 }
 
+/** One place: photo, name, and a single short line (visit length, kosher). */
+function PlaceRow({ place, onOpen }: { place: Place; onOpen: (p: Place) => void }) {
+  const kosher = isKosher(place);
+  return (
+    <button type="button" className="idea-row" onClick={() => onOpen(place)}>
+      <Photo place={place} className="idea-thumb" iconSize={26} />
+      <span className="grow">
+        <span className="idea-title">{place.name}</span>
+        {(kosher || place.duration) && (
+          <span className="idea-meta">
+            {kosher && <span className="idea-kosher">{TAG_LABELS.kosher}</span>}
+            {place.duration}
+          </span>
+        )}
+      </span>
+      <ChevronLeft size={20} aria-hidden className="idea-chevron" />
+    </button>
+  );
+}
+
 export function ExploreView() {
   const trip = useTrip();
   const [filter, setFilter] = useState("all");
@@ -53,12 +80,13 @@ export function ExploreView() {
   const [open, setOpen] = useState<Place | null>(null);
 
   const planned = useMemo(() => plannedIds(trip), [trip]);
+  const searching = query.trim() !== "";
 
   const sections = useMemo(() => {
     const f = FILTERS.find((x) => x.id === filter) ?? FILTERS[0];
     const q = query.trim().toLowerCase();
-    // Fresh ideas first, then the rest, and what's already planned last.
-    const rank = (p: Place) => (planned.has(p.id) ? 2 : IDEA_IDS.has(p.id) ? 0 : 1);
+    // New ideas first; what's already in the plan goes in its own folded row.
+    const rank = (p: Place) => (IDEA_IDS.has(p.id) ? 0 : 1);
     const list = allPlaces(trip)
       .filter((p) => p.category !== "transport" && p.category !== "hotel")
       .filter(f.match)
@@ -70,17 +98,21 @@ export function ExploreView() {
           p.description.includes(q),
       )
       .sort((a, b) => rank(a) - rank(b));
-    return SECTION_ORDER.map((category) => ({
-      category,
-      places: list.filter((p) => p.category === category),
-    })).filter((section) => section.places.length > 0);
+    return SECTION_ORDER.map((category) => {
+      const places = list.filter((p) => p.category === category);
+      return {
+        category,
+        fresh: places.filter((p) => !planned.has(p.id)),
+        inPlan: places.filter((p) => planned.has(p.id)),
+      };
+    }).filter((section) => section.fresh.length + section.inPlan.length > 0);
   }, [trip, planned, filter, query]);
 
   return (
     <>
       <div className="page-head">
-        <h1 className="page-title">רעיונות</h1>
-        <p className="page-lead">עוד מקומות שכדאי להכיר. לוחצים על מקום ומוסיפים אותו לאחד הימים.</p>
+        <h1 className="page-title">מקומות</h1>
+        <p className="page-lead">לוחצים על מקום ומוסיפים אותו לאחד הימים.</p>
       </div>
 
       <div className="search" style={{ marginBlockEnd: 10 }}>
@@ -94,7 +126,7 @@ export function ExploreView() {
           aria-label="חיפוש מקום"
         />
       </div>
-      <div className="chip-row" role="group" aria-label="סינון" style={{ marginBlockEnd: 12 }}>
+      <div className="idea-chips" role="group" aria-label="סינון">
         {FILTERS.map((f) => (
           <button
             key={f.id}
@@ -112,29 +144,27 @@ export function ExploreView() {
 
       {filter === "kosher" && <KosherNote />}
 
-      {sections.map(({ category, places }) => (
+      {sections.map(({ category, fresh, inPlan }) => (
         <section key={category} className="idea-section" aria-label={CATEGORY_LABELS[category]}>
           <h2 className="idea-section-title">
-            {CATEGORY_LABELS[category]} <span className="count">{places.length}</span>
+            {CATEGORY_LABELS[category]} <span className="count">{fresh.length + inPlan.length}</span>
           </h2>
           <div className="card idea-list">
-            {places.map((place) => (
-              <button key={place.id} type="button" className="idea-row" onClick={() => setOpen(place)}>
-                <Photo place={place} className="idea-thumb" iconSize={26} />
-                <span className="grow">
-                  {place.duration && <span className="idea-meta">{place.duration}</span>}
-                  <span className="idea-title">{place.name}</span>
-                  {planned.has(place.id) ? (
-                    <span className="idea-planned">
-                      <CalendarCheck size={14} aria-hidden /> כבר בתוכנית
-                    </span>
-                  ) : (
-                    <Tags tags={place.tags?.filter((t) => t === "kosher" || t === "free")} />
-                  )}
-                </span>
-                <ChevronLeft size={20} aria-hidden className="idea-chevron" />
-              </button>
+            {fresh.map((place) => (
+              <PlaceRow key={place.id} place={place} onOpen={setOpen} />
             ))}
+            {inPlan.length > 0 && (
+              // Folded, unless the person is searching for something by name.
+              <details className="idea-planned-group" open={searching || undefined}>
+                <summary className="idea-planned-head">
+                  <CalendarCheck size={20} aria-hidden />
+                  <span className="grow">כבר בתוכנית ({inPlan.length})</span>
+                </summary>
+                {inPlan.map((place) => (
+                  <PlaceRow key={place.id} place={place} onOpen={setOpen} />
+                ))}
+              </details>
+            )}
           </div>
         </section>
       ))}

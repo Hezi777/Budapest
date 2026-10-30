@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   ArrowUpDown,
+  Banknote,
   CarTaxiFront,
   Coffee,
   CreditCard,
@@ -31,7 +32,44 @@ const PRICES: { label: string; huf: number; Icon: LucideIcon }[] = [
   { label: "מונית לשדה", huf: 13000, Icon: Plane },
 ];
 
-const QUICK: Record<Currency, number[]> = {
+/** Payment tips, folded one per row under the price list. */
+const TIPS: { title: string; hint: string; Icon: LucideIcon; body: ReactNode }[] = [
+  {
+    title: "תשלום בכרטיס",
+    hint: "באיזה מטבע לבחור",
+    Icon: CreditCard,
+    body: (
+      <p>
+        כשהמכשיר או המלצר שואלים באיזה מטבע לחייב, תמיד לבחור <strong>פורינט (HUF)</strong>. בחירה בשקלים
+        נשמעת נוחה, אבל השער שלהם גרוע ומשלמים 5%–10% יותר. ב־Bolt ובשווקים משלמים בכרטיס בלי בעיה.
+      </p>
+    ),
+  },
+  {
+    title: "טיפ במסעדה",
+    hint: "דמי שירות וכמה להשאיר",
+    Icon: UtensilsCrossed,
+    body: (
+      <p>
+        הרבה מסעדות כבר מוסיפות לחשבון דמי שירות (szervizdíj) של 10%–13%. אם זה כתוב בחשבון, לא צריך להוסיף
+        טיפ. אם לא, נהוג להשאיר כ־10%.
+      </p>
+    ),
+  },
+  {
+    title: "מזומן",
+    hint: "איפה מוציאים כסף",
+    Icon: Banknote,
+    body: (
+      <p>
+        לא מחליפים כסף בדוכנים ברחוב או בשדה. אם צריך מזומן, מוציאים מכספומט של בנק (OTP, K&amp;H) ולא מכספומט
+        כתום של Euronet.
+      </p>
+    ),
+  },
+];
+
+const QUICK:Record<Currency, number[]> = {
   HUF: [1000, 2000, 5000, 10000, 20000, 50000],
   ILS: [10, 20, 50, 100, 200, 500],
 };
@@ -131,25 +169,6 @@ export function Converter() {
         {status === "offline" && `אין חיבור. שער אחרון שנשמר: ${formatDate(rate.date)}`}
       </p>
 
-      <h2 className="section-title">
-        <span className="badge-icon">
-          <CreditCard size={20} aria-hidden />
-        </span>
-        טיפ לתשלום בכרטיס
-      </h2>
-      <div className="note-box">
-        כשהמכשיר או המלצר שואלים באיזה מטבע לחייב, תמיד לבחור <strong>פורינט (HUF)</strong>. בחירה
-        בשקלים נשמעת נוחה, אבל השער שלהם גרוע ומשלמים 5%–10% יותר. ב־Bolt ובשווקים משלמים בכרטיס בלי בעיה.
-      </div>
-      <div className="note-box" style={{ marginBlockStart: 10 }}>
-        <strong>טיפ במסעדה:</strong> הרבה מסעדות כבר מוסיפות לחשבון דמי שירות (szervizdíj) של 10%–13%. אם זה
-        כתוב בחשבון, לא צריך להוסיף טיפ. אם לא, נהוג להשאיר כ־10%.
-      </div>
-      <div className="note-box" style={{ marginBlockStart: 10 }}>
-        <strong>מזומן:</strong> לא מחליפים כסף בדוכנים ברחוב או בשדה. אם צריך מזומן, מוציאים מכספומט של בנק (OTP,
-        K&amp;H) ולא מכספומט כתום של Euronet.
-      </div>
-
       <h2 className="section-title">מחירים נפוצים בשקלים</h2>
       <div className="card">
         <div className="list">
@@ -167,6 +186,29 @@ export function Converter() {
             </div>
           ))}
         </div>
+      </div>
+
+      <h2 className="section-title">
+        <span className="badge-icon">
+          <CreditCard size={20} aria-hidden />
+        </span>
+        טיפים לתשלום
+      </h2>
+      <div className="card topic-list">
+        {TIPS.map(({ title, hint, Icon, body }) => (
+          <details key={title} className="topic">
+            <summary className="topic-head">
+              <span className="topic-icon">
+                <Icon size={22} aria-hidden />
+              </span>
+              <span className="grow">
+                <span className="topic-title">{title}</span>
+                <span className="topic-hint">{hint}</span>
+              </span>
+            </summary>
+            <div className="topic-body">{body}</div>
+          </details>
+        ))}
       </div>
     </div>
   );

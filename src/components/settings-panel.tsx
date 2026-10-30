@@ -27,7 +27,7 @@ export function SettingsPanel() {
   }
 
   return (
-    <div className="card">
+    <div className="settings-panel">
       <div className="settings-row card-pad">
         <strong>גודל הטקסט</strong>
         <div className="segmented" role="group" aria-label="גודל הטקסט">

@@ -11,7 +11,7 @@ import { updateSettings, useSettings, type TextSize } from "@/lib/store";
 const NAV = [
   { href: "/", label: "התוכנית", Icon: CalendarDays },
   { href: "/map", label: "מפה", Icon: Map },
-  { href: "/explore", label: "רעיונות", Icon: Compass },
+  { href: "/explore", label: "מקומות", Icon: Compass },
   { href: "/money", label: "כסף", Icon: Coins },
   { href: "/info", label: "מידע", Icon: Info },
 ];

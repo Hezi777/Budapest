@@ -1551,7 +1551,8 @@ textarea.input {
   transition: background-color 160ms ease;
 }
 
-.idea-row:last-of-type {
+.idea-list > .idea-row:last-child,
+.idea-planned-group .idea-row:last-child {
   border-block-end: 0;
 }
 
@@ -1574,24 +1575,88 @@ textarea.input {
 }
 
 .idea-meta {
-  color: var(--text-soft);
-  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  color: var(--text-muted);
+  font-size: 0.86rem;
   font-weight: 700;
+}
+
+.idea-kosher {
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--tag-kosher-bg);
+  color: var(--tag-kosher);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+/* Filter chips wrap, so none hide behind a sideways scroll. */
+.idea-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block-end: 18px;
+}
+
+/* "Already in the plan": one folded row at the end of a section. */
+.idea-planned-group {
+  border-block-start: 1px solid var(--line);
+}
+
+.idea-list > .idea-planned-group:first-child {
+  border-block-start: 0;
+}
+
+.idea-planned-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 8px 16px;
+  color: var(--walk);
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.idea-planned-head::-webkit-details-marker {
+  display: none;
+}
+
+.idea-planned-head:active {
+  background: var(--surface-sunk);
+}
+
+/* A chevron (a glyph, so physical sides): down, and up when open. */
+.idea-planned-head::after {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-block-start: -4px;
+  margin-inline: 4px;
+  border-right: 2px solid var(--text-soft);
+  border-bottom: 2px solid var(--text-soft);
+  transform: rotate(45deg);
+  transition: transform 200ms var(--ease-out);
+}
+
+.idea-planned-group[open] > .idea-planned-head::after {
+  margin-block-start: 4px;
+  transform: rotate(-135deg);
+}
+
+.idea-planned-group[open] > .idea-planned-head {
+  border-block-end: 1px solid var(--line);
 }
 
 .idea-title {
   font-size: 1.05rem;
   font-weight: 800;
   line-height: 1.2;
-}
-
-.idea-planned {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: var(--walk);
-  font-size: 0.82rem;
-  font-weight: 800;
 }
 
 .idea-why {
@@ -1948,6 +2013,148 @@ textarea.input {
 
 .info-tile svg {
   color: var(--text-muted);
+}
+
+/* The info hub: a list of big rows that fold open in place. */
+.info-heading {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-block: 30px 12px;
+}
+
+.topic-list {
+  overflow: hidden;
+}
+
+.topic {
+  scroll-margin-top: 70px;
+  border-block-end: 1px solid var(--line);
+}
+
+.topic:last-child {
+  border-block-end: 0;
+}
+
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 10px 16px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  list-style: none;
+  transition: background-color 160ms ease;
+}
+
+.topic-head::-webkit-details-marker {
+  display: none;
+}
+
+.topic-head:active {
+  background: var(--surface-sunk);
+}
+
+.topic-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--white);
+  flex: none;
+}
+
+.topic-head .grow {
+  display: grid;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.topic-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.topic-hint {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.3;
+}
+
+.topic-go {
+  flex: none;
+  color: var(--text-soft);
+}
+
+/* A chevron (a glyph, so physical sides): down, and up when open. */
+summary.topic-head::after {
+  content: "";
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-block-start: -4px;
+  margin-inline: 4px;
+  border-right: 2px solid var(--text-soft);
+  border-bottom: 2px solid var(--text-soft);
+  transform: rotate(45deg);
+  transition: transform 200ms var(--ease-out);
+}
+
+.topic[open] > summary.topic-head::after {
+  margin-block-start: 4px;
+  transform: rotate(-135deg);
+}
+
+.topic[open] > .topic-head {
+  background: var(--surface-soft);
+}
+
+.topic-body {
+  padding: 16px;
+  border-block-start: 1px solid var(--line);
+  background: var(--canvas);
+}
+
+.topic-body.is-flush {
+  padding: 0;
+}
+
+.topic-body .bullets li:first-child {
+  border-block-start: 0;
+}
+
+/* Bullets that follow a step list get a hairline above them. */
+.topic-body .info-bullets {
+  margin: 16px -16px -16px;
+  border-block-start: 1px solid var(--line);
+}
+
+/* Cards that sit inside a topic (settings, install) lose their own frame. */
+.topic-body > .card {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+}
+
+.topic-body > .install-card {
+  border-block-start: 1px solid var(--line);
+}
+
+.topic-body .info-grid {
+  gap: 10px;
+}
+
+.topic-body .info-tile {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
 .link-tile {
