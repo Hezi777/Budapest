@@ -139,7 +139,7 @@ export function MapView({ initialDay }: { initialDay?: string }) {
     ...trip.days.map((d, i) => ({ id: d.id, label: `יום ${i + 1}`, color: d.color })),
     { id: "all", label: "כל הימים", color: "#111111" },
     { id: "kosher", label: "אוכל כשר", color: KOSHER_GREEN },
-    { id: "ideas", label: "רעיונות", color: "#3b3b3b" },
+    { id: "ideas", label: "מקומות", color: "#3b3b3b" },
   ];
 
   return (
@@ -190,7 +190,8 @@ export function MapView({ initialDay }: { initialDay?: string }) {
             <LocateFixed size={20} /> {!me ? "איפה אני?" : follow ? "עוקב אחריכם" : "חזרה אליי"}
           </button>
         )}
-        {selected && (
+        {/* While the place sheet is open the card steps aside; it comes back when the sheet closes. */}
+        {selected && !details && (
           <div className="card map-card" role="dialog" aria-label={selected.name}>
             <div className="map-card-top">
               <Photo place={selected} className="stop-thumb" iconSize={26} />
