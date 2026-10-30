@@ -100,8 +100,11 @@ export default function MapCanvas({
   topInset,
   me,
   follow,
+  selectedId,
+  coverBottom,
   onUnfollow,
   onSelect,
+  onBackgroundTap,
 }: {
   pins: Pin[];
   route: [number, number][];
@@ -111,19 +114,27 @@ export default function MapCanvas({
   topInset: RefObject<HTMLElement | null>;
   me: Me | null;
   follow: boolean;
+  /** The pin whose card is open; it is highlighted and kept clear of the card. */
+  selectedId: string | null;
+  /** The card at the bottom of the map; a selected pin is panned above it. */
+  coverBottom: RefObject<HTMLElement | null>;
   onUnfollow: () => void;
   onSelect: (id: string) => void;
+  /** A tap on the bare map, which closes the card. */
+  onBackgroundTap: () => void;
 }) {
   const container = useRef<HTMLDivElement>(null);
   const failed = useRef<HTMLParagraphElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const meMarker = useRef<maplibregl.Marker | null>(null);
+  const pinEls = useRef(new Map<string, HTMLElement>());
   const fitted = useRef(false);
   // Bumped on every style load; overlay layers are (re)added after it.
   const [styleGen, setStyleGen] = useState(0);
 
   const unfollow = useEffectEvent(() => onUnfollow());
   const select = useEffectEvent((id: string) => onSelect(id));
+  const backgroundTap = useEffectEvent(() => onBackgroundTap());
 
   useEffect(() => {
     const el = container.current;
@@ -177,6 +188,7 @@ export default function MapCanvas({
       map.setStyle(FALLBACK_STYLE, { diff: false });
     });
     map.on("dragstart", () => unfollow());
+    map.on("click", () => backgroundTap());
 
     return () => {
       map.remove();
@@ -190,16 +202,39 @@ export default function MapCanvas({
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+    const els = pinEls.current;
     const markers = pins.map((pin) => {
       const el = pinElement(pin);
       el.addEventListener("click", (e) => {
         e.stopPropagation();
         select(pin.id);
       });
+      els.set(pin.id, el);
       return new maplibregl.Marker({ element: el }).setLngLat([pin.lng, pin.lat]).addTo(map);
     });
-    return () => markers.forEach((m) => m.remove());
+    return () => {
+      markers.forEach((m) => m.remove());
+      els.clear();
+    };
   }, [pins]);
+
+  // The open card's pin stands out, and is panned out from under the card.
+  useEffect(() => {
+    const map = mapRef.current;
+    for (const [id, el] of pinEls.current) {
+      el.classList.toggle("is-selected", id === selectedId);
+    }
+    const pin = selectedId ? pins.find((p) => p.id === selectedId) : undefined;
+    if (!map || !pin) return;
+    const { height } = map.getContainer().getBoundingClientRect();
+    const top = (topInset.current?.offsetHeight ?? 100) + 40;
+    const bottom = height - (coverBottom.current?.offsetHeight ?? 200) - 120;
+    const y = map.project([pin.lng, pin.lat]).y;
+    if (y < top) map.panBy([0, y - top], { duration: 300 });
+    else if (y > bottom) map.panBy([0, y - bottom], { duration: 300 });
+    // Only a new selection pans, not a new pin list.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId]);
 
   // The day's route: the day colour over a white casing.
   useEffect(() => {
