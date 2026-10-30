@@ -1,6 +1,6 @@
 # Budapest trip
 
-A mobile web app for Edna and Benny, a couple (50s–60s, not technical),, on
+A mobile web app for Edna and Benny, a couple (50s–60s, not technical), on
 a Budapest trip, Thu 26 – Sun 29 Nov 2026: the day-by-day plan, a map, ideas
 (with kosher places; they keep kosher; Shabbat falls in the trip but they don't keep it strictly, so taxis and shops are fine), a
 forint ⇄ shekel converter, emergency numbers and an eSIM guide. Hebrew, RTL.
