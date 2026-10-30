@@ -5,10 +5,14 @@ import {
   CarTaxiFront,
   ChevronLeft,
   Coins,
+  Languages,
   MessageCircle,
   Navigation,
   Phone,
+  Pill,
+  Plug,
   Settings,
+  ShieldAlert,
   Siren,
   Snowflake,
   Sunset,
@@ -19,7 +23,9 @@ import {
 } from "lucide-react";
 import { HashOpen } from "@/components/hash-open";
 import { InstallCard } from "@/components/install-card";
+import { PackingList } from "@/components/packing-list";
 import { SettingsPanel } from "@/components/settings-panel";
+import { Topic } from "@/components/topic";
 import { StoreLinks, type StoreIds } from "@/components/ui";
 import { EMERGENCY_GROUPS, telHref } from "@/lib/emergency";
 import { PLAN_PLACES, HOTEL_ID } from "@/lib/places";
@@ -56,36 +62,41 @@ const BOOKINGS = [
 
 
 /**
- * One topic of the hub: a big row (icon, title, one-line hint) that folds open
- * in place. The id doubles as an anchor, e.g. /info#transport.
+ * A few words for the trip. The transliteration is approximate: ö is about
+ * "או", sz is "ס", s is "ש", gy is "ג׳", cs is "צ׳".
  */
-function Topic({
-  id,
-  icon,
-  title,
-  hint,
-  flush,
-  children,
-}: {
-  id: string;
-  icon: React.ReactNode;
-  title: string;
-  hint: string;
-  /** No padding in the body, for lists that bring their own. */
-  flush?: boolean;
-  children: React.ReactNode;
-}) {
+const WORDS: { hu: string; sound: string; he: string }[] = [
+  { hu: "Jó napot", sound: "יו נאפוט", he: "שלום / יום טוב" },
+  { hu: "Köszönöm", sound: "קוסונום", he: "תודה" },
+  { hu: "Kérem", sound: "קרם", he: "בבקשה" },
+  { hu: "Igen / Nem", sound: "איגן / נם", he: "כן / לא" },
+  { hu: "Elnézést", sound: "אלנזשט", he: "סליחה" },
+  { hu: "Mennyibe kerül?", sound: "מניבה קרול", he: "כמה זה עולה?" },
+  { hu: "A számlát, kérem", sound: "א סאמלאט, קרם", he: "החשבון, בבקשה" },
+  { hu: "Beszél angolul?", sound: "בסל אנגולול", he: "מדברים אנגלית?" },
+  { hu: "Nem beszélek magyarul", sound: "נם בסלק מג׳ארול", he: "אני לא מדבר הונגרית" },
+  { hu: "Segítség!", sound: "שגיצ׳ג", he: "הצילו / עזרה" },
+  { hu: "Viszontlátásra", sound: "ויסונטלאטשרה", he: "להתראות" },
+];
+
+/** A time or date range kept left-to-right, so "11:00–21:00" doesn't read backwards in RTL text. */
+const R = ({ children }: { children: string }) => <bdi dir="ltr">{children}</bdi>;
+
+/** Wraps every "9:00–12:00" in a text with R. */
+function withRanges(text: string): React.ReactNode[] {
+  return text.split(/(\d{1,2}:\d{2}–\d{1,2}:\d{2})/).map((part, i) => (i % 2 ? <R key={i}>{part}</R> : part));
+}
+
+/** One short fact: icon, a big word, one line under it. */
+function Tile({ icon, big, children }: { icon: React.ReactNode; big: React.ReactNode; children: React.ReactNode }) {
   return (
-    <details className="topic" id={id}>
-      <summary className="topic-head">
-        <span className="topic-icon">{icon}</span>
-        <span className="grow">
-          <span className="topic-title">{title}</span>
-          <span className="topic-hint">{hint}</span>
-        </span>
-      </summary>
-      <div className={`topic-body${flush ? " is-flush" : ""}`}>{children}</div>
-    </details>
+    <div className="info-tile">
+      <span className="info-tile-icon">{icon}</span>
+      <div className="grow">
+        <div className="big">{big}</div>
+        <p className="muted">{children}</p>
+      </div>
+    </div>
   );
 }
 
@@ -104,14 +115,14 @@ export default function InfoPage() {
         </span>
         טלפונים לחירום
       </h2>
-      <a className="sos-call" href="tel:112">
-        <span className="num">112</span>
-        <span style={{ flex: 1 }}>
-          <strong>מוקד חירום אירופי</strong>
-          <br />
-          <span className="small">משטרה, אמבולנס וכבאים. עונים באנגלית.</span>
+      <a className="sos-call" href="tel:112" aria-label="התקשרות ל־112, מוקד חירום אירופי">
+        <span className="sos-call-main">
+          <span className="sos-call-label">
+            <Phone size={22} aria-hidden /> התקשרות לחירום
+          </span>
+          <span className="sos-call-sub">משטרה, אמבולנס וכבאים. עונים באנגלית.</span>
         </span>
-        <Phone size={26} aria-hidden />
+        <span className="num">112</span>
       </a>
       <div className="stack" style={{ marginBlockStart: 12 }}>
         {EMERGENCY_GROUPS.map((group, i) => (
@@ -122,19 +133,21 @@ export default function InfoPage() {
               {group.contacts.map((c) => (
                 <a
                   key={c.name}
-                  className="list-row"
+                  className="contact-row"
                   href={telHref(c)}
                   target={c.whatsapp ? "_blank" : undefined}
                   rel={c.whatsapp ? "noreferrer" : undefined}
                 >
                   <span className="grow">
-                    <span className="title">{c.name}</span>
-                    <br />
-                    <span className="sub latin" style={{ display: "inline-block" }}>{c.phone}</span>
-                    {c.note && <span className="sub"> · {c.note}</span>}
+                    <span className="contact-name">{c.name}</span>
+                    <bdi className="contact-num" dir="ltr">
+                      {c.phone}
+                    </bdi>
+                    {c.note && <span className="contact-note">{withRanges(c.note)}</span>}
                   </span>
-                  <span className="lead">
-                    {c.whatsapp ? <MessageCircle size={20} aria-label="וואטסאפ" /> : <Phone size={20} aria-label="חיוג" />}
+                  <span className="contact-act">
+                    {c.whatsapp ? <MessageCircle size={20} aria-hidden /> : <Phone size={20} aria-hidden />}
+                    {c.whatsapp ? "וואטסאפ" : "חיוג"}
                   </span>
                 </a>
               ))}
@@ -142,7 +155,7 @@ export default function InfoPage() {
           </details>
         ))}
       </div>
-      <p className="small muted" style={{ marginBlockStart: 10 }}>
+      <p className="info-fine">
         מספרי הביטוח והאשראי נבדקו באוקטובר 2026. כדאי לוודא מול הפוליסה ומול גב הכרטיס, ולצלם את שניהם לפני
         הטיסה. מד״א (101) ומשטרת ישראל (100) לא עובדים מחו״ל.
       </p>
@@ -152,7 +165,7 @@ export default function InfoPage() {
         <Topic id="hotel" icon={<BedDouble size={22} aria-hidden />} title="המלון" hint="כתובת, ניווט והתקשרות">
           <div className="stack">
             <div>
-              <div className="title latin" style={{ textAlign: "start", fontWeight: 800, fontSize: "1.1rem" }}>
+              <div className="title latin" style={{ textAlign: "start", fontWeight: 800, fontSize: "1.2rem" }}>
                 {HOTEL.local}
               </div>
               <div className="muted latin" style={{ textAlign: "start" }}>
@@ -162,10 +175,10 @@ export default function InfoPage() {
             </div>
             <div className="btn-row">
               <a className="btn btn-primary" href={directionsUrl(HOTEL)} target="_blank" rel="noreferrer">
-                <Navigation size={18} /> ניווט למלון
+                <Navigation size={18} aria-hidden /> ניווט למלון
               </a>
               <a className="btn btn-outline" href={`tel:${HOTEL.phone!.replace(/\s/g, "")}`}>
-                <Phone size={18} /> התקשרות
+                <Phone size={18} aria-hidden /> התקשרות למלון
               </a>
             </div>
           </div>
@@ -178,28 +191,32 @@ export default function InfoPage() {
           hint="מוניות, מטרו ומה לעשות בנחיתה"
         >
           <div className="stack">
+            <h3 className="topic-sub">איך מזמינים מונית</h3>
             <ol className="steps">
               <li>מורידים את Bolt עוד בארץ, ונרשמים עם מספר הטלפון וכרטיס אשראי.</li>
               <li>בכל קטע מונית בתוכנית יש כתובת באנגלית. לוחצים עליה, היא מועתקת, ומדביקים ב־Bolt.</li>
               <li>המחיר מופיע מראש ומחויב אוטומטית. לא צריך מזומן.</li>
-              <li>לא עוצרים מוניות ברחוב. בשדה התעופה: עמדת Főtaxi הרשמית או Bolt.</li>
+              <li>
+                לא עוצרים מוניות ברחוב: רק Bolt, או עמדת Főtaxi הרשמית בשדה התעופה. מונית רחוב לשדה יכולה לעלות
+                פי 3.
+              </li>
             </ol>
             <StoreLinks {...BOLT_APP} />
           </div>
+          <h3 className="topic-sub is-spaced">בנחיתה ובעיר</h3>
           <ul className="bullets info-bullets">
             <li>
-              <strong>בנחיתה:</strong> בביקורת הדרכונים יש מאז 2026 רישום ביומטרי חדש (EES) לישראלים, והתור יכול
-              להתארך. לא לתכנן משהו צמוד לנחיתה.
+              <strong>ביקורת דרכונים:</strong> מאז 2026 יש רישום ביומטרי חדש (EES) לישראלים, והתור יכול להתארך.
+              לא לתכנן משהו צמוד לנחיתה.
             </li>
             <li>
               <strong>מטרו ואוטובוס 100E לשדה:</strong> אפשר לשלם בכניסה בהצמדת כרטיס אשראי (כרטיס בודד). המלון ליד
               תחנת Astoria בקו M2.
             </li>
-            <li>
-              <strong>לא עוצרים מונית ברחוב.</strong> רק Bolt או Főtaxi. מונית רחוב לשדה יכולה לעלות פי 3.
-            </li>
           </ul>
         </Topic>
+
+        <PackingList />
 
         <div className="topic">
           <Link href="/esim" className="topic-head">
@@ -210,25 +227,30 @@ export default function InfoPage() {
               <span className="topic-title">אינטרנט בחו״ל</span>
               <span className="topic-hint">מדריך eSIM עם קוד הנחה</span>
             </span>
-            <ChevronLeft size={22} aria-hidden className="topic-go" />
+            <ChevronLeft size={24} aria-hidden className="topic-go" />
           </Link>
         </div>
 
-        <Topic id="kosher" icon={<UtensilsCrossed size={22} aria-hidden />} title="אוכל כשר ושבת" hint="זמני שבת ומה לאכול">
-          <div className="stack">
-            <p>
-              במסעדות שאינן כשרות: מנות צמחוניות, פסטה, פיצה, או דגים עם קשקשים (סלמון, טונה, דניס). להימנע
-              מפירות ים ומגולאש.
-            </p>
-            <p>
-              <strong>שבת (27–28 בנובמבר):</strong> הדלקת נרות בערך 15:35, צאת שבת בערך 16:50 (לוודא ב־chabad.org).
-              המסעדות הכשרות נסגרות בשישי בצהריים, ומגישות ארוחות שבת רק בהזמנה ובתשלום מראש.
-            </p>
-            <p>
+        <Topic id="kosher" icon={<UtensilsCrossed size={22} aria-hidden />} title="אוכל כשר ושבת" hint="זמני שבת ומה לאכול" flush>
+          <ul className="bullets">
+            <li>
+              <strong>במסעדות שאינן כשרות:</strong> מנות צמחוניות, פסטה, פיצה, או דגים עם קשקשים (סלמון, טונה,
+              דניס). להימנע מפירות ים ומגולאש.
+            </li>
+            <li>
+              <strong>שבת (<R>27–28</R> בנובמבר):</strong> הדלקת נרות בערך 15:35, צאת שבת בערך 16:50 (לוודא ב־chabad.org).
+            </li>
+            <li>
+              <strong>ארוחות שבת:</strong> המסעדות הכשרות נסגרות בשישי בצהריים, ומגישות ארוחות שבת רק בהזמנה
+              ובתשלום מראש.
+            </li>
+            <li>
               <strong>בית הכנסת הגדול (דוהאני)</strong> סגור בשבת. מתאים לחמישי או לראשון בבוקר.
-            </p>
-            <Link className="btn btn-outline" href="/explore">
-              לכל המקומות הכשרים <ChevronLeft size={18} />
+            </li>
+          </ul>
+          <div className="topic-actions">
+            <Link className="btn btn-outline btn-block" href="/explore">
+              לכל המקומות הכשרים <ChevronLeft size={18} aria-hidden />
             </Link>
           </div>
         </Topic>
@@ -242,10 +264,10 @@ export default function InfoPage() {
         >
           <ul className="bullets">
             <li>
-              <strong>שוק ורשמרטי:</strong> בערך 11:00–21:00 (שישי־שבת עד 22:00). משלמים בכרטיס.
+              <strong>שוק ורשמרטי:</strong> בערך <R>11:00–21:00</R> (שישי־שבת עד 22:00). משלמים בכרטיס.
             </li>
             <li>
-              <strong>שוק הבזיליקה:</strong> 11:00–22:00 (שישי־שבת עד 23:00), עם מופע אורות על החזית מ־17:30, כל
+              <strong>שוק הבזיליקה:</strong> <R>11:00–22:00</R> (שישי־שבת עד 23:00), עם מופע אורות על החזית מ־17:30, כל
               חצי שעה. נבחר שוב לשוק הכריסמס הטוב באירופה.
             </li>
             <li>
@@ -258,44 +280,63 @@ export default function InfoPage() {
           </ul>
         </Topic>
 
-        <Topic id="good-to-know" icon={<Snowflake size={22} aria-hidden />} title="טוב לדעת" hint="קור, שקיעה, פורינט ומשקאות">
-          <div className="info-grid">
-            <div className="info-tile">
-              <Snowflake size={22} aria-hidden />
-              <div className="big latin" style={{ textAlign: "start" }}>0–7°</div>
-              <p className="small muted">קר. מעיל, כפפות, כובע ונעליים נוחות.</p>
-            </div>
-            <div className="info-tile">
-              <Sunset size={22} aria-hidden />
-              <div className="big">15:55</div>
-              <p className="small muted">שקיעה. בחמש כבר חושך, והשווקים נדלקים.</p>
-            </div>
-            <div className="info-tile">
-              <Coins size={22} aria-hidden />
-              <div className="big">פורינט</div>
-              <p className="small muted">1,000 פורינט ≈ 9 ₪. אשראי עובד כמעט בכל מקום.</p>
-            </div>
-            <div className="info-tile">
-              <Wine size={22} aria-hidden />
-              <div className="big">בלי אלכוהול</div>
-              <p className="small muted">בשווקים: gyerekpuncs או שוקו חם. לאבא: בירה Dreher.</p>
-            </div>
+        <Topic
+          id="good-to-know"
+          icon={<Snowflake size={22} aria-hidden />}
+          title="טוב לדעת"
+          hint="קור, שקיעה, שקעים, כיסים ובית מרקחת"
+          flush
+        >
+          <div className="info-tiles">
+            <Tile icon={<Snowflake size={24} aria-hidden />} big={<bdi dir="ltr">0–7°</bdi>}>
+              קר. מעיל, כפפות, כובע ונעליים נוחות.
+            </Tile>
+            <Tile icon={<Sunset size={24} aria-hidden />} big="שקיעה ב־15:55">
+              בחמש כבר חושך, והשווקים נדלקים.
+            </Tile>
+            <Tile icon={<Coins size={24} aria-hidden />} big="פורינט">
+              1,000 פורינט שווים בערך 9 ₪. אשראי עובד כמעט בכל מקום.
+            </Tile>
+            <Tile icon={<Wine size={24} aria-hidden />} big="בלי אלכוהול">
+              בשווקים: gyerekpuncs או שוקו חם. לבני: בירה Dreher.
+            </Tile>
+            <Tile icon={<Plug size={24} aria-hidden />} big="שקעים">
+              230V, סוג C/F. התקע הישראלי עם שני פינים מתאים. תקע עם שלושה פינים צריך מתאם.
+            </Tile>
+            <Tile icon={<ShieldAlert size={24} aria-hidden />} big="כייסים">
+              בשווקים הצפופים, במטרו וב־<bdi dir="ltr">Váci utca</bdi>: התיק מלפנים, והטלפון לא בכיס אחורי.
+            </Tile>
+            <Tile icon={<Pill size={24} aria-hidden />} big="בית מרקחת">
+              בהונגרית: <bdi dir="ltr">Gyógyszertár</bdi>. מחפשים שלט עם צלב ירוק.
+            </Tile>
           </div>
+        </Topic>
+
+        <Topic id="words" icon={<Languages size={22} aria-hidden />} title="מילים בהונגרית" hint="תודה, בבקשה, כמה זה עולה" flush>
+          <ul className="word-list">
+            {WORDS.map((w) => (
+              <li key={w.hu} className="word-row">
+                <span className="word-he">{w.he}</span>
+                <bdi className="word-hu" dir="ltr">
+                  {w.hu}
+                </bdi>
+                <span className="word-sound">איך אומרים: {w.sound}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="info-fine is-inset">התעתיק משוער.</p>
         </Topic>
 
         <Topic id="bookings" icon={<CalendarCheck size={22} aria-hidden />} title="הזמנות" hint="מה כדאי להזמין מראש" flush>
           <div className="list">
             {BOOKINGS.map((b) => (
-              <a key={b.what} className="list-row" href={b.href} target="_blank" rel="noreferrer">
-                <span className="lead" style={{ fontSize: "0.78rem", lineHeight: 1.15, textAlign: "center" } as React.CSSProperties}>
-                  {b.when}
-                </span>
+              <a key={b.what} className="list-row book-row" href={b.href} target="_blank" rel="noreferrer">
                 <span className="grow">
-                  <span className="title">{b.what}</span>
-                  <br />
-                  <span className="sub">{b.how}</span>
+                  <span className="book-when">{b.when}</span>
+                  <span className="book-what">{b.what}</span>
+                  <span className="book-how">{b.how}</span>
                 </span>
-                <ChevronLeft size={20} aria-hidden />
+                {b.href.startsWith("tel:") ? <Phone size={22} aria-label="חיוג" /> : <ChevronLeft size={22} aria-hidden />}
               </a>
             ))}
           </div>

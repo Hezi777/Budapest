@@ -89,6 +89,7 @@ export function Photo({
   width = 500,
   iconSize = 32,
   hideIfMissing = false,
+  decorative = false,
 }: {
   place: Place;
   className?: string;
@@ -96,6 +97,8 @@ export function Photo({
   iconSize?: number;
   /** Render nothing, rather than an icon tile, when there's no photo. */
   hideIfMissing?: boolean;
+  /** The name is printed next to the photo, so screen readers skip the picture (alt=""). */
+  decorative?: boolean;
 }) {
   const src = photoUrl(place, width);
   const [failed, setFailed] = useState<string | null>(null);
@@ -118,7 +121,7 @@ export function Photo({
         <Image
           ref={checkLoaded}
           src={src}
-          alt={place.local}
+          alt={decorative ? "" : place.local}
           fill
           unoptimized
           sizes={width >= 960 ? "100vw" : "120px"}

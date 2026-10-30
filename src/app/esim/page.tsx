@@ -37,15 +37,15 @@ export default function EsimPage() {
       <div className="page-head">
         <h1 className="page-title">אינטרנט בחו״ל</h1>
         <p className="page-lead">
-          במקום חבילת חו״ל יקרה: eSIM של Airalo. זה כרטיס סים דיגיטלי שמתקינים מהאפליקציה, בלי להוציא את הסים
-          הישראלי. מספיק לוואטסאפ, מפות ו־Bolt לכל הטיול.
+          במקום חבילת חו״ל יקרה: eSIM של Airalo, כרטיס סים דיגיטלי שמתקינים מהאפליקציה. הסים הישראלי נשאר
+          בטלפון. מספיק לוואטסאפ, מפות ו־Bolt לכל הטיול.
         </p>
       </div>
 
       <div className="plan-card">
-        <span className="small" style={{ opacity: 0.8, fontWeight: 800 }}>החבילה שמתאימה לכם</span>
+        <span style={{ opacity: 0.85, fontWeight: 800 }}>החבילה שמתאימה לכם</span>
         <span style={{ fontSize: "1.3rem", fontWeight: 800 }}>
-          הונגריה · <bdi>Szia!</bdi>
+          הונגריה · <bdi dir="ltr">Szia!</bdi>
         </span>
         <span className="tags">
           <span className="tag latin">3GB</span>
@@ -54,7 +54,7 @@ export default function EsimPage() {
         <span className="plan-price">
           <bdi className="latin">≈ €7.50</bdi>
         </span>
-        <span className="small" style={{ opacity: 0.85 }}>
+        <span style={{ opacity: 0.9, lineHeight: 1.5 }}>
           גלישה בלבד (בלי מספר הונגרי). אפשר לשתף אינטרנט (Hotspot). 1GB לא יספיק לארבעה ימים עם מפות.
         </span>
       </div>
