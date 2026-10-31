@@ -25,8 +25,8 @@ welcome screen); Hen found an 18px default with bigger controls "too big".
 Muted text ≥ 4.5:1 (`--text-soft` is the lightest allowed); selected states use
 ink or a check, never colour alone; buttons say what they do in words;
 deleting needs a confirm or an undo. Check new screens at "xlarge" too.
-The itinerary is the full-card version (each stop shows its details); a
-tap-to-expand version was tried and rejected.
+The itinerary is the full-card version (each stop shows its details), all days
+in one scroll; a tap-to-expand version was tried and rejected.
 
 ## Motion
 

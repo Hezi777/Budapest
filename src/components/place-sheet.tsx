@@ -28,7 +28,7 @@ import {
   updateStop,
   useTrip,
 } from "@/lib/store";
-import type { Day, Place, Stop } from "@/lib/types";
+import type { Day, Place, Reservation, Stop } from "@/lib/types";
 
 function nextFreeTime(day: Day): string {
   const last = day.stops[day.stops.length - 1];
@@ -450,6 +450,99 @@ export function StopEditor({
       </button>
     </Sheet>
   );
+}
+
+/* ---------- Reservation ---------- */
+
+/**
+ * A booked table or time slot: when, under whose name, and a short note.
+ * Lives only on this phone, so nothing sensitive (tickets, card numbers).
+ */
+export function ReservationSheet({
+  day,
+  stop,
+  place,
+  onClose,
+}: {
+  day: Day;
+  stop: Stop;
+  place?: Place;
+  onClose: () => void;
+}) {
+  const toast = useToast();
+  const existing = stop.reservation;
+  const [time, setTime] = useState(existing?.time ?? "");
+  const [name, setName] = useState(existing?.name ?? "");
+  const [note, setNote] = useState(existing?.note ?? "");
+  const title = stop.title ?? place?.name ?? "העצירה";
+
+  function save() {
+    const reservation: Reservation = {
+      time: time || undefined,
+      name: name.trim() || undefined,
+      note: note.trim() || undefined,
+    };
+    const empty = !reservation.time && !reservation.name && !reservation.note;
+    updateStop(day.id, stop.id, { reservation: empty ? undefined : reservation });
+    toast(empty ? "אין הזמנה" : `ההזמנה נשמרה${reservation.time ? ` ל־${reservation.time}` : ""}`);
+    onClose();
+  }
+
+  function remove() {
+    updateStop(day.id, stop.id, { reservation: undefined });
+    toast("ההזמנה נמחקה", {
+      label: "ביטול",
+      onClick: () => updateStop(day.id, stop.id, { reservation: existing }),
+    });
+    onClose();
+  }
+
+  return (
+    <Sheet title={existing ? "ההזמנה" : "הוספת הזמנה"} onClose={onClose}>
+      <p className="ps-hint">
+        <bdi>{title}</bdi> · {day.label}
+      </p>
+      <label className="field">
+        <span className="field-label">לאיזו שעה?</span>
+        <input className="input ps-input" type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+      </label>
+      <label className="field">
+        <span className="field-label">על שם</span>
+        <input
+          className="input ps-input"
+          value={name}
+          placeholder="למשל: בני"
+          autoComplete="off"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <label className="field">
+        <span className="field-label">פרטים (לא חובה)</span>
+        <textarea
+          className="input ps-input"
+          value={note}
+          placeholder="למשל: מספר אישור, שולחן לשניים, לבוא 10 דקות לפני"
+          onChange={(e) => setNote(e.target.value)}
+        />
+      </label>
+      <p className="ps-hint">נשמר רק בטלפון הזה. לא לשמור כאן כרטיסים, פרטי אשראי או סיסמאות.</p>
+      <button type="button" className="btn btn-primary btn-block ps-action" onClick={save}>
+        <Check size={22} aria-hidden /> שמירה
+      </button>
+      {existing && (
+        <button type="button" className="btn btn-outline btn-block ps-action" onClick={remove}>
+          <Trash size={22} aria-hidden /> מחיקת ההזמנה
+        </button>
+      )}
+    </Sheet>
+  );
+}
+
+/** One line for a booked stop, e.g. "הזמנה ל־19:30 · על שם בני". */
+export function reservationLabel(r: Reservation): string {
+  const parts = [r.time ? `הזמנה ל־${r.time}` : "יש הזמנה"];
+  if (r.name) parts.push(`על שם ${r.name}`);
+  return parts.join(" · ");
 }
 
 /* ---------- Add a stop to a day ---------- */

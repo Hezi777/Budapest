@@ -76,6 +76,15 @@ page's stacking context, the map's above all, can paint over it. Toasts sit at
 from the URL hash (`/info#packing`). The packing list is saved in settings
 (`packed`).
 
+## Plan: one scroll
+
+All four days render on one page (`DaySection` in `plan-view.tsx`), like
+Wanderlog. The sticky day strip follows the scroll (`useActiveDay`: the last
+day whose top passed under the strip) and a tap scrolls to that day. Each day
+has its own edit mode. A stop can carry a `reservation` (time, name, a short
+note) set from the card's "הזמנה" button; it lives in localStorage like the
+rest, so the sheet warns not to store tickets or payment details.
+
 ## Reordering
 
 In edit mode each stop has a grip handle (`useStopDrag` in

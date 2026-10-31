@@ -1342,6 +1342,52 @@ textarea.input {
   font-size: 0.88rem;
 }
 
+/* ---------- All days in one scroll ---------- */
+
+/* Each day after the first opens with a full-width band, like turning a page. */
+.day-section + .day-section {
+  margin-block-start: 32px;
+  padding-block-start: 8px;
+  border-block-start: 10px solid var(--surface-sunk);
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+}
+
+.day-add {
+  margin-block-start: 18px;
+}
+
+/* A booked table or slot: blue-ish, so it reads as "you have a booking". */
+.resv-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  margin-block-end: 10px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: #e8eefc;
+  color: #1d3f8f;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.resv-pill svg {
+  flex: none;
+  margin-block-start: 2px;
+}
+.resv-main {
+  display: block;
+  font-weight: 800;
+}
+.resv-note {
+  display: block;
+  font-size: 0.88rem;
+  color: #2b4a94;
+}
+
 /* ================= Sheet ================= */
 
 .sheet-backdrop {

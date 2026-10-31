@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import {
   BedDouble,
+  CalendarClock,
   CarTaxiFront,
   Check,
   Coins,
@@ -22,12 +23,12 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { InstallCard } from "./install-card";
-import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
+import { AddStopSheet, PlaceSheet, ReservationSheet, reservationLabel, StopEditor } from "./place-sheet";
 import { BudapestScene, CopyAddress, Photo, Tags } from "./ui";
 import { CATEGORY_LABELS, placeIndex } from "@/lib/catalog";
 import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
 import { HERO, HOTEL_ID } from "@/lib/places";
-import { moveStop, moveStopTo, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
+import { moveStop, moveStopTo, updateStop, useTrip } from "@/lib/store";
 import { TRIP_INFO } from "@/lib/trip";
 import type { Day, Leg, Place, Stop, Tag } from "@/lib/types";
 
@@ -239,6 +240,7 @@ function StopCard({
   arrivesOnFoot,
   editing,
   onOpenPlace,
+  onReserve,
 }: {
   day: Day;
   stop: Stop;
@@ -247,6 +249,7 @@ function StopCard({
   arrivesOnFoot: boolean;
   editing: boolean;
   onOpenPlace: (place: Place) => void;
+  onReserve: () => void;
 }) {
   const title = stop.title ?? place.name;
 
@@ -265,6 +268,15 @@ function StopCard({
         <Photo place={place} className="stop-thumb" iconSize={28} />
       </button>
       <div className="stop-body">
+        {stop.reservation && (
+          <button type="button" className="resv-pill" onClick={onReserve}>
+            <CalendarClock size={17} aria-hidden />
+            <span>
+              <span className="resv-main">{reservationLabel(stop.reservation)}</span>
+              {stop.reservation.note && <span className="resv-note">{stop.reservation.note}</span>}
+            </span>
+          </button>
+        )}
         {stop.note && <p className="stop-note">{stop.note}</p>}
         {stop.alts?.map((alt) => (
           <StopAlt
@@ -284,6 +296,11 @@ function StopCard({
             >
               <Navigation size={17} /> ניווט
             </a>
+            {!stop.reservation && place.category !== "transport" && place.category !== "hotel" && (
+              <button type="button" className="btn btn-soft btn-sm" onClick={onReserve}>
+                <CalendarClock size={17} /> הזמנה
+              </button>
+            )}
             <button
               type="button"
               className="icon-btn done-btn"
@@ -367,6 +384,7 @@ function dayAsText(day: Day, number: number, places: Map<string, Place>): string
     const place = stop.placeId ? places.get(stop.placeId) : undefined;
     const name = stop.title ?? place?.name ?? "";
     lines.push(`${stop.time}  ${name}${place && !stop.compact ? ` (${place.address})` : ""}`);
+    if (stop.reservation) lines.push(`      ${reservationLabel(stop.reservation)}`);
     if (stop.note) lines.push(`      ${stop.note}`);
   }
   return lines.join("\n");
@@ -471,36 +489,33 @@ function useStopDrag(dayId: string) {
   return { timeline, onGrab };
 }
 
-/* ---------- Page ---------- */
+/* ---------- One day ---------- */
 
-export function PlanView() {
-  const trip = useTrip();
-  const settings = useSettings();
-  const today = useToday();
-  const now = useNow();
-  const places = useMemo(() => placeIndex(trip), [trip]);
+function DaySection({
+  day,
+  index,
+  places,
+  hotel,
+  onOpenPlace,
+  onEditStop,
+  onReserve,
+  onAdd,
+}: {
+  day: Day;
+  index: number;
+  places: Map<string, Place>;
+  hotel: Place;
+  onOpenPlace: (place: Place) => void;
+  onEditStop: (stop: Stop) => void;
+  onReserve: (stop: Stop) => void;
+  onAdd: () => void;
+}) {
   const [editing, setEditing] = useState(false);
-  const [openPlace, setOpenPlace] = useState<Place | null>(null);
-  const [editStop, setEditStop] = useState<Stop | null>(null);
-  const [adding, setAdding] = useState(false);
-
-  // A pick made today wins; otherwise jump to today's day during the trip.
-  const picked = settings.dayPick?.on === today ? settings.dayPick.id : undefined;
-  const dayId = picked ?? trip.days.find((d) => d.date === today)?.id ?? trip.days[0].id;
-  const dayIndex = Math.max(0, trip.days.findIndex((d) => d.id === dayId));
-  const day = trip.days[dayIndex];
-  const hotel = places.get(HOTEL_ID)!;
   const { rows, endLeg } = layoutDay(day, places, hotel);
-  const todayIndex = trip.days.findIndex((d) => d.date === today);
   const { timeline, onGrab } = useStopDrag(day.id);
 
-  function pickDay(id: string) {
-    updateSettings({ dayPick: { id, on: todayIso() } });
-    setEditing(false);
-  }
-
   async function shareDay() {
-    const text = dayAsText(day, dayIndex + 1, places);
+    const text = dayAsText(day, index + 1, places);
     if (navigator.share) {
       try {
         await navigator.share({ text });
@@ -513,7 +528,188 @@ export function PlanView() {
   }
 
   return (
-    <div style={{ "--day": day.color } as React.CSSProperties}>
+    <section
+      id={`day-${day.id}`}
+      className="day-section"
+      aria-labelledby={`day-${day.id}-title`}
+      style={{ "--day": day.color } as React.CSSProperties}
+    >
+      <header className="day-card">
+        <div className="page-kicker">
+          יום {index + 1} · {day.label}
+        </div>
+        <h2 className="day-title" id={`day-${day.id}-title`}>
+          {day.title}
+        </h2>
+        <p className="day-summary">{day.summary}</p>
+        <div className="day-links">
+          <button type="button" className="text-link" aria-pressed={editing} onClick={() => setEditing((v) => !v)}>
+            <Pencil size={16} /> {editing ? "סיום עריכה" : "שינוי היום"}
+          </button>
+          <button type="button" className="text-link" onClick={shareDay}>
+            <Share2 size={16} /> שליחה בוואטסאפ
+          </button>
+        </div>
+      </header>
+
+      {editing && (
+        <div className="edit-banner" role="status">
+          גוררים את הידית <GripVertical size={16} aria-hidden /> כדי לשנות סדר. „עריכה” משנה שעה, שם או יום.
+        </div>
+      )}
+
+      <div className={`timeline${editing ? " is-editing" : ""}`} ref={timeline}>
+        {rows.map(({ stop, place, leg, i, isRest, number }) => (
+          <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
+            {leg && <LegRow {...leg} />}
+            <div style={{ position: "relative" }}>
+              <span
+                className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}`}
+                aria-hidden
+              >
+                {isRest ? (
+                  place?.id === HOTEL_ID ? <BedDouble size={15} /> : <Moon size={15} />
+                ) : stop.done ? (
+                  <Check size={16} />
+                ) : (
+                  number
+                )}
+              </span>
+              {isRest || !place ? (
+                <div className={editing ? "card" : undefined}>
+                  <div className={`rest${editing ? " in-card" : ""}`}>
+                    <span className="time">{stop.time}</span>
+                    <span>
+                      <strong>{stop.title ?? place?.name}.</strong> {stop.note}
+                    </span>
+                  </div>
+                  {editing && (
+                    <EditBar
+                      day={day}
+                      stop={stop}
+                      isFirst={i === 0}
+                      isLast={i === rows.length - 1}
+                      onEdit={() => onEditStop(stop)}
+                      onGrab={(e) => onGrab(e, stop.id, i)}
+                    />
+                  )}
+                </div>
+              ) : (
+                <article className={`card stop${stop.done ? " is-done" : ""}`}>
+                  <StopCard
+                    day={day}
+                    stop={stop}
+                    place={place}
+                    places={places}
+                    arrivesOnFoot={leg?.leg.mode === "walk"}
+                    editing={editing}
+                    onOpenPlace={onOpenPlace}
+                    onReserve={() => onReserve(stop)}
+                  />
+                  {editing && (
+                    <EditBar
+                      day={day}
+                      stop={stop}
+                      isFirst={i === 0}
+                      isLast={i === rows.length - 1}
+                      onEdit={() => onEditStop(stop)}
+                      onGrab={(e) => onGrab(e, stop.id, i)}
+                    />
+                  )}
+                </article>
+              )}
+            </div>
+          </div>
+        ))}
+        {endLeg && <LegRow {...endLeg} />}
+      </div>
+
+      <button type="button" className="btn btn-outline btn-block day-add" onClick={onAdd}>
+        <Plus size={20} /> הוספת עצירה ליום {index + 1}
+      </button>
+    </section>
+  );
+}
+
+/* ---------- Which day is on screen ---------- */
+
+/** Where the sticky day strip ends once it's stuck under the header. */
+function stuckLine(strip: HTMLElement | null): number {
+  const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 0;
+  return header + (strip?.offsetHeight ?? 0);
+}
+
+/**
+ * Wanderlog-style: all days in one scroll. The chip of the day under the
+ * sticky strip lights up; tapping a chip scrolls to that day.
+ */
+function useActiveDay(days: Day[]) {
+  const [active, setActive] = useState(days[0].id);
+  const strip = useRef<HTMLDivElement>(null);
+  // While a tap-scroll glides, the tapped chip stays lit.
+  const lockUntil = useRef(0);
+
+  useEffect(() => {
+    let frame = 0;
+    function measure() {
+      frame = 0;
+      if (Date.now() < lockUntil.current) return;
+      const line = stuckLine(strip.current) + 24;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      let current = days[0].id;
+      for (const d of days) {
+        const el = document.getElementById(`day-${d.id}`);
+        if (el && el.getBoundingClientRect().top <= line) current = d.id;
+      }
+      // The last day may be too short to ever reach the strip.
+      setActive(atBottom ? days[days.length - 1].id : current);
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    frame = requestAnimationFrame(measure);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [days]);
+
+  function jump(id: string) {
+    const el = document.getElementById(`day-${id}`);
+    if (!el) return;
+    setActive(id);
+    const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    lockUntil.current = Date.now() + (smooth ? 900 : 100);
+    const top = el.getBoundingClientRect().top + window.scrollY - stuckLine(strip.current) - 8;
+    window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
+  }
+
+  return { active, jump, strip };
+}
+
+/* ---------- Page ---------- */
+
+export function PlanView() {
+  const trip = useTrip();
+  const today = useToday();
+  const now = useNow();
+  const places = useMemo(() => placeIndex(trip), [trip]);
+  const hotel = places.get(HOTEL_ID)!;
+  const todayIndex = trip.days.findIndex((d) => d.date === today);
+  const { active, jump, strip } = useActiveDay(trip.days);
+  const [openPlace, setOpenPlace] = useState<Place | null>(null);
+  // Stops are kept as they were when the sheet opened; days are looked up fresh.
+  const [editStop, setEditStop] = useState<{ dayId: string; stop: Stop } | null>(null);
+  const [reserve, setReserve] = useState<{ dayId: string; stop: Stop } | null>(null);
+  const [adding, setAdding] = useState<string | null>(null);
+  const dayById = (id: string) => trip.days.find((d) => d.id === id);
+  const editDay = editStop && dayById(editStop.dayId);
+  const reserveDay = reserve && dayById(reserve.dayId);
+  const addDay = adding && dayById(adding);
+
+  return (
+    <div>
       <section className="hero" aria-label="הטיול">
         <BudapestScene className="hero-art" />
         <Photo place={HERO} width={960} iconSize={0} />
@@ -547,7 +743,7 @@ export function PlanView() {
           </span>
           חזרה למלון
         </a>
-        <Link className="quick" href={`/map?day=${day.id}`}>
+        <Link className="quick" href={`/map?day=${active}`}>
           <span className="q-icon">
             <MapIcon size={22} aria-hidden />
           </span>
@@ -562,7 +758,7 @@ export function PlanView() {
       </nav>
 
       <h2 className="section-title">התוכנית</h2>
-      <div className="day-strip" role="group" aria-label="בחירת יום">
+      <div className="day-strip" role="group" aria-label="מעבר ליום" ref={strip}>
         {trip.days.map((d) => {
           const [, month, date] = d.date.split("-").map(Number);
           return (
@@ -571,8 +767,8 @@ export function PlanView() {
               type="button"
               className="day-chip"
               style={{ "--chip": d.color } as React.CSSProperties}
-              aria-pressed={d.id === day.id}
-              onClick={() => pickDay(d.id)}
+              aria-pressed={d.id === active}
+              onClick={() => jump(d.id)}
             >
               <span className="d-week">{d.label.split(" · ")[0]}</span>
               <span className="d-num">{date}</span>
@@ -582,124 +778,42 @@ export function PlanView() {
         })}
       </div>
 
-      <header className="day-card">
-        <div className="page-kicker">
-          יום {dayIndex + 1} · {day.label}
-        </div>
-        <h2 className="day-title">{day.title}</h2>
-        <p className="day-summary">{day.summary}</p>
-        <div className="day-links">
-          <button
-            type="button"
-            className="text-link"
-            aria-pressed={editing}
-            onClick={() => setEditing((v) => !v)}
-          >
-            <Pencil size={16} /> {editing ? "סיום עריכה" : "שינוי היום"}
-          </button>
-          <button type="button" className="text-link" onClick={shareDay}>
-            <Share2 size={16} /> שליחה בוואטסאפ
-          </button>
-        </div>
-      </header>
-
-      {editing && (
-        <div className="edit-banner" role="status">
-          גוררים את הידית <GripVertical size={16} aria-hidden /> כדי לשנות סדר. „עריכה” משנה שעה, שם או יום.
-        </div>
-      )}
-
-      {/* Keyed by day so switching days replays the stops' entrance. */}
-      <div className={`timeline${editing ? " is-editing" : ""}`} key={day.id} ref={timeline}>
-        {rows.map(({ stop, place, leg, i, isRest, number }) => (
-          <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
-            {leg && <LegRow {...leg} />}
-            <div style={{ position: "relative" }}>
-              <span
-                className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}`}
-                aria-hidden
-              >
-                {isRest ? (
-                  place?.id === HOTEL_ID ? <BedDouble size={15} /> : <Moon size={15} />
-                ) : stop.done ? (
-                  <Check size={16} />
-                ) : (
-                  number
-                )}
-              </span>
-              {isRest || !place ? (
-                <div className={editing ? "card" : undefined}>
-                  <div className={`rest${editing ? " in-card" : ""}`}>
-                    <span className="time">{stop.time}</span>
-                    <span>
-                      <strong>{stop.title ?? place?.name}.</strong> {stop.note}
-                    </span>
-                  </div>
-                  {editing && (
-                    <EditBar
-                      day={day}
-                      stop={stop}
-                      isFirst={i === 0}
-                      isLast={i === rows.length - 1}
-                      onEdit={() => setEditStop(stop)}
-                      onGrab={(e) => onGrab(e, stop.id, i)}
-                    />
-                  )}
-                </div>
-              ) : (
-                <article className={`card stop${stop.done ? " is-done" : ""}`}>
-                  <StopCard
-                    day={day}
-                    stop={stop}
-                    place={place}
-                    places={places}
-                    arrivesOnFoot={leg?.leg.mode === "walk"}
-                    editing={editing}
-                    onOpenPlace={setOpenPlace}
-                  />
-                  {editing && (
-                    <EditBar
-                      day={day}
-                      stop={stop}
-                      isFirst={i === 0}
-                      isLast={i === rows.length - 1}
-                      onEdit={() => setEditStop(stop)}
-                      onGrab={(e) => onGrab(e, stop.id, i)}
-                    />
-                  )}
-                </article>
-              )}
-            </div>
-          </div>
-        ))}
-        {endLeg && <LegRow {...endLeg} />}
-      </div>
-
-      <button
-        type="button"
-        className="btn btn-outline btn-block"
-        style={{ marginBlockStart: 18 }}
-        onClick={() => setAdding(true)}
-      >
-        <Plus size={20} /> הוספת עצירה ליום {dayIndex + 1}
-      </button>
+      {trip.days.map((d, index) => (
+        <DaySection
+          key={d.id}
+          day={d}
+          index={index}
+          places={places}
+          hotel={hotel}
+          onOpenPlace={setOpenPlace}
+          onEditStop={(stop) => setEditStop({ dayId: d.id, stop })}
+          onReserve={(stop) => setReserve({ dayId: d.id, stop })}
+          onAdd={() => setAdding(d.id)}
+        />
+      ))}
 
       <div style={{ marginBlockStart: 28 }}>
         <InstallCard />
       </div>
 
-      {openPlace && (
-        <PlaceSheet place={openPlace} defaultDayId={day.id} onClose={() => setOpenPlace(null)} />
-      )}
-      {editStop && (
+      {openPlace && <PlaceSheet place={openPlace} defaultDayId={active} onClose={() => setOpenPlace(null)} />}
+      {editStop && editDay && (
         <StopEditor
-          day={day}
-          stop={editStop}
-          place={editStop.placeId ? places.get(editStop.placeId) : undefined}
+          day={editDay}
+          stop={editStop.stop}
+          place={editStop.stop.placeId ? places.get(editStop.stop.placeId) : undefined}
           onClose={() => setEditStop(null)}
         />
       )}
-      {adding && <AddStopSheet day={day} onClose={() => setAdding(false)} />}
+      {reserve && reserveDay && (
+        <ReservationSheet
+          day={reserveDay}
+          stop={reserve.stop}
+          place={reserve.stop.placeId ? places.get(reserve.stop.placeId) : undefined}
+          onClose={() => setReserve(null)}
+        />
+      )}
+      {addDay && <AddStopSheet day={addDay} onClose={() => setAdding(null)} />}
     </div>
   );
 }

@@ -87,6 +87,16 @@ export type Stop = {
   /** Fallback suggestions shown under the card. */
   alts?: { placeId?: string; text: string; kosher?: boolean }[];
   done?: boolean;
+  /** A table or ticket slot the couple booked. Plain notes only: no tickets or payment details. */
+  reservation?: Reservation;
+};
+
+export type Reservation = {
+  time?: string;
+  /** Whose name it's under. */
+  name?: string;
+  /** e.g. confirmation number, "שולחן ליד החלון". */
+  note?: string;
 };
 
 export type Day = {
