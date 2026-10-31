@@ -54,5 +54,7 @@ self.addEventListener("fetch", (event) => {
   }
   // Photos redirect to Wikimedia; leave them to the browser's own cache.
   if (url.pathname.startsWith("/api/photo")) return;
+  // The shared plan must always be fresh; the app keeps its own copy offline.
+  if (url.pathname.startsWith("/api/trip")) return;
   event.respondWith(networkFirst(request));
 });

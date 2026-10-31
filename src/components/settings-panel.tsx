@@ -4,6 +4,7 @@ import { useState, type CSSProperties } from "react";
 import { RotateCcw } from "lucide-react";
 import { useToast } from "./ui";
 import { resetTrip, updateSettings, useSettings, type TextSize } from "@/lib/store";
+import { useSyncStatus, type SyncStatus } from "@/lib/sync";
 
 /** `sample` is the size, in px, of the letter shown on each button: a preview of that setting. */
 const SIZES: { id: TextSize; label: string; sample: number }[] = [
@@ -12,10 +13,19 @@ const SIZES: { id: TextSize; label: string; sample: number }[] = [
   { id: "xlarge", label: "גדול מאוד", sample: 28 },
 ];
 
+const SYNC_TEXT: Record<SyncStatus, string> = {
+  off: "כל שינוי נשמר בטלפון הזה בלבד. כדי לשתף, משתמשים בכפתור „שליחה בוואטסאפ” בדף התוכנית.",
+  synced: "התוכנית משותפת לשני הטלפונים: כל שינוי כאן מופיע גם בטלפון השני.",
+  pending: "שולחים את השינויים לטלפון השני…",
+  offline: "אין אינטרנט כרגע. השינויים שמורים כאן ויישלחו לטלפון השני כשיהיה חיבור.",
+};
+
 export function SettingsPanel() {
   const { textSize } = useSettings();
   const toast = useToast();
   const [confirm, setConfirm] = useState(false);
+  const { status } = useSyncStatus();
+  const shared = status !== "off";
 
   function reset() {
     resetTrip();
@@ -47,12 +57,14 @@ export function SettingsPanel() {
       </div>
       <div className="settings-row card-pad">
         <strong>שינויים בתוכנית</strong>
-        <p className="muted">
-          כל שינוי נשמר בטלפון הזה בלבד. כדי לשתף, משתמשים בכפתור „שליחה בוואטסאפ” בדף התוכנית.
+        <p className="muted" role="status">
+          {SYNC_TEXT[status]}
         </p>
         {confirm ? (
           <div className="confirm-box" role="alertdialog" aria-labelledby="reset-q">
-            <p id="reset-q">למחוק את כל השינויים שעשיתם ולחזור לתוכנית המקורית?</p>
+            <p id="reset-q">
+              למחוק את כל השינויים שעשיתם ולחזור לתוכנית המקורית?{shared && " זה ישנה את התוכנית גם בטלפון השני."}
+            </p>
             <div className="btn-row">
               <button type="button" className="btn btn-outline" onClick={() => setConfirm(false)} autoFocus>
                 לא, להשאיר

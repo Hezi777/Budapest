@@ -456,7 +456,7 @@ export function StopEditor({
 
 /**
  * A booked table or time slot: when, under whose name, and a short note.
- * Lives only on this phone, so nothing sensitive (tickets, card numbers).
+ * Shared through the plan without a login, so nothing sensitive (tickets, card numbers).
  */
 export function ReservationSheet({
   day,
@@ -525,7 +525,7 @@ export function ReservationSheet({
           onChange={(e) => setNote(e.target.value)}
         />
       </label>
-      <p className="ps-hint">נשמר רק בטלפון הזה. לא לשמור כאן כרטיסים, פרטי אשראי או סיסמאות.</p>
+      <p className="ps-hint">מופיע גם בטלפון השני. בלי כרטיסים, פרטי אשראי או סיסמאות: אלה נשארים במייל.</p>
       <button type="button" className="btn btn-primary btn-block ps-action" onClick={save}>
         <Check size={22} aria-hidden /> שמירה
       </button>

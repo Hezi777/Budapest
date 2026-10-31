@@ -74,8 +74,28 @@ const tripStore = createStore<Trip>(
 
 export const useTrip = tripStore.use;
 
+/** Edits made on this phone; the sync (src/lib/sync.ts) sends them to the other one. */
+const localEdits = new Set<() => void>();
+
+export function onLocalTripEdit(listener: () => void) {
+  localEdits.add(listener);
+  return () => {
+    localEdits.delete(listener);
+  };
+}
+
+export function readTrip(): Trip {
+  return tripStore.read();
+}
+
+/** A plan that came from the other phone: shown, but not sent back. */
+export function applySyncedTrip(trip: Trip) {
+  tripStore.write(trip);
+}
+
 function update(fn: (trip: Trip) => Trip) {
   tripStore.write(fn(tripStore.read()));
+  localEdits.forEach((l) => l());
 }
 
 function byTime(a: Stop, b: Stop) {
@@ -171,7 +191,7 @@ export function addCustomPlace(place: Place) {
 }
 
 export function resetTrip() {
-  tripStore.write(seedTrip());
+  update(() => seedTrip());
 }
 
 /* ---------- Settings ---------- */

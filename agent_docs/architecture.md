@@ -7,8 +7,9 @@ localStorage: `budapest-trip` and `budapest-settings`. The server snapshot is
 the seed, so there are no hydration mismatches. Anything that must differ per
 phone (the welcome screen, today's date, the current time) renders only after
 hydration (see `useToday` / `useNow` in `src/components/plan-view.tsx` and
-`src/components/welcome.tsx`). Each phone keeps its own copy; nothing syncs
-between Edna's and Benny's phones.
+`src/components/welcome.tsx`). Each phone keeps its own copy, and
+`src/lib/sync.ts` keeps the two copies in step (see "Sync between phones").
+Settings (text size, packing list) stay per phone.
 
 Saved plans are discarded when `TRIP_VERSION` (`src/lib/trip.ts`) changes.
 
@@ -75,6 +76,27 @@ page's stacking context, the map's above all, can paint over it. Toasts sit at
 `Topic` row (`src/components/topic.tsx`), a `<details>` that `HashOpen` opens
 from the URL hash (`/info#packing`). The packing list is saved in settings
 (`packed`).
+
+## Sync between phones
+
+Both of them use the app, so the plan is shared through `/api/trip`: one
+document in Upstash Redis (Vercel Marketplace, env `KV_REST_API_URL` /
+`KV_REST_API_TOKEN`, or the `UPSTASH_REDIS_REST_*` names). No login: anyone
+with the site can read and edit the plan, so nothing sensitive goes in it.
+- Offline-first: edits write to localStorage, then `push` (0.8s later) sends
+  the whole plan with the revision it started from. The server saves only if
+  that is still the latest (a Lua compare-and-set); otherwise it answers 409
+  with the latest and the phone merges.
+- `pull` runs on open, when the app comes back to the foreground, when the
+  network returns and every 30s while open. The other phone's changes show a
+  toast "התוכנית עודכנה מהטלפון השני".
+- `mergeTrips` is a three-way merge per stop (by id) against the last synced
+  plan; on a phone's first sync the seed plan is the common ancestor. A stop
+  changed on both phones takes the server's version.
+- Without the env vars the route answers 503 and the app behaves as before
+  (per phone). Local test: `TRIP_SYNC_MEMORY=1 pnpm start` keeps the store in
+  memory. Bumping `TRIP_VERSION` replaces the shared plan with the new seed
+  once the first updated phone syncs.
 
 ## Plan: one scroll
 

@@ -7,6 +7,7 @@ import { CalendarDays, Coins, Compass, Info, Map, Siren } from "lucide-react";
 import { ToastProvider, useToast } from "./ui";
 import { Welcome } from "./welcome";
 import { updateSettings, useSettings, type TextSize } from "@/lib/store";
+import { startSync } from "@/lib/sync";
 
 const NAV = [
   { href: "/", label: "התוכנית", Icon: CalendarDays },
@@ -102,6 +103,21 @@ function TextSizeButton({ textSize }: { textSize: TextSize }) {
   );
 }
 
+/** Keeps this phone's plan in step with the other phone's; says when theirs arrive. */
+function TripSync() {
+  const toast = useToast();
+  useEffect(() => {
+    const stop = startSync();
+    const onSyncedIn = () => toast("התוכנית עודכנה מהטלפון השני");
+    window.addEventListener("trip-synced-in", onSyncedIn);
+    return () => {
+      stop();
+      window.removeEventListener("trip-synced-in", onSyncedIn);
+    };
+  }, [toast]);
+  return null;
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { textSize } = useSettings();
@@ -120,6 +136,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <ToastProvider>
+      <TripSync />
       <header className="app-header">
         <Link href="/" className="app-brand" aria-label="בודפשט, לדף הבית">
           {/* eslint-disable-next-line @next/next/no-img-element */}

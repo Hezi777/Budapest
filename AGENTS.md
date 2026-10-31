@@ -16,6 +16,7 @@ Next.js 16 / React 19 have breaking changes. Read the relevant guide in
 - `src/lib/trip.ts` — the four days (seed plan). `places.ts` — places in the
   plan and the kosher list. `ideas.ts` — extra places. `emergency.ts` — phones.
 - `src/lib/store.ts` — the plan and settings, in localStorage, per phone.
+  `src/lib/sync.ts` + `src/app/api/trip` — keeps both phones on one plan.
 - `src/app/api/photo` — real photo per place. `src/app/api/rate` — HUF → ILS.
 - `src/app/globals.css` — all styles; tokens in `:root`.
 

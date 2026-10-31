@@ -46,8 +46,10 @@ the earlier red/navy/gold styling), and for the app to feel less overwhelming.
    (tickets, insurance), flight details (waiting for the real flight times). Offline support is in (service worker,
    2026-10-30). Push notifications (e.g. "next stop in 15 minutes") need a
    push server and VAPID keys in Vercel; not built.
-5. **Sharing an edited plan** between both phones needs a backend (or a
-   share-link encoding of the trip). `Trip.customPlaces` has no UI yet.
+5. **Sync between both phones**: built (`src/lib/sync.ts`, `/api/trip`). It
+   switches on once Upstash Redis is connected to the Vercel project (Storage
+   → Upstash for Redis, free plan); until then each phone keeps its own copy.
+   `Trip.customPlaces` has no UI yet.
 6. Geolocation (now live tracking on the map), drag-to-reorder and the Bolt-address
    copy still need a check on a real phone.
 7. **Logo**: the icon is after the Budapest flag (white field, red and green
