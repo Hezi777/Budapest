@@ -6,17 +6,15 @@ import {
   BedDouble,
   CarTaxiFront,
   Check,
+  Coins,
   ChevronDown,
-  ChevronLeft,
   ChevronUp,
-  Circle,
   Footprints,
   GripVertical,
-  Info,
   Map as MapIcon,
+  Moon,
   Navigation,
   Pencil,
-  Phone,
   Plus,
   Route,
   Share2,
@@ -25,13 +23,15 @@ import {
 } from "lucide-react";
 import { InstallCard } from "./install-card";
 import { AddStopSheet, PlaceSheet, StopEditor } from "./place-sheet";
-import { BudapestScene, CopyAddress, Photo, Sheet } from "./ui";
-import { placeIndex, TAG_LABELS } from "@/lib/catalog";
+import { BudapestScene, CopyAddress, Photo, Tags } from "./ui";
+import { CATEGORY_LABELS, placeIndex } from "@/lib/catalog";
 import { directionsUrl, estimateLeg, mapsUrl } from "@/lib/geo";
 import { HERO, HOTEL_ID } from "@/lib/places";
 import { moveStop, moveStopTo, updateSettings, updateStop, useSettings, useTrip } from "@/lib/store";
 import { TRIP_INFO } from "@/lib/trip";
 import type { Day, Leg, Place, Stop, Tag } from "@/lib/types";
+
+const MONTHS = ["ינו׳", "פבר׳", "מרץ", "אפר׳", "מאי", "יוני", "יולי", "אוג׳", "ספט׳", "אוק׳", "נוב׳", "דצמ׳"];
 
 const noop = () => () => {};
 const todayIso = () => {
@@ -46,21 +46,9 @@ function useToday(): string | null {
 
 const nowHhmm = () => new Date().toTimeString().slice(0, 5);
 
-/** Re-checks the clock every 30 seconds, so "next up" follows the day on its own. */
-const everyMinute = (onChange: () => void) => {
-  const id = window.setInterval(onChange, 30_000);
-  return () => window.clearInterval(id);
-};
-
 /** The local time ("14:05") at render, null during server render. */
 function useNow(): string | null {
-  return useSyncExternalStore(everyMinute, nowHhmm, () => null);
-}
-
-/** The stop to go to next: the first one not ticked that hasn't started; else the last one still open. */
-function pickNext(day: Day, places: Map<string, Place>, now: string): Stop | undefined {
-  const open = day.stops.filter((s) => !s.done && !s.compact && s.placeId && places.has(s.placeId));
-  return open.find((s) => s.time >= now) ?? open[open.length - 1];
+  return useSyncExternalStore(noop, nowHhmm, () => null);
 }
 
 function daysBetween(fromIso: string, toIso: string): number {
@@ -89,32 +77,7 @@ function RouteLink({ from, to, mode }: { from: Place; to?: Place; mode: "walking
   );
 }
 
-/** Keeps a range like "30–40" reading left to right inside Hebrew text. */
-function isolateRanges(text: string): string {
-  return text.replace(/\d[\d,]*(?:[–-]\d[\d,]*)+/g, "\u2066$&\u2069");
-}
-
-/** The plan's long leg text boiled down to its duration: "8 דק' הליכה", "מונית · 15 דק'". */
-function shortLeg(leg: Leg): string {
-  const found = leg.text.match(/(?:כ־)?\d+(?:–\d+)?\s*דק'/)?.[0];
-  const mins = found && isolateRanges(found);
-  if (leg.mode === "walk") return mins ? `${mins} הליכה` : "הליכה";
-  return mins ? `מונית · ${mins}` : "מונית";
-}
-
-/** A thin, muted line between two stops: just how long it takes. */
-function LegLine({ leg }: { leg: Leg }) {
-  const Icon = leg.mode === "walk" ? Footprints : CarTaxiFront;
-  return (
-    <div className="leg-line">
-      <Icon size={16} aria-hidden />
-      <span>{shortLeg(leg)}</span>
-    </div>
-  );
-}
-
-/** "How to get there" in full: the plan's text, directions, and the Bolt address for taxis. */
-function HowToGet({
+function LegRow({
   leg,
   estimated,
   from,
@@ -125,69 +88,35 @@ function HowToGet({
   from: Place;
   to?: Place;
 }) {
-  const Icon = leg.mode === "walk" ? Footprints : CarTaxiFront;
-  return (
-    <section className="howto" aria-label="איך מגיעים">
-      <div className="howto-label">איך מגיעים</div>
-      <p className="howto-text">
-        <Icon size={18} aria-hidden />
-        <span>
-          {isolateRanges(leg.text)}
-          {estimated && <span className="estimate"> (הערכה)</span>}
+  if (leg.mode === "walk") {
+    return (
+      <div className="leg leg-row">
+        <span className="leg-walk">
+          <span className="leg-icon">
+            <Footprints size={16} aria-hidden />
+          </span>
+          {leg.text}
+          {estimated && <span className="estimate">(הערכה)</span>}
         </span>
-      </p>
-      <RouteLink from={from} to={to} mode={leg.mode === "walk" ? "walking" : "driving"} />
-      {leg.mode === "taxi" && leg.boltTo && <CopyAddress address={leg.boltTo} />}
-    </section>
-  );
-}
-
-/**
- * Height-animated disclosure. Content mounts on first open (so photos are not
- * fetched for stops nobody opens) and stays; `inert` keeps the folded content
- * out of reach of focus and screen readers.
- */
-function Collapse({ open, id, children }: { open: boolean; id: string; children: React.ReactNode }) {
-  const [seen, setSeen] = useState(false);
-  if (open && !seen) setSeen(true);
-  return (
-    <div className="collapse" data-open={open}>
-      <div className="collapse-inner" id={id} inert={!open}>
-        {(open || seen) && children}
+        <RouteLink from={from} to={to} mode="walking" />
       </div>
-    </div>
-  );
-}
-
-/** The day's closing leg (back to the hotel) has no stop to unfold from, so its line is the button. */
-function EndLeg({
-  leg,
-  open,
-  onToggle,
-}: {
-  leg: NonNullable<ReturnType<typeof resolveLeg>>;
-  open: boolean;
-  onToggle: (el: HTMLElement) => void;
-}) {
-  const Icon = leg.leg.mode === "walk" ? Footprints : CarTaxiFront;
+    );
+  }
   return (
-    <div className="tl-end">
-      <button
-        type="button"
-        className="leg-line leg-toggle"
-        aria-expanded={open}
-        aria-controls="leg-end"
-        onClick={(e) => onToggle(e.currentTarget)}
-      >
-        <Icon size={16} aria-hidden />
-        <span>{shortLeg(leg.leg)}</span>
-        <ChevronDown className="row-chevron" size={18} aria-hidden />
-      </button>
-      <Collapse open={open} id="leg-end">
-        <div className="stop-detail">
-          <HowToGet {...leg} />
-        </div>
-      </Collapse>
+    <div className="leg leg-taxi">
+      <div className="leg-row">
+        <span className="leg-walk">
+          <span className="leg-icon">
+            <CarTaxiFront size={16} aria-hidden />
+          </span>
+          <span>
+            {leg.text}
+            {estimated && <span className="estimate"> (הערכה)</span>}
+          </span>
+        </span>
+        <RouteLink from={from} to={to} mode="driving" />
+      </div>
+      {leg.boltTo && <CopyAddress address={leg.boltTo} />}
     </div>
   );
 }
@@ -208,13 +137,15 @@ function resolveLeg(
 /** Pairs every stop with how you get there. Each day starts from the hotel. */
 function layoutDay(day: Day, places: Map<string, Place>, hotel: Place) {
   let prevPlace: Place | undefined = hotel;
+  let number = 0;
   const rows = day.stops.map((stop, i) => {
     const place = stop.placeId ? places.get(stop.placeId) : undefined;
     // Landing at the airport has no "getting there".
     const leg = place?.category === "transport" ? undefined : resolveLeg(stop.leg, prevPlace, place);
     if (place) prevPlace = place;
     const isRest = !!stop.compact || !place;
-    return { stop, place, leg, i, isRest };
+    if (!isRest) number += 1;
+    return { stop, place, leg, i, isRest, number };
   });
   const endTo = day.end?.to ? places.get(day.end.to) : undefined;
   return { rows, endLeg: resolveLeg(day.end, prevPlace, endTo) };
@@ -222,51 +153,47 @@ function layoutDay(day: Day, places: Map<string, Place>, hotel: Place) {
 
 /* ---------- Stops ---------- */
 
-/** The grip at the start of a stop's row in edit mode: press and drag to reorder. */
-function GripHandle({ onGrab }: { onGrab: (e: React.PointerEvent<HTMLElement>) => void }) {
-  return (
-    <span className="drag-handle" role="img" aria-label="גרירה לשינוי סדר" onPointerDown={onGrab}>
-      <GripVertical size={24} aria-hidden />
-    </span>
-  );
-}
-
-/** One row under a stop in edit mode: earlier, later, edit. Drag is the grip on the stop's row. */
 function EditBar({
   day,
   stop,
   isFirst,
   isLast,
   onEdit,
+  onGrab,
 }: {
   day: Day;
   stop: Stop;
   isFirst: boolean;
   isLast: boolean;
   onEdit: () => void;
+  onGrab: (e: React.PointerEvent<HTMLElement>) => void;
 }) {
   return (
     <div className="edit-bar">
+      <span className="icon-btn drag-handle" role="img" aria-label="גרירה לשינוי הסדר" onPointerDown={onGrab}>
+        <GripVertical size={22} />
+      </span>
       <button
         type="button"
-        className="move-btn"
-        aria-label="להקדים את העצירה"
+        className="icon-btn"
+        aria-label="להקדים"
         disabled={isFirst}
         onClick={() => moveStop(day.id, stop.id, -1)}
       >
-        <ChevronUp size={20} aria-hidden /> למעלה
+        <ChevronUp size={22} />
       </button>
       <button
         type="button"
-        className="move-btn"
-        aria-label="לאחר את העצירה"
+        className="icon-btn"
+        aria-label="לאחר"
         disabled={isLast}
         onClick={() => moveStop(day.id, stop.id, 1)}
       >
-        <ChevronDown size={20} aria-hidden /> למטה
+        <ChevronDown size={22} />
       </button>
-      <button type="button" className="move-btn" aria-label="עריכת העצירה: שעה, שם או מחיקה" onClick={onEdit}>
-        <Pencil size={18} aria-hidden /> עריכה
+      <span className="spacer" />
+      <button type="button" className="btn btn-primary btn-sm" onClick={onEdit}>
+        <Pencil size={16} /> עריכה
       </button>
     </div>
   );
@@ -304,119 +231,71 @@ function StopAlt({
   );
 }
 
-/**
- * One stop, folded to a single row: time, name, a small photo. Tapping it
- * unfolds the rest in place (one stop open at a time). In edit mode the row
- * stays folded and is not a button; the edit bar below it takes over.
- */
 function StopCard({
   day,
   stop,
   place,
   places,
-  leg,
+  arrivesOnFoot,
   editing,
-  open,
-  isNext,
-  onGrab,
-  onToggle,
   onOpenPlace,
 }: {
   day: Day;
   stop: Stop;
   place: Place;
   places: Map<string, Place>;
-  leg?: ReturnType<typeof resolveLeg>;
+  arrivesOnFoot: boolean;
   editing: boolean;
-  open: boolean;
-  isNext?: boolean;
-  onGrab: (e: React.PointerEvent<HTMLElement>) => void;
-  onToggle: (row: HTMLElement) => void;
   onOpenPlace: (place: Place) => void;
 }) {
   const title = stop.title ?? place.name;
-  const panelId = `stop-${stop.id}`;
-  const tags = place.tags?.filter((t) => CARD_TAGS.has(t));
-  const row = (
-    <>
-      {editing && <GripHandle onGrab={onGrab} />}
-      <span className="row-time">{stop.time}</span>
-      <span className="row-title">
-        {isNext && <span className="tag tag-next">הבא</span>}
-        {title}
-        {place.tags?.includes("kosher") && <span className="tag tag-kosher">{TAG_LABELS.kosher}</span>}
-      </span>
-      <Photo place={place} className="row-thumb" iconSize={20} />
-      {!editing && (
-        <span className="row-chevron" aria-hidden>
-          <ChevronDown size={22} />
-        </span>
-      )}
-    </>
-  );
 
   return (
     <>
-      {editing ? (
-        <div className="stop-row">{row}</div>
-      ) : (
-        <button
-          type="button"
-          className="stop-row"
-          aria-expanded={open}
-          aria-controls={panelId}
-          onClick={(e) => onToggle(e.currentTarget)}
-        >
-          {row}
-        </button>
-      )}
-      <Collapse open={open && !editing} id={panelId}>
-        <div className="stop-detail">
-          <Photo place={place} className="stop-photo" width={960} iconSize={0} hideIfMissing />
-          {tags && tags.length > 0 && (
-            <div className="tags">
-              {tags.map((t) => (
-                <span key={t} className={`tag tag-${t}`}>
-                  {TAG_LABELS[t]}
-                </span>
-              ))}
-            </div>
-          )}
-          {stop.note && <p className="stop-note">{stop.note}</p>}
-          {leg && <HowToGet {...leg} />}
-          {stop.alts?.map((alt) => (
-            <StopAlt
-              key={alt.text}
-              alt={alt}
-              place={alt.placeId ? places.get(alt.placeId) : undefined}
-              onOpenPlace={onOpenPlace}
-            />
-          ))}
+      <button type="button" className="stop-head" onClick={() => onOpenPlace(place)}>
+        <span className="stop-info">
+          <span className="stop-meta">
+            <span>{stop.time}</span>
+            <span className="sep">·</span>
+            <span className="cat">{CATEGORY_LABELS[place.category]}</span>
+          </span>
+          <span className="stop-title">{title}</span>
+          <Tags tags={place.tags?.filter((t) => CARD_TAGS.has(t))} />
+        </span>
+        <Photo place={place} className="stop-thumb" iconSize={28} />
+      </button>
+      <div className="stop-body">
+        {stop.note && <p className="stop-note">{stop.note}</p>}
+        {stop.alts?.map((alt) => (
+          <StopAlt
+            key={alt.text}
+            alt={alt}
+            place={alt.placeId ? places.get(alt.placeId) : undefined}
+            onOpenPlace={onOpenPlace}
+          />
+        ))}
+        {!editing && (
           <div className="stop-actions">
             <a
-              className="btn btn-primary btn-block go-btn"
-              href={leg?.leg.mode === "walk" ? directionsUrl(place) : mapsUrl(place)}
+              className="btn btn-soft btn-sm"
+              href={arrivesOnFoot ? directionsUrl(place) : mapsUrl(place)}
               target="_blank"
               rel="noreferrer"
             >
-              <Navigation size={20} aria-hidden /> ניווט
+              <Navigation size={17} /> ניווט
             </a>
-            <div className="stop-actions-row">
-              <button
-                type="button"
-                className="btn btn-outline done-btn"
-                aria-pressed={!!stop.done}
-                onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
-              >
-                {stop.done ? <Check size={20} aria-hidden /> : <Circle size={20} aria-hidden />} היינו כאן
-              </button>
-              <button type="button" className="btn btn-outline" onClick={() => onOpenPlace(place)}>
-                <Info size={20} aria-hidden /> עוד על המקום
-              </button>
-            </div>
+            <button
+              type="button"
+              className="icon-btn done-btn"
+              aria-pressed={!!stop.done}
+              aria-label={stop.done ? "היינו כאן" : "סימון: היינו כאן"}
+              onClick={() => updateStop(day.id, stop.id, { done: !stop.done })}
+            >
+              <Check size={22} />
+            </button>
           </div>
-        </div>
-      </Collapse>
+        )}
+      </div>
     </>
   );
 }
@@ -438,14 +317,16 @@ function NextUp({
   hotel: Place;
   onOpenPlace: (place: Place) => void;
 }) {
-  const stop = pickNext(day, places, now);
+  const open = day.stops.filter((s) => !s.done && !s.compact && s.placeId && places.has(s.placeId));
+  // The first stop not yet ticked that hasn't started; else the last one still open.
+  const stop = open.find((s) => s.time >= now) ?? open[open.length - 1];
   if (!stop) {
     return (
       <section className="card next-up" aria-label="הבא בתוכנית">
         <div className="next-kicker">יום {dayNumber}</div>
         <div className="next-title">סיימתם את כל התחנות להיום</div>
-        <a className="btn btn-primary btn-block go-btn" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
-          <BedDouble size={20} aria-hidden /> ניווט למלון
+        <a className="btn btn-primary btn-block" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
+          <BedDouble size={18} /> ניווט למלון
         </a>
       </section>
     );
@@ -461,45 +342,20 @@ function NextUp({
           </span>
           <span className="next-title">{stop.title ?? place.name}</span>
         </span>
-        <ChevronLeft className="next-chevron" size={24} aria-hidden />
       </button>
       <div className="stop-actions">
-        <a className="btn btn-primary btn-block go-btn" href={directionsUrl(place)} target="_blank" rel="noreferrer">
-          <Navigation size={20} aria-hidden /> ניווט
+        <a className="btn btn-primary" href={directionsUrl(place)} target="_blank" rel="noreferrer">
+          <Navigation size={18} /> ניווט
         </a>
         <button
           type="button"
-          className="btn btn-outline btn-block"
+          className="btn btn-soft"
           onClick={() => updateStop(day.id, stop.id, { done: true })}
         >
-          <Check size={20} aria-hidden /> היינו כאן
+          <Check size={18} /> היינו
         </button>
       </div>
     </section>
-  );
-}
-
-/** "Back to the hotel", ready to hand to a taxi driver. Three actions at most. */
-function HotelSheet({ hotel, onClose }: { hotel: Place; onClose: () => void }) {
-  return (
-    <Sheet title="חזרה למלון" onClose={onClose}>
-      <div className="show-driver">
-        <div className="show-driver-label">להראות לנהג המונית</div>
-        <div className="show-driver-name latin">{hotel.local}</div>
-        <div className="show-driver-address latin">{hotel.address}</div>
-      </div>
-      <div className="stop-actions">
-        <a className="btn btn-primary btn-block go-btn" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
-          <Navigation size={20} aria-hidden /> ניווט למלון
-        </a>
-        <CopyAddress address={hotel.address.split(",")[0]} />
-        {hotel.phone && (
-          <a className="btn btn-outline btn-block" href={`tel:${hotel.phone.replace(/[^\d+]/g, "")}`}>
-            <Phone size={20} aria-hidden /> התקשרות למלון
-          </a>
-        )}
-      </div>
-    </Sheet>
   );
 }
 
@@ -627,9 +483,6 @@ export function PlanView() {
   const [openPlace, setOpenPlace] = useState<Place | null>(null);
   const [editStop, setEditStop] = useState<Stop | null>(null);
   const [adding, setAdding] = useState(false);
-  const [hotelOpen, setHotelOpen] = useState(false);
-  // The one stop (or the closing leg, "end") unfolded; null = all folded.
-  const [openId, setOpenId] = useState<string | null>(null);
 
   // A pick made today wins; otherwise jump to today's day during the trip.
   const picked = settings.dayPick?.on === today ? settings.dayPick.id : undefined;
@@ -640,23 +493,10 @@ export function PlanView() {
   const { rows, endLeg } = layoutDay(day, places, hotel);
   const todayIndex = trip.days.findIndex((d) => d.date === today);
   const { timeline, onGrab } = useStopDrag(day.id);
-  // During the trip, the stop to head for next on today's plan (highlighted in the list).
-  const nextId = now && day.id === trip.days[todayIndex]?.id ? pickNext(day, places, now)?.id : undefined;
 
   function pickDay(id: string) {
     updateSettings({ dayPick: { id, on: todayIso() } });
     setEditing(false);
-    setOpenId(null);
-  }
-
-  /** Unfold a row (folding the previous one), then bring it fully into view. */
-  function toggle(id: string, el: HTMLElement) {
-    const opening = openId !== id;
-    setOpenId(opening ? id : null);
-    if (!opening) return;
-    const item = el.closest(".tl-item, .tl-end");
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.setTimeout(() => item?.scrollIntoView({ block: "nearest", behavior: calm ? "auto" : "smooth" }), 300);
   }
 
   async function shareDay() {
@@ -701,24 +541,30 @@ export function PlanView() {
       )}
 
       <nav className="quick-grid" aria-label="קיצורים">
-        <button type="button" className="quick" onClick={() => setHotelOpen(true)}>
+        <a className="quick" href={directionsUrl(hotel)} target="_blank" rel="noreferrer">
           <span className="q-icon">
             <BedDouble size={22} aria-hidden />
           </span>
           חזרה למלון
-        </button>
+        </a>
         <Link className="quick" href={`/map?day=${day.id}`}>
           <span className="q-icon">
             <MapIcon size={22} aria-hidden />
           </span>
           מפת היום
         </Link>
+        <Link className="quick" href="/money">
+          <span className="q-icon">
+            <Coins size={22} aria-hidden />
+          </span>
+          המרת כסף
+        </Link>
       </nav>
 
+      <h2 className="section-title">התוכנית</h2>
       <div className="day-strip" role="group" aria-label="בחירת יום">
         {trip.days.map((d) => {
-          const date = Number(d.date.split("-")[2]);
-          const isToday = d.date === today;
+          const [, month, date] = d.date.split("-").map(Number);
           return (
             <button
               key={d.id}
@@ -726,13 +572,11 @@ export function PlanView() {
               className="day-chip"
               style={{ "--chip": d.color } as React.CSSProperties}
               aria-pressed={d.id === day.id}
-              aria-current={isToday ? "date" : undefined}
-              aria-label={`${d.label}${isToday ? " (היום)" : ""}`}
               onClick={() => pickDay(d.id)}
             >
               <span className="d-week">{d.label.split(" · ")[0]}</span>
               <span className="d-num">{date}</span>
-              <span className="d-sub">{isToday ? "היום" : "נוב׳"}</span>
+              <span className="d-month">{MONTHS[month - 1]}</span>
             </button>
           );
         })}
@@ -745,85 +589,90 @@ export function PlanView() {
         <h2 className="day-title">{day.title}</h2>
         <p className="day-summary">{day.summary}</p>
         <div className="day-links">
-          {editing ? (
-            <button type="button" className="btn btn-primary" onClick={() => setEditing(false)}>
-              <Check size={18} aria-hidden /> סיום עריכה
-            </button>
-          ) : (
-            <button type="button" className="btn btn-outline" onClick={() => setEditing(true)}>
-              <Pencil size={18} aria-hidden /> עריכת היום
-            </button>
-          )}
-          <button type="button" className="btn btn-outline" onClick={shareDay}>
-            <Share2 size={18} aria-hidden /> שליחה בוואטסאפ
+          <button
+            type="button"
+            className="text-link"
+            aria-pressed={editing}
+            onClick={() => setEditing((v) => !v)}
+          >
+            <Pencil size={16} /> {editing ? "סיום עריכה" : "שינוי היום"}
+          </button>
+          <button type="button" className="text-link" onClick={shareDay}>
+            <Share2 size={16} /> שליחה בוואטסאפ
           </button>
         </div>
       </header>
 
       {editing && (
         <div className="edit-banner" role="status">
-          להזזת עצירה: למעלה, למטה, או גרירה בידית שבצד. כשמסיימים לוחצים על סיום עריכה.
+          גוררים את הידית <GripVertical size={16} aria-hidden /> כדי לשנות סדר. „עריכה” משנה שעה, שם או יום.
         </div>
       )}
 
       {/* Keyed by day so switching days replays the stops' entrance. */}
       <div className={`timeline${editing ? " is-editing" : ""}`} key={day.id} ref={timeline}>
-        {rows.map(({ stop, place, leg, i, isRest }) => {
-          const bar = editing && (
-            <EditBar
-              day={day}
-              stop={stop}
-              isFirst={i === 0}
-              isLast={i === rows.length - 1}
-              onEdit={() => setEditStop(stop)}
-            />
-          );
-          return (
-            <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
-              {leg && <LegLine leg={leg.leg} />}
-              <div className="tl-stop">
-                <span
-                  className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}${stop.id === nextId ? " is-next" : ""}`}
-                  aria-hidden
-                >
-                  {stop.done && <Check size={14} strokeWidth={3} />}
-                </span>
-                {isRest || !place ? (
-                  <div className={editing ? "card" : undefined}>
-                    <div className={`rest${editing ? " in-card" : ""}${stop.done ? " is-done" : ""}`}>
-                      {editing && <GripHandle onGrab={(e) => onGrab(e, stop.id, i)} />}
-                      <span className="time">{stop.time}</span>
-                      <span>
-                        <strong>{stop.title ?? place?.name}.</strong> {stop.note}
-                      </span>
-                    </div>
-                    {bar}
-                  </div>
+        {rows.map(({ stop, place, leg, i, isRest, number }) => (
+          <div key={stop.id} className="tl-item" style={{ "--i": i } as React.CSSProperties}>
+            {leg && <LegRow {...leg} />}
+            <div style={{ position: "relative" }}>
+              <span
+                className={`tl-marker${isRest ? " is-rest" : ""}${stop.done ? " is-done" : ""}`}
+                aria-hidden
+              >
+                {isRest ? (
+                  place?.id === HOTEL_ID ? <BedDouble size={15} /> : <Moon size={15} />
+                ) : stop.done ? (
+                  <Check size={16} />
                 ) : (
-                  <article className={`card stop-card${stop.done ? " is-done" : ""}${openId === stop.id && !editing ? " is-open" : ""}${stop.id === nextId ? " is-next" : ""}`}>
-                    <StopCard
+                  number
+                )}
+              </span>
+              {isRest || !place ? (
+                <div className={editing ? "card" : undefined}>
+                  <div className={`rest${editing ? " in-card" : ""}`}>
+                    <span className="time">{stop.time}</span>
+                    <span>
+                      <strong>{stop.title ?? place?.name}.</strong> {stop.note}
+                    </span>
+                  </div>
+                  {editing && (
+                    <EditBar
                       day={day}
                       stop={stop}
-                      place={place}
-                      places={places}
-                      leg={leg}
-                      editing={editing}
-                      open={openId === stop.id}
-                      isNext={stop.id === nextId}
+                      isFirst={i === 0}
+                      isLast={i === rows.length - 1}
+                      onEdit={() => setEditStop(stop)}
                       onGrab={(e) => onGrab(e, stop.id, i)}
-                      onToggle={(el) => toggle(stop.id, el)}
-                      onOpenPlace={setOpenPlace}
                     />
-                    {bar}
-                  </article>
-                )}
-              </div>
+                  )}
+                </div>
+              ) : (
+                <article className={`card stop${stop.done ? " is-done" : ""}`}>
+                  <StopCard
+                    day={day}
+                    stop={stop}
+                    place={place}
+                    places={places}
+                    arrivesOnFoot={leg?.leg.mode === "walk"}
+                    editing={editing}
+                    onOpenPlace={setOpenPlace}
+                  />
+                  {editing && (
+                    <EditBar
+                      day={day}
+                      stop={stop}
+                      isFirst={i === 0}
+                      isLast={i === rows.length - 1}
+                      onEdit={() => setEditStop(stop)}
+                      onGrab={(e) => onGrab(e, stop.id, i)}
+                    />
+                  )}
+                </article>
+              )}
             </div>
-          );
-        })}
-        {endLeg && (
-          <EndLeg leg={endLeg} open={openId === "end" && !editing} onToggle={(el) => toggle("end", el)} />
-        )}
+          </div>
+        ))}
+        {endLeg && <LegRow {...endLeg} />}
       </div>
 
       <button
@@ -851,12 +700,6 @@ export function PlanView() {
         />
       )}
       {adding && <AddStopSheet day={day} onClose={() => setAdding(false)} />}
-      {hotelOpen && <HotelSheet hotel={hotel} onClose={() => setHotelOpen(false)} />}
-      {editing && (
-        <button type="button" className="btn btn-primary edit-done" onClick={() => setEditing(false)}>
-          <Check size={20} aria-hidden /> סיום עריכה
-        </button>
-      )}
     </div>
   );
 }

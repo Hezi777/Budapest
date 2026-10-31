@@ -78,8 +78,7 @@ from the URL hash (`/info#packing`). The packing list is saved in settings
 
 ## Reordering
 
-In edit mode each stop has one row of buttons (למעלה, למטה, עריכה) and a grip
-handle for dragging (`useStopDrag` in
+In edit mode each stop has a grip handle (`useStopDrag` in
 `src/components/plan-view.tsx`). Dropping calls `moveStopTo` in the store:
 stops change slots, every slot keeps its time, so the day stays sorted.
 

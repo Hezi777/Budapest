@@ -19,11 +19,14 @@ Reuse classes before adding new ones: `.card`, `.btn .btn-primary|soft|outline`,
 The audience is 50–60 and not technical: 48px+ tap targets, large text
 (three sizes via `html[data-text]`), one obvious action per card, secondary
 actions as `.text-link`, long details behind a tap (sheet or `<details>`).
-Readable for this age: body at 18px at the normal size; nothing under 15px
-except the map credit; muted text ≥ 4.5:1 (`--text-soft` is the lightest
-allowed); selected states use ink or a check, never colour alone; buttons say
-what they do in words; deleting needs a confirm or an undo. Check new screens
-at the "xlarge" text size too.
+Readable without being big: the default size stays modest (root 17px) and
+Edna and Benny choose larger text themselves (header "טקסט" button, settings,
+welcome screen); Hen found an 18px default with bigger controls "too big".
+Muted text ≥ 4.5:1 (`--text-soft` is the lightest allowed); selected states use
+ink or a check, never colour alone; buttons say what they do in words;
+deleting needs a confirm or an undo. Check new screens at "xlarge" too.
+The itinerary is the full-card version (each stop shows its details); a
+tap-to-expand version was tried and rejected.
 
 ## Motion
 
